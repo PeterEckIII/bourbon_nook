@@ -3,6 +3,7 @@ import { installGlobals } from "@remix-run/node";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { remixDevTools } from "remix-development-tools";
+import istanbul from "vite-plugin-istanbul";
 
 installGlobals();
 

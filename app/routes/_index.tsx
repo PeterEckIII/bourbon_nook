@@ -3,7 +3,7 @@ import { Icon } from "~/library/icon/icon";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
+    { title: "Bourbon Nook" },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };
