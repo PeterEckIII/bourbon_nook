@@ -1,4 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
+import { Icon } from "~/library/icon/icon";
 
 export const meta: MetaFunction = () => {
   return [
@@ -10,7 +11,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Remix</h1>
+      <h1 className="text-3xl text-red-500">Welcome to Remix</h1>
       <ul>
         <li>
           <a
@@ -18,7 +19,7 @@ export default function Index() {
             href="https://remix.run/tutorials/blog"
             rel="noreferrer"
           >
-            15m Quickstart Blog Tutorial
+            15m Quickstart Blog Tutorial <Icon name="SingleChevronUp" />
           </a>
         </li>
         <li>

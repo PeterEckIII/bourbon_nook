@@ -1,0 +1,166 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model password {
+  hash   String
+  user   user   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String @unique
+}
+
+model profile {
+  id     String @id @default(cuid())
+  user   user   @relation("userHasProfile", fields: [userId], references: [id])
+  userId String @unique
+}
+
+model user {
+  id       String    @id @default(cuid())
+  email    String    @unique
+  username String    @unique
+  password password?
+
+  profile profile? @relation("userHasProfile")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // FOLLOWERS
+  followers follows[] @relation("follower")
+  following follows[] @relation("following")
+
+  // REVIEWS
+  reviews review[] @relation("userReviews")
+
+  // COMMENTS
+  comments   comment[] @relation("UserComments")
+  likes      like[]
+  collection bottle[]  @relation("UserBottles")
+}
+
+model like {
+  user      user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  comment   comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([userId, commentId])
+}
+
+model comment {
+  id        String   @id @default(cuid())
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   user   @relation("UserComments", fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  review   review @relation("ReviewComments", fields: [reviewId], references: [id], onDelete: Cascade)
+  reviewId String
+
+  parent   comment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
+  parentId String?
+  children comment[] @relation("ParentChild")
+  likes    like[]
+}
+
+model follows {
+  follower    user     @relation("following", fields: [followerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  followerId  String
+  following   user     @relation("follower", fields: [followingId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  followingId String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@id([followerId, followingId])
+}
+
+model review {
+  id       String  @id @default(cuid())
+  bottle   bottle? @relation(fields: [bottleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  bottleId String?
+
+  user   user   @relation("userReviews", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+
+  comments comment[] @relation("ReviewComments")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // SETTING:
+  date      String?
+  setting   String?
+  glassware String?
+  restTime  String?
+  nose      String?
+  palate    String?
+  finish    String?
+  thoughts  String?
+
+  // NOTES ABRIDGED
+  fruity        Float?
+  nutty         Float?
+  spicy         Float?
+  herbal        Float?
+  tobacco       Float?
+  leather       Float?
+  oak           Float?
+  grain         Float?
+  vanilla       Float?
+  caramel       Float?
+  honey         Float?
+  chocolate     Float?
+  value         Float?
+  overallRating Float?
+}
+
+enum BottleStatus {
+  CLOSED   @map("CLOSED")
+  OPENED   @map("OPENED")
+  FINISHED @map("FINISHED")
+
+  @@map("bottle_status")
+}
+
+model bottle {
+  id String @id @default(cuid())
+
+  user      user         @relation("UserBottles", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String
+  status    BottleStatus @default(CLOSED)
+  reviews   review[]
+  createdAt DateTime?    @default(now())
+  updatedAt DateTime?    @updatedAt
+
+  imageUrl       String?
+  name           String
+  type           String
+  distiller      String?
+  producer       String?
+  country        String?
+  region         String?
+  price          String?
+  age            String?
+  alcoholPercent String?
+  proof          String?
+  color          String?
+  year           String?
+  batch          String?
+  barrel         String?
+  size           String?
+  finishing      String?
+  openDate       String?
+  killDate       String?
+}
