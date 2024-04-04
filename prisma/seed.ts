@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { PrismaClient } from "@prisma/client";
 import chalk from "chalk";
 
@@ -6,8 +7,9 @@ const prisma = new PrismaClient();
 async function main() {
   await prisma.user.create({
     data: {
-      email: "peter@remix.com",
-      username: "peter-remix",
+      email: faker.internet.email(),
+      username: faker.internet.userName(),
+      role: "USER",
     },
   });
 }

@@ -9,6 +9,8 @@
     "db:migrate": "prisma migrate dev",
     "db:seed": "npm run script \"prisma db seed\" confirm",
     "db:studio": "npm run script \"prisma studio\"",
+    "db:up": "docker-compose up -d db",
+    "db:down": "docker-compose down db",
     "dev": "remix vite:dev",
     "execute": "node --no-warnings --experimental-specifier-resolution=node --loader ./loader.js",
     "icons": "npm run script scripts/icons.ts",
@@ -16,6 +18,12 @@
     "script": "npm run execute scripts/setup.ts",
     "prod": "npm run script scripts/icons.ts prod confirm",
     "start": "remix-serve ./build/server/index.js",
+    "pretest:i": "npm run script \"npm run db:up && npx prisma migrate deploy\" test",
+    "test:i": "npm run script \"vitest run --config ./vitest.config.integration.ts\" test",
+    "posttest:i": "npm run db:down",
+    "pretest:i:ui": "npm run script \"npm run db:up && npx prisma migrate deploy\" test",
+    "test:i:ui": "npm run script \"vitest run --config ./vitest.config.integration.ts --ui --api 9527\" test",
+    "posttest:i:ui": "npm run db:down",
     "typecheck": "tsc"
   },
   "dependencies": {
@@ -30,6 +38,7 @@
     "react-toastify": "^10.0.5"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@remix-run/dev": "^2.8.1",
     "@types/node": "^20.12.4",
     "@types/prompt": "^1.1.8",
@@ -37,6 +46,7 @@
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
+    "@vitest/ui": "^1.4.0",
     "autoprefixer": "^10.4.19",
     "chalk": "^5.3.0",
     "eslint": "^8.38.0",
@@ -45,6 +55,7 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "happy-dom": "^14.4.0",
     "node-html-parser": "^6.1.13",
     "postcss": "^8.4.38",
     "prisma": "^5.12.0",
@@ -54,7 +65,8 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3",
     "vite": "^5.1.0",
-    "vite-tsconfig-paths": "^4.2.1"
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^1.4.0"
   },
   "engines": {
     "node": ">=18.0.0"

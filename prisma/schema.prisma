@@ -22,11 +22,17 @@ model profile {
   userId String @unique
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model user {
   id       String    @id @default(cuid())
   email    String    @unique
   username String    @unique
   password password?
+  role     Role      @default(USER)
 
   profile profile? @relation("userHasProfile")
 
