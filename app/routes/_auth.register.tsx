@@ -16,6 +16,8 @@ import {
 import { createUserSession } from "~/.server/utils/session.server";
 import Button from "~/library/components/Button/Button";
 
+import bcrypt from "bcryptjs";
+
 function createSchema(
   intent: Intent | null,
   options?: {
@@ -141,13 +143,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return json(submission.reply());
   }
 
+  const hash = await bcrypt.hash(submission.value.password, 10);
+
   const user = await createUser(
     {
       email: submission.value.email,
       username: submission.value.username,
       role: submission.value.role,
     },
-    submission.value.password
+    hash
   );
 
   return await createUserSession({

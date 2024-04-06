@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "remix vite:build",
+    "db:connect:test": "npm run script \"psql -h localhost -p 5433 -d tests -U prisma\" test",
+    "db:connect:dev": "",
     "db:gen": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:seed": "npm run script \"prisma db seed\" confirm",
