@@ -3,6 +3,7 @@ import "../app/tailwind.css";
 
 const preview: Preview = {
   parameters: {
+    layout: 'centered',
     actions: {},
     controls: {
       matchers: {
