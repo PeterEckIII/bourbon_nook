@@ -1,15 +1,18 @@
-import { LoaderFunctionArgs, json } from "@remix-run/node";
-import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
-
-export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const bottleId = params.bottleId;
-  if (bottleId === "1") {
-    return json({ message: "The first bottle!" });
-  }
-  return null;
-};
+import { useEffect } from "react";
+import {
+  useFetcher,
+  isRouteErrorResponse,
+  useRouteError,
+} from "@remix-run/react";
 
 export default function BottleRoute() {
+  const fetcher = useFetcher();
+
+  useEffect(() => {
+    fetcher.submit(
+      "https://res.cloudinary.com/jpeckiii/image/upload/v1/common/EHT_zpzfun"
+    );
+  }, [fetcher]);
   return (
     <div>
       <h1>Hi</h1>

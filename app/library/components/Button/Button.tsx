@@ -32,9 +32,7 @@ export default function Button({
       >
         {loading ? (
           <div className="flex">
-            <div>
-              <Spinner />
-            </div>
+            <div>{/* <Spinner /> */}</div>
             <div>{loadingText}</div>
           </div>
         ) : (

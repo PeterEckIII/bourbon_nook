@@ -133,11 +133,9 @@ model review {
 }
 
 enum BottleStatus {
-  CLOSED   @map("CLOSED")
-  OPENED   @map("OPENED")
-  FINISHED @map("FINISHED")
-
-  @@map("bottle_status")
+  OPENED
+  SEALED
+  FINISHED
 }
 
 model bottle {
@@ -145,7 +143,7 @@ model bottle {
 
   user      user         @relation("UserBottles", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId    String
-  status    BottleStatus @default(CLOSED)
+  status    BottleStatus @default(SEALED)
   reviews   review[]
   createdAt DateTime?    @default(now())
   updatedAt DateTime?    @updatedAt
@@ -153,20 +151,13 @@ model bottle {
   imageUrl       String?
   name           String
   type           String
-  distiller      String?
-  producer       String?
+  distillery     String?
   country        String?
   region         String?
   price          String?
   age            String?
   alcoholPercent String?
-  proof          String?
-  color          String?
   year           String?
-  batch          String?
   barrel         String?
-  size           String?
   finishing      String?
-  openDate       String?
-  killDate       String?
 }

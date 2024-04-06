@@ -1,28 +1,30 @@
 import {
+  Form,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
-  useLoaderData,
+  // useLoaderData,
   useRouteError,
 } from "@remix-run/react";
 import "./tailwind.css?inline";
 import { prisma } from "./.server/db";
 import { json } from "@remix-run/node";
+import Button from "./library/components/Button/Button";
 
 type TempUser = {
   name: string;
   role: "ADMIN" | "USER";
 };
 
-const isTempUser = (value: unknown): value is TempUser => {
-  if (typeof value !== "object" || value === null) return false;
-  if ("name" in value && typeof value.name !== "string") return false;
-  if ("role" in value && typeof value.role !== "string") return false;
-  return true;
-};
+// const isTempUser = (value: unknown): value is TempUser => {
+//   if (typeof value !== "object" || value === null) return false;
+//   if ("name" in value && typeof value.name !== "string") return false;
+//   if ("role" in value && typeof value.role !== "string") return false;
+//   return true;
+// };
 
 export async function loader() {
   return null;
@@ -38,6 +40,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
+        <Form method="POST" action="/logout">
+          <Button
+            primary={false}
+            label="Logout"
+            type="submit"
+            onClick={() => console.log(`Logging out...`)}
+          />
+        </Form>
         {children}
         <ScrollRestoration />
       </body>
@@ -58,20 +68,6 @@ export function ErrorBoundary() {
   const error = useRouteError();
   // catch boundary (handles thrown responses)
   if (isRouteErrorResponse(error)) {
-    if (isTempUser(error.data)) {
-      const user = error.data;
-      if (user.role === "ADMIN") {
-        return (
-          <Layout>
-            <div className="bg-yellow-500">
-              {user.name} is an admin -- you should know better!
-              {user.role}
-              {error.status} {error.statusText}
-            </div>
-          </Layout>
-        );
-      }
-    }
     return (
       <Layout>
         {" "}
