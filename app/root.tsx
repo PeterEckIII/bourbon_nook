@@ -10,7 +10,7 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import "./tailwind.css?inline";
-import { prisma } from "./.server/db";
+import { prisma } from "./.server/libs/prisma";
 import { json } from "@remix-run/node";
 import Button from "./library/components/Button/Button";
 

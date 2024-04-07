@@ -2,7 +2,7 @@ import type { user } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
-import { prisma } from "../db";
+import { prisma } from "../libs/prisma";
 
 invariant(
   process.env.SESSION_SECRET,

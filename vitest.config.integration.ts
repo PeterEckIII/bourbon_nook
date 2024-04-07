@@ -13,5 +13,6 @@ export default defineConfig({
     },
     setupFiles: ["./tests/setup.integration.ts"],
     include: ["./app/**/integration/*.test.{ts,tsx}"],
+    exclude: ["./app/**/unit/*.test.{ts,tsx}"]
   },
 });
