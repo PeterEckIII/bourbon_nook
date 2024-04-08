@@ -1,17 +1,20 @@
 import { user } from "@prisma/client";
-import { findAllBottlesByUserId, findBottleById } from "../bottle.model";
-import { createUser, findUserByEmail } from "../user.model";
+import {
+  findAllBottlesByUserId,
+  findBottleById,
+} from "../../app/.server/models/bottle.model";
+import {
+  createUser,
+  findUserByEmail,
+} from "../../app/.server/models/user.model";
 import { prisma } from "~/.server/libs/prisma";
 
 beforeAll(async () => {
-  await createUser(
-    {
-      email: "test@test.com",
-      username: "testuser",
-      role: "USER",
-    },
-    "testpassword123"
-  );
+  await createUser({
+    email: "test@test.com",
+    username: "testuser",
+    role: "USER",
+  });
 });
 
 beforeEach(async () => {

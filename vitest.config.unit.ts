@@ -5,8 +5,8 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
     globals: true,
-    include: [`./app/**/unit/*.test.{ts,tsx}`],
-    exclude: [`./app/**/integration/*.test.{ts,tsx}`],
+    include: [`./app/**/*.test.ts`],
+    exclude: [`./tests/*.test.{ts,tsx}`],
     setupFiles: ["./tests/setup.unit.ts"],
   },
 });
