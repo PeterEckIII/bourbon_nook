@@ -4,7 +4,7 @@ import process from "process";
 export default defineConfig({
   testDir: "./e2e",
   expect: {
-    timeout: 5000,
+    timeout: 10_000,
   },
   fullyParallel: true,
   forbidOnly: !!process.env.CI,

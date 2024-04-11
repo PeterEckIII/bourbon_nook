@@ -1,56 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FieldMetadata, FormMetadata } from "@conform-to/react";
 import { Form } from "@remix-run/react";
 import Button from "../../Button/Button";
-import Textbox from "../../Inputs/TextBox/Textbox";
-import { bottleSchema } from "~/routes/bottles.new";
+import { Checkbox } from "../../ui/checkbox";
 
 interface BottleFormProps {
   actionUrl: string;
-  inputs: Required<{
-    [x: string]: FieldMetadata<
-      typeof bottleSchema,
-      Record<string, any>,
-      string[]
-    >;
-  }>;
   formId: string;
 }
 
-export default function BottleForm({
-  inputs,
-  formId,
-  actionUrl,
-}: BottleFormProps) {
+export default function BottleForm({ formId, actionUrl }: BottleFormProps) {
   return (
     <Form action={actionUrl} method="POST" id={formId}>
-      <Textbox
-        label="Bottle Name"
-        type="text"
-        name="name"
-        placeholder="Buffalo Trace"
-        error=""
-        navigationState="idle"
-        value=""
-      />
-      <Textbox
-        label="Bottle Type"
-        type="text"
-        name="type"
-        placeholder="Bourbon"
-        error=""
-        navigationState="idle"
-        value=""
-      />
-      <Textbox
-        label="Status"
-        type="text"
-        name="status"
-        placeholder="Sealed"
-        error=""
-        navigationState="idle"
-        value=""
-      />
+      <div className="items-top flex space-x-2">
+        <Checkbox id="imageCheck" name="imageCheck" />
+        <div className="grid gap-1.5 leading-none">
+          <label
+            htmlFor="imageCheck"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            Add an image with this bottle
+          </label>
+        </div>
+      </div>
       <Button
         label="Submit"
         type="submit"

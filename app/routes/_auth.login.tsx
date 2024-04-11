@@ -1,9 +1,16 @@
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { type ActionFunctionArgs, json } from "@remix-run/node";
+import { type ActionFunctionArgs, json, MetaFunction } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { z } from "zod";
 import { createUserSession } from "~/.server/utils/session.server";
+import { Button } from "~/library/components/ui/button";
+import { Checkbox } from "~/library/components/ui/checkbox";
+import { Input } from "~/library/components/ui/input";
+
+export const meta: MetaFunction = () => {
+  return [{ title: "Login | Bourbon Nook" }];
+};
 
 export const schema = z.object({
   email: z
@@ -45,7 +52,63 @@ export default function LoginRoute() {
   return (
     <div className="flex">
       <Form method="post" className="flex flex-wrap" id={form.id}>
-        <div className="w-full">
+        <div className="items-top space-x-2 my-4 w-full">
+          <label
+            htmlFor={email.id}
+            className="font-semibold text-lg text-gray-600 block mb-2 ml-2 dark:text-gray-100"
+          >
+            Email
+          </label>
+          <Input
+            id={email.id}
+            name={email.name}
+            type="email"
+            required
+            className="w-full"
+          />
+        </div>
+        <div className="items-top space-x-2 my-4 w-full">
+          <label
+            htmlFor={password.id}
+            className="font-semibold text-lg text-gray-600 block mb-2 ml-2 dark:text-gray-100"
+          >
+            Password
+          </label>
+          <Input
+            id={password.id}
+            name={password.name}
+            type="password"
+            required
+            className="w-full"
+          />
+        </div>
+        <div className="flex justify-between w-full">
+          <div className="w-1/3">
+            <div className="items-top flex space-x-2 my-4">
+              <Checkbox id={rememberMe.id} name={rememberMe.name} />
+              <div className="grid gap-1.5 leading-none">
+                <label
+                  htmlFor={rememberMe.id}
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Remember me
+                </label>
+              </div>
+            </div>
+          </div>
+          <div className="w-2/3">
+            <Button type="submit" variant="default">
+              Submit
+            </Button>
+          </div>
+        </div>
+      </Form>
+    </div>
+  );
+}
+
+{
+  /* <div className="w-full">
           <label
             htmlFor="email"
             className="block text-sm font-medium text-gray-700"
@@ -60,11 +123,10 @@ export default function LoginRoute() {
             required
             className="mt-1 p-2 w-full border border-gray-300 rounded-md"
           />
-          {email.errors ? (
-            <p className="text-red-500 text-xs italic">{email.errors}</p>
-          ) : null}
-        </div>
-        <div className="w-full">
+        </div> */
+}
+{
+  /* <div className="w-full">
           <label
             htmlFor="password"
             className="block text-sm font-medium text-gray-700"
@@ -82,27 +144,5 @@ export default function LoginRoute() {
           {password.errors ? (
             <p className="text-red-500 text-xs italic">{password.errors}</p>
           ) : null}
-        </div>
-        <div>
-          <label htmlFor={rememberMe.id} className="flex items-center">
-            <input
-              type="checkbox"
-              name={rememberMe.name}
-              id={rememberMe.id}
-              className="h-4 w-4 text-blue-600 border-gray-300 rounded"
-            />
-            <span className="ml-2 text-sm text-gray-600">Remember me</span>
-          </label>
-        </div>
-        <div className="w-full">
-          <button
-            type="submit"
-            className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Sign in
-          </button>
-        </div>
-      </Form>
-    </div>
-  );
+        </div> */
 }

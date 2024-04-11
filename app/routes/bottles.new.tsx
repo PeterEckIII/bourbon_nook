@@ -1,18 +1,16 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
-import { parse, parseWithZod, getZodConstraint } from "@conform-to/zod";
+import { parseWithZod, getZodConstraint } from "@conform-to/zod";
 import {
   ActionFunctionArgs,
   LoaderFunctionArgs,
-  json,
   redirect,
 } from "@remix-run/node";
-import { Form, Outlet, useActionData, useNavigation } from "@remix-run/react";
+import { Form, useActionData } from "@remix-run/react";
 
 import { z } from "zod";
 import { createBottle } from "~/.server/models/bottle.model";
 import { requireUserId } from "~/.server/utils/session.server";
-import BottleForm from "~/library/components/Form/BottleForm/BottleForm";
-import Textbox from "~/library/components/Inputs/TextBox/Textbox";
+import { Input } from "~/library/components/ui/input";
 
 export const bottleSchema = z.object({
   name: z
@@ -112,13 +110,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function BottlesRoute() {
-  const navigation = useNavigation();
   const lastResult = useActionData<typeof action>();
   const [form, fields] = useForm({
     lastResult,
     constraint: getZodConstraint(bottleSchema),
     onValidate({ formData }) {
-      return parse(formData, { schema: bottleSchema });
+      return parseWithZod(formData, { schema: bottleSchema });
     },
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
@@ -126,9 +123,24 @@ export default function BottlesRoute() {
   return (
     <Form method="POST" {...getFormProps(form)}>
       <div className="mt-5 w-full lg:w-1/2 xl:w-1/3 flex flex-col">
-        <label htmlFor={fields.name.id}>Bottle Name</label>
-        <input {...getInputProps(fields.name, { type: "text" })} />
-        <div>{fields.name.errors ? fields.name.errors : undefined}</div>
+        <label htmlFor={fields.name.id} className="my-4 ml-2">
+          Bottle Name
+          <Input
+            {...getInputProps(fields.name, { type: "text" })}
+            id={fields.name.id}
+            className="w-full"
+          />
+        </label>
+      </div>
+      <div className="mt-5 w-full lg:w-1/2 xl:w-1/3 flex flex-col">
+        <label htmlFor={fields.name.id} className="my-4 ml-2">
+          Spirit Type
+          <Input
+            {...getInputProps(fields.type, { type: "text" })}
+            id={fields.type.id}
+            className="w-full"
+          />
+        </label>
       </div>
     </Form>
   );
