@@ -41,6 +41,26 @@ Storybook is configured in this project and can be used as a UI tool. Storybook 
 * `./.storybook/preview.ts` -- Main layout for Storybook
 * `./.storybook/sbvite.config.ts` -- Vite config for Storybook
 
+#### `shadcn`
+The project is also configured for `shadcn-ui` use. Simply use the appropriate `npx shadcn-ui@latest add <component_name>`
+
+**Example**
+```
+$ npx shadcn-ui@latest add button
+```
+
+This installs the shadcn-ui component to the `./app/library/components/ui/` directory and can be imported and used as follows
+
+```
+import {Button} from '~/library/components/ui/button'
+
+{...}
+
+return (
+  <Button>Click Me</Button>
+)
+```
+
 ### Testing
 This repository implements unit, integration, and e2e tests to ensure proper functionality across the codebase. See below for more information about running each category of tests.
 
