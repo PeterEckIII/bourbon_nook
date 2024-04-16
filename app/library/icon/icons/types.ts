@@ -3,8 +3,10 @@
 export type IconName =
 	| "SingleChevronUp"
 	| "SingleChevronDown"
+	| "ExternalLink"
 
 export const iconNames = [
 	  "SingleChevronUp",
 	  "SingleChevronDown",
+	  "ExternalLink",
 ] as const

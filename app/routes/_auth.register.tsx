@@ -6,7 +6,7 @@ import {
 } from "@conform-to/react";
 import { conformZodMessage, parseWithZod } from "@conform-to/zod";
 import { ActionFunctionArgs, json } from "@remix-run/node";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, MetaFunction, useActionData } from "@remix-run/react";
 import { z } from "zod";
 import {
   createUser,
@@ -17,6 +17,10 @@ import { createUserSession } from "~/.server/utils/session.server";
 import Button from "~/library/components/Button/Button";
 
 import bcrypt from "bcryptjs";
+
+export const meta: MetaFunction = () => {
+  return [{ title: "Register | Bourbon Nook" }];
+};
 
 function createSchema(
   intent: Intent | null,
@@ -177,7 +181,11 @@ export default function RegisterRoute() {
     });
   return (
     <div>
-      <Form method="post" className="flex flex-wrap" {...getFormProps(form)}>
+      <Form
+        method="post"
+        className="flex flex-wrap flex-col"
+        {...getFormProps(form)}
+      >
         <div>
           <label htmlFor={email.id}>
             Email

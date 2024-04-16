@@ -11,3 +11,6 @@ node_modules
 *storybook.log
 /.vscode
 /.DS_Store
+/playwright-report
+/e2e/.auth/
+/playwright/fixtures.ts

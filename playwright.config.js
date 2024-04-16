@@ -18,13 +18,13 @@ export default defineConfig({
   },
   projects: [
     {
+      name: 'setup',
+      testMatch: /.*\.setup\.ts/
+    },
+    {
       name: "chromium",
       use: { ...devices['Desktop Chrome'], channel: 'chrome' }
     },
-    // {
-    //   name: "firefox",
-    //   use: { ...devices['Desktop Firefox'], channel: 'firefox' }
-    // },
   ],
   webServer: {
     command: 'npm run dev',

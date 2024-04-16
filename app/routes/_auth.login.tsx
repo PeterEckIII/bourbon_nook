@@ -98,7 +98,7 @@ export default function LoginRoute() {
           </div>
           <div className="w-2/3">
             <Button type="submit" variant="default">
-              Submit
+              Login
             </Button>
           </div>
         </div>

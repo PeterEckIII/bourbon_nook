@@ -1,32 +1,38 @@
 import { prisma } from "../libs/prisma";
 import { Prisma } from "@prisma/client";
 
-export const createUser = async (user: Prisma.userCreateInput) => {
+export const createUser = async (
+  user: Prisma.userCreateInput,
+  hash: string,
+) => {
   return await prisma.user.create({
-    data: user,
+    data: {
+      email: user.email,
+      username: user.username,
+      role: user.role,
+      password: {
+        create: {
+          hash,
+        },
+      },
+    },
   });
 };
 
 export const findUserById = async (id: string) => {
-  try {
-    return await prisma.user.findUniqueOrThrow({
-      where: { id },
-    });
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      return error.message;
-    }
-  }
+  return await prisma.user.findUniqueOrThrow({
+    where: { id },
+  });
 };
 
 export const findUserByEmail = async (email: string) => {
-  return await prisma.user.findUnique({
+  return await prisma.user.findUniqueOrThrow({
     where: { email },
   });
 };
 
 export const findUserByUsername = async (username: string) => {
-  return await prisma.user.findUnique({
+  return await prisma.user.findUniqueOrThrow({
     where: { username },
   });
 };

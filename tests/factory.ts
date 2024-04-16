@@ -3,9 +3,8 @@ import { createBottle as createDbBottle } from "~/.server/models/bottle.model";
 import { faker } from "@faker-js/faker";
 import { BottleStatus, type user } from "@prisma/client";
 
-
 // ============================== USERS ==============================
-const createUser = (role: user["role"]) => (userId: string) =>
+const createUser = (role: user["role"]) =>
   createDbUser(
     {
       email: faker.internet.email(),
@@ -13,7 +12,6 @@ const createUser = (role: user["role"]) => (userId: string) =>
       role,
     },
     faker.internet.password(),
-    userId,
   );
 
 export const createNormalUser = createUser("USER");
@@ -21,7 +19,7 @@ export const createNormalUser = createUser("USER");
 export const createAdminUser = createUser("ADMIN");
 
 // ============================== BOTTLES ==============================
-const createBottle = (status: BottleStatus) => (userId: user["id"]) => 
+const createBottle = (status: BottleStatus) => (userId: user["id"]) =>
   createDbBottle({
     userId,
     name: faker.commerce.productName(),
