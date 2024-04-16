@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test("should login with valid credentials", async ({ page }) => {
   await page.goto("http://localhost:3000/login");
@@ -9,7 +9,7 @@ test("should login with valid credentials", async ({ page }) => {
   await expect(password).toBeVisible();
 
   await email.fill("jpeckiii@gmail.com");
-  await password.fill("Katie123!");
+  await password.fill("");
   await page.getByRole("button", { name: "Login" }).click();
 
   expect(await page.url()).toBe("http://localhost:3000/bottles");
