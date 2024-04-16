@@ -54,7 +54,7 @@ Unit testing is setup via the `./vitest.config.unit.ts` file at the root of the 
 
 **Execution Command**: `npm run unit`
 
-*Unit injection*
+**Unit injection**
 The `./tests/factory.ts` and `./tests/setup.unit.ts` files inject predictable database functions that simplify the testing process. 
 
 * `factory.ts` -- contains the functions that will be available in the test context
@@ -63,11 +63,11 @@ The `./tests/factory.ts` and `./tests/setup.unit.ts` files inject predictable da
 #### Integration
 Integration testing is setup via the `./vitest.config.integration.ts` and the `./tests/setup.integration.ts` files
 
-*Testing files location*: `./tests/**/*.test.{ts|tsx}`
+**Testing files location**: `./tests/**/*.test.{ts|tsx}`
 
-*Execution Command*: npm run integration
+**Execution Command**: npm run integration
 
-*Integration injection*
+**Integration injection**
 The `./tests/factory.ts` and `./tests/setup.integration.ts` files inject predictable database functions that simplify the testing process. 
 
 * `factory.ts` -- contains the functions that will be available in the test context
@@ -75,7 +75,7 @@ The `./tests/factory.ts` and `./tests/setup.integration.ts` files inject predict
 
 ##### UI Testing
 
-*Execution Command*: `npm run integration:ui`
+**Execution Command**: `npm run integration:ui`
 
 #### End-to-End
 End-to-End testing is setup in the `./tests/setup.integration.ts` file and the `./playwright/` directory, along with the `./playwright.config.ts` file
@@ -100,9 +100,11 @@ Postgresql powers the data storage for this app and can be configured easily
 
 ## Production
 ### Build
+First build a production version of the app
 ```
 $ npm run build
 ```
+
 
 ### Deployment
 ```
