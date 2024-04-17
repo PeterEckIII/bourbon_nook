@@ -158,6 +158,7 @@ The database used in the test suites (unit, integration, and e2e) is launched by
 ### The `.env.test` file
 The `DATABASE_URL` environment variable should match the values passed in the `./docker-compose.yml` file to successfully connect to the local test database. Ensure your `DATABASE_URL` is set before running any testing suites.
 
+
 <u>**NOTE**</u>: If your database isn't running properly, you might need to run `npm run db:up` first, to ensure the database exists
 
 ### Commands
