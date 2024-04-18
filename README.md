@@ -20,7 +20,7 @@
 
 ## UI
 
-### Icon Generation
+### <u>Icon Generation</u>
 Entrypoint: `./scripts/icons.ts`
 
 <u>Dependencies</u>:
@@ -52,7 +52,7 @@ Entrypoint: `./scripts/icons.ts`
 
 The `name` property hooks into our type file to provide autocomplete
 
-### Storybook
+### <u>Storybook</u>
 Storybook is configured in this project and can be used as a UI tool. Storybook is setup via the three files in the `./.storybook/` directory:
 * `./.storybook/main.ts` -- Plugins, add-ons, and aliasing
 * `./.storybook/preview.ts` -- Main layout for Storybook
@@ -72,7 +72,7 @@ Storybook is configured in this project and can be used as a UI tool. Storybook 
 - "@storybook/addon-actions"
 
 
-### `shadcn`
+### <u>`shadcn`</u>
 The project is also configured for `shadcn-ui` use. Simply use the appropriate `npx shadcn-ui@latest add <component_name>`
 
 **Example**
@@ -98,7 +98,7 @@ This repository implements unit, integration, and e2e tests to ensure proper fun
 <U>**Note**</U>: All test suites run operations on the test database, a local Postgresql DB that can be accessed via `psql` by running:
 `npm run db:connect:test`. 
 
-### Unit
+### <u>Unit</u>
 Unit testing is setup via the `./vitest.config.unit.ts` file at the root of the directory as well as the `./tests/setup.unit.ts` file.
 
 **Testing files location**: `./app/**/*.test.ts`
@@ -112,7 +112,7 @@ The `./tests/factory.ts` and `./tests/setup.unit.ts` files inject predictable da
 * `factory.ts` -- contains the functions that will be available in the test context
 * `setup.unit.ts` -- injects the unit context before each test
 
-### Integration
+### <u>Integration</u>
 Integration testing is setup via the `./vitest.config.integration.ts` and the `./tests/setup.integration.ts` files
 
 **Testing files location**: `./tests/**/*.test.{ts|tsx}`
@@ -130,7 +130,7 @@ The `./tests/factory.ts` and `./tests/setup.integration.ts` files inject predict
 
 **Execution Command**: `npm run integration:ui`
 
-### End-to-End
+### <u>End-to-End</u>
 End-to-End testing is setup in the `./tests/setup.integration.ts` file and the `./playwright/` directory, along with the `./playwright.config.ts` file
 
 **Testing files location**: `./e2e/*.test.{ts|tsx}`
@@ -143,10 +143,10 @@ End-to-End testing is setup in the `./tests/setup.integration.ts` file and the `
 
 ## Database
 
-### Setup
+### <u>Setup</u>
 The database used in the test suites (unit, integration, and e2e) is launched by the `./docker-compose.yml` file.
 
-### Configuration
+### <u>Configuration</u>
 1. Adjust your schema in `./prisma/schema.prisma`
 2. Migrate the changes with `npm run db:migrate`
 3. Spin up the Docker container with `npm run db:up`
@@ -155,13 +155,13 @@ The database used in the test suites (unit, integration, and e2e) is launched by
 5. When you're done shut down the Docker container with `npm run db:down`
 
 
-### The `.env.test` file
+### <u>The `.env.test` file</u>
 The `DATABASE_URL` environment variable should match the values passed in the `./docker-compose.yml` file to successfully connect to the local test database. Ensure your `DATABASE_URL` is set before running any testing suites.
 
 
 <u>**NOTE**</u>: If your database isn't running properly, you might need to run `npm run db:up` first, to ensure the database exists
 
-### Commands
+### <u>Commands</u>
 A list of commands and their explanation is below:
 - `npm run db:connect:test` -- boots up the local test database with `psql`
 - `npm db:connect:dev` -- connects to the remote Supabase database used for development/staging
