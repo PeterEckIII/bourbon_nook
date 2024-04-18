@@ -10,10 +10,13 @@ describe("User Model", () => {
     expect(foundUser).toBeDefined();
   });
 
-  it("CREATE - should throw an error if the email is already taken", async ({ integration }) => {
+  it("CREATE - should throw an error if the email is already taken", async ({
+    integration,
+  }) => {
     const user = await integration.createNormalUser;
-    expect(() => createUser({ ...user }, "password123!")).rejects
-      .toThrowError();
+    expect(() =>
+      createUser({ ...user }, "password123!")
+    ).rejects.toThrowError();
   });
 
   it("FIND -- finds a user by email", async ({ integration }) => {

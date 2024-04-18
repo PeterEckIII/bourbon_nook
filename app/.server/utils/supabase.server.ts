@@ -19,6 +19,6 @@ export function createClient(request: Request) {
           headers.append("Set-Cookie", serialize(key, "", options));
         },
       },
-    },
+    }
   );
 }
