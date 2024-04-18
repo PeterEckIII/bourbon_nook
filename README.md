@@ -1,5 +1,5 @@
 # Bourbon Nook
-![Bourbon Nook](https://res.cloudinary.com/jpeckiii/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/v1713391963/bourbon_lhjvg2.jpg)
+![Bourbon Nook](https://res.cloudinary.com/jpeckiii/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/v1713476266/bourbon_jc09ol.png)
 
 ## Tech Stack
 - [Remix ❤️ Vite](https://remix.run/docs/en/main/future/vite)
