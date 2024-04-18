@@ -20,14 +20,14 @@
 
 ## UI
 
-### <u>Icon Generation</u>
+### <ins>Icon Generation</ins>
 Entrypoint: `./scripts/icons.ts`
 
-<u>Dependencies</u>:
+<ins>Dependencies</ins>:
   * `ts-node`
 
 
-<u>Steps to add an icon to your library</u>
+<ins>Steps to add an icon to your library</ins>
 1. Open `./resources/` and create a new `.svg.` file -- use `snake_case_syntax` when naming your `.svg` files for the best DX
 
 2. Remove the `height` and `width` properties from the SVG to support dynamic sizing
@@ -35,7 +35,7 @@ Entrypoint: `./scripts/icons.ts`
 3. Remove the `class` attribute from the SVG
 
 4. Make sure the nested element of the SVG doesn't include any custom `fill` or `stroke` properties to support dynamic colors
-  <U>**NOTE**</U>: The `<svg>` component itself can have `stroke` and `fill` properties, but any nested elements need to be blank
+  <ins>**NOTE**</ins>: The `<svg>` component itself can have `stroke` and `fill` properties, but any nested elements need to be blank
 
 5. Run `npm run icons` to generate sprites for your icons in the `./resources` directory
 
@@ -52,7 +52,7 @@ Entrypoint: `./scripts/icons.ts`
 
 The `name` property hooks into our type file to provide autocomplete
 
-### <u>Storybook</u>
+### <ins>Storybook</ins>
 Storybook is configured in this project and can be used as a UI tool. Storybook is setup via the three files in the `./.storybook/` directory:
 * `./.storybook/main.ts` -- Plugins, add-ons, and aliasing
 * `./.storybook/preview.ts` -- Main layout for Storybook
@@ -72,7 +72,7 @@ Storybook is configured in this project and can be used as a UI tool. Storybook 
 - "@storybook/addon-actions"
 
 
-### <u>`shadcn`</u>
+### <ins>`shadcn`</ins>
 The project is also configured for `shadcn-ui` use. Simply use the appropriate `npx shadcn-ui@latest add <component_name>`
 
 **Example**
@@ -95,10 +95,10 @@ return (
 ## Testing
 This repository implements unit, integration, and e2e tests to ensure proper functionality across the codebase. See below for more information about running each category of tests.
 
-<U>**Note**</U>: All test suites run operations on the test database, a local Postgresql DB that can be accessed via `psql` by running:
+<ins>**Note**</ins>: All test suites run operations on the test database, a local Postgresql DB that can be accessed via `psql` by running:
 `npm run db:connect:test`. 
 
-### <u>Unit</u>
+### <ins>Unit</ins>
 Unit testing is setup via the `./vitest.config.unit.ts` file at the root of the directory as well as the `./tests/setup.unit.ts` file.
 
 **Testing files location**: `./app/**/*.test.ts`
@@ -112,7 +112,7 @@ The `./tests/factory.ts` and `./tests/setup.unit.ts` files inject predictable da
 * `factory.ts` -- contains the functions that will be available in the test context
 * `setup.unit.ts` -- injects the unit context before each test
 
-### <u>Integration</u>
+### <ins>Integration</ins>
 Integration testing is setup via the `./vitest.config.integration.ts` and the `./tests/setup.integration.ts` files
 
 **Testing files location**: `./tests/**/*.test.{ts|tsx}`
@@ -130,7 +130,7 @@ The `./tests/factory.ts` and `./tests/setup.integration.ts` files inject predict
 
 **Execution Command**: `npm run integration:ui`
 
-### <u>End-to-End</u>
+### <ins>End-to-End</ins>
 End-to-End testing is setup in the `./tests/setup.integration.ts` file and the `./playwright/` directory, along with the `./playwright.config.ts` file
 
 **Testing files location**: `./e2e/*.test.{ts|tsx}`
@@ -143,25 +143,25 @@ End-to-End testing is setup in the `./tests/setup.integration.ts` file and the `
 
 ## Database
 
-### <u>Setup</u>
+### <ins>Setup</ins>
 The database used in the test suites (unit, integration, and e2e) is launched by the `./docker-compose.yml` file.
 
-### <u>Configuration</u>
+### <ins>Configuration</ins>
 1. Adjust your schema in `./prisma/schema.prisma`
 2. Migrate the changes with `npm run db:migrate`
 3. Spin up the Docker container with `npm run db:up`
 4. To connect to the local database you can run `npm run db:connect:test`
-  <u>**NOTE**</u>. To connect to the dev/staging database run `npm run db:connect:dev`
+  <ins>**NOTE**</ins>. To connect to the dev/staging database run `npm run db:connect:dev`
 5. When you're done shut down the Docker container with `npm run db:down`
 
 
-### <u>The `.env.test` file</u>
+### <ins>The `.env.test` file</ins>
 The `DATABASE_URL` environment variable should match the values passed in the `./docker-compose.yml` file to successfully connect to the local test database. Ensure your `DATABASE_URL` is set before running any testing suites.
 
 
-<u>**NOTE**</u>: If your database isn't running properly, you might need to run `npm run db:up` first, to ensure the database exists
+<ins>**NOTE**</ins>: If your database isn't running properly, you might need to run `npm run db:up` first, to ensure the database exists
 
-### <u>Commands</u>
+### <ins>Commands</ins>
 A list of commands and their explanation is below:
 - `npm run db:connect:test` -- boots up the local test database with `psql`
 - `npm db:connect:dev` -- connects to the remote Supabase database used for development/staging
