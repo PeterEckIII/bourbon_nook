@@ -5,10 +5,10 @@
     "**/.server/**/*.ts",
     "**/.server/**/*.tsx",
     "**/.client/**/*.ts",
-    "**/.client/**/*.tsx", 
-    "postcss.config.mjs", 
+    "**/.client/**/*.tsx",
+    "postcss.config.mjs",
     "tailwind.config.js",
-    "**/**/.server/**/*.ts",
+    "**/**/.server/**/*.ts"
   ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],

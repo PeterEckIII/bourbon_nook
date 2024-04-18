@@ -3,7 +3,7 @@ import { Prisma } from "@prisma/client";
 
 export const createUser = async (
   user: Prisma.userCreateInput,
-  hash: string,
+  hash: string
 ) => {
   return await prisma.user.create({
     data: {

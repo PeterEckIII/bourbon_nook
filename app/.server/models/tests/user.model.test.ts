@@ -5,7 +5,7 @@ import prisma from "~/.server/libs/__mocks__/prisma";
 
 vi.mock("~/.server/__mocks__/db", async () => {
   const actual = await vi.importActual<typeof import("../../libs/prisma")>(
-    "../../libs/db"
+    "../../libs/db",
   );
   console.log(`Mocking Prisma!`);
   return {
@@ -37,7 +37,7 @@ describe("User Model", () => {
       updatedAt: today,
     };
     prisma.user.create.mockResolvedValue(newUser);
-    const user = await createUser(newUser);
+    const user = await createUser(newUser, "testpassword12343!");
     expect(user).toStrictEqual(newUser);
     expect(newUser.email).toBe(user.email);
   });

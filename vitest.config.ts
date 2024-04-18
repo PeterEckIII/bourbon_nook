@@ -11,7 +11,7 @@ export default defineConfig({
     include: [
       // Include app *test.(ts|tsx) files (components)
       "./app/**/*.test.{ts,tsx}",
-      "./app/**/unit/*.test.{ts,tsx}"
+      "./app/**/unit/*.test.{ts,tsx}",
     ],
     // Ignore integration tests
     exclude: ["./app/**/integration/*.test.{ts,tsx}"],

@@ -11,7 +11,7 @@ const createUser = (role: user["role"]) =>
       username: faker.internet.userName(),
       role,
     },
-    faker.internet.password(),
+    faker.internet.password()
   );
 
 export const createNormalUser = createUser("USER");

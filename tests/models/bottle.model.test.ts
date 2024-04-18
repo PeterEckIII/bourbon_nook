@@ -14,7 +14,7 @@ beforeAll(async () => {
     email: "test@test.com",
     username: "testuser",
     role: "USER",
-  });
+  }, "testpassword12343!");
 });
 
 beforeEach(async () => {
