@@ -27,7 +27,7 @@
     "unit": "npm run script \"vitest run --config ./vitest.config.unit.ts\" test",
     "postunit": "npm run db:down",
     "e2e:coverage": "nyc --reporter=lcov playwright test",
-    "pree2e": "npm run script \"npm run db:up && npx prisma migrate deploy && npm run playwright:prepare\" test",
+    "pree2e": "npm run script \"npm run db:up && npx prisma migrate deploy\" test",
     "e2e": "playwright test",
     "poste2e": "npm run db:down",
     "pree2e:ui": "npm run script \"npm run db:up && npx prisma migrate deploy && npm run playwright:prepare\" test",

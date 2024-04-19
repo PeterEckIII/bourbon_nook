@@ -5,7 +5,7 @@ import prisma from "~/.server/libs/__mocks__/prisma";
 
 vi.mock("~/.server/__mocks__/db", async () => {
   const actual = await vi.importActual<typeof import("../../libs/prisma")>(
-    "../../libs/db",
+    "../../libs/db"
   );
   console.log(`Mocking Prisma!`);
   return {

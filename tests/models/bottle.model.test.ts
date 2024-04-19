@@ -10,11 +10,14 @@ import {
 import { prisma } from "~/.server/libs/prisma";
 
 beforeAll(async () => {
-  await createUser({
-    email: "test@test.com",
-    username: "testuser",
-    role: "USER",
-  }, "testpassword12343!");
+  await createUser(
+    {
+      email: "test@test.com",
+      username: "testuser",
+      role: "USER",
+    },
+    "testpassword12343!"
+  );
 });
 
 beforeEach(async () => {
