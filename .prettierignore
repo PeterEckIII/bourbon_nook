@@ -1,0 +1,11 @@
+node_modules
+/build
+/public/build
+.env
+
+/coverage
+/data
+/postgres-data
+/playwright-report
+
+/app/tailwind.css

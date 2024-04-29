@@ -36,3 +36,23 @@ export async function updateBottle(
     data: payload,
   });
 }
+
+export async function addImageToBottle(bottleId: string, imageUrl: string) {
+  return prisma.bottle.update({
+    where: {
+      id: bottleId,
+    },
+    data: {
+      imageUrl,
+    },
+  });
+}
+
+export async function deleteBottle(bottleId: string, userId: string) {
+  return prisma.bottle.delete({
+    where: {
+      id: bottleId,
+      userId: userId,
+    },
+  });
+}
