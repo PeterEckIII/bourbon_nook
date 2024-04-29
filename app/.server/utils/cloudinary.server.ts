@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as cloudinary from "cloudinary";
 import { writeAsyncIterableToWritable } from "@remix-run/node";
 
@@ -25,7 +26,7 @@ export async function uploadImage({ data, userId, publicId }: UploadProps) {
           return;
         }
         resolve(result);
-      }
+      },
     );
     await writeAsyncIterableToWritable(data, uploadStream);
   });
