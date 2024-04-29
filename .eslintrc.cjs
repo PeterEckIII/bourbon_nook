@@ -19,16 +19,6 @@ module.exports = {
     commonjs: true,
     es6: true,
   },
-  ignorePatterns: [
-    "!**/.server",
-    "!**/.client",
-    "!**/library/icon/icons/types.ts",
-    "./build",
-    "./coverage",
-    "./.github",
-    "./plugins",
-  ],
-
   // Base config
   extends: ["eslint:recommended", "plugin:storybook/recommended"],
 
@@ -42,6 +32,7 @@ module.exports = {
         "plugin:react/jsx-runtime",
         "plugin:react-hooks/recommended",
         "plugin:jsx-a11y/recommended",
+        "prettier",
       ],
       settings: {
         react: {
@@ -56,6 +47,16 @@ module.exports = {
           typescript: {},
         },
       },
+      rules: {
+        "react/jsx-no-leaked-render": [
+          "warn",
+          { validStrategies: ["ternary"] }
+        ],
+        "eslint/no-mixed-spaces-and-tabs": [
+          "warn",
+          "smart-tabs"
+        ]
+      }
     },
 
     // Typescript
@@ -76,11 +77,44 @@ module.exports = {
       },
       extends: [
         "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/stylistic",
         "plugin:import/recommended",
         "plugin:import/typescript",
       ],
+      rules: {
+        "import/order": [
+          "error",
+          {
+            alphabetize: { caseInsensitive: true, order: "asc" },
+            groups: ["builtin", "external", "internal", "parent", "sibling", "index"],
+            "newlines-between": "always",
+          },
+        ],
+      },
     },
-
+    // Jest/Vitest
+    {
+      files: [
+        "./tests/**/*",
+        "**/*.test.{js,jsx,ts,tsx}",
+      ],
+      plugins: ["jest", "jest-dom", "testing-library"],
+      extends: [
+        "plugin:jest/recommended",
+        "plugin:jest-dom/recommended",
+        "plugin:testing-library/react",
+        "prettier",
+      ],
+      env: {
+        "jest/globals": true,
+      },
+      settings: {
+        jest: {
+          // Since we're using Vitest we have to explicitly set the Jest version
+          version: 28
+        }
+      }
+    },
     // Node
     {
       files: [".eslintrc.cjs"],
