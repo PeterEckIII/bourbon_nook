@@ -6,10 +6,22 @@ import {
   unstable_composeUploadHandlers as composeUploadHandlers,
   UploadHandler,
 } from "@remix-run/node";
+import { randomUUID } from "crypto";
 import { uploadImage } from "~/.server/utils/cloudinary.server";
+import { requireUserId } from "~/.server/utils/session.server";
 import { CloudinaryUploadResponse } from "~/types/cloudinary";
 
+export type ImageUploadData = {
+  error?: string;
+  imgSrc?: string;
+  publicId?: string;
+};
+
 export const action = async ({ request }: ActionFunctionArgs) => {
+  const userId = await requireUserId(request);
+
+  const publicId = randomUUID();
+
   const uploadHandler: UploadHandler = composeUploadHandlers(
     async ({ name, data }) => {
       if (name !== "img") {
@@ -17,8 +29,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       }
       const uploadedImage = (await uploadImage({
         data,
-        userId: "user-id",
-        publicId: "public-id",
+        userId,
+        publicId,
       })) as CloudinaryUploadResponse;
       return uploadedImage.secure_url;
     },
@@ -26,11 +38,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   );
 
   const formData = await parseMultiPartFormData(request, uploadHandler);
-  const imgSrc = formData.get("img");
+  const imgSrc = formData.get("img")?.toString();
+
   if (!imgSrc) {
-    return json({
+    return json<ImageUploadData>({
       error: `There was no image submitted with the form`,
     });
   }
-  return json({ imgSrc });
+  return json<ImageUploadData>({ imgSrc, publicId });
 };
