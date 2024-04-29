@@ -26,6 +26,7 @@ export default function BottleIdRoute() {
   return (
     <div>
       <h1>{bottle.name}</h1>
+      <img src={bottle.imageUrl ?? ""} alt={`Bottle of ${bottle.name}`} />
       <p>{bottle.type}</p>
       <p>{bottle.distillery}</p>
       <p>{bottle.country}</p>

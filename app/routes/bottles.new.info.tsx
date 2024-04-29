@@ -1,20 +1,14 @@
-import { z } from "zod";
-import {
-  LoaderFunctionArgs,
-  ActionFunctionArgs,
-  json,
-  redirect,
-} from "@remix-run/node";
-import {
-  Form,
-  isRouteErrorResponse,
-  useActionData,
-  useRouteError,
-} from "@remix-run/react";
-import { requireUserId } from "~/.server/utils/session.server";
+import { ImageUploadData } from "~/routes/api.upload-image";
 import { parseWithZod } from "@conform-to/zod";
+import { ActionFunctionArgs, redirect } from "@remix-run/node";
+import { useActionData, useNavigation, useRouteError } from "@remix-run/react";
+import { useTypedFetcher } from "remix-typedjson";
+import { z } from "zod";
 import { createBottle } from "~/.server/models/bottle.model";
-import { useForm } from "@conform-to/react";
+import { requireUserId } from "~/.server/utils/session.server";
+import ErrorBoundaryComponent from "~/library/components/ErrorBoundary/ErrorBoundaryComponent";
+import BottleForm from // BottleErrors,
+"~/library/components/Form/BottleForm/BottleForm";
 
 export const bottleSchema = z.object({
   name: z
@@ -86,192 +80,46 @@ export const bottleSchema = z.object({
     .max(50, `Please try to abbreviate this section`),
 });
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  await requireUserId(request);
-  return null;
-};
-
 export const action = async ({ request }: ActionFunctionArgs) => {
   const userId = await requireUserId(request);
-
   const formData = await request.formData();
   const submission = await parseWithZod(formData, { schema: bottleSchema });
 
   if (submission.status !== "success") {
-    return json(submission.reply());
+    return submission.reply();
   }
 
-  const bottle = await createBottle({
-    name: submission.value.name,
-    type: submission.value.type,
-    status: submission.value.status,
-    distillery: submission.value.distillery,
-    country: submission.value.country,
-    region: submission.value.region,
-    price: submission.value.price,
-    age: submission.value.age,
-    alcoholPercent: submission.value.alcoholPercent,
-    barrel: submission.value.barrel,
-    year: submission.value.year,
-    finishing: submission.value.finishing,
-    imageUrl: "",
+  const newBottle = await createBottle({
     userId,
+    imageUrl: "",
+    ...submission.value,
   });
 
-  return redirect(`/bottles/new/image?bid=${bottle.id}`);
+  return redirect(`/bottles/${newBottle.id}`);
 };
 
-export default function NewBottleRoute() {
+export default function NewBottleInfoRoute() {
+  // const errors = useTypedActionData<BottleErrors>();
+  const navigation = useNavigation();
+  const formSubmitting = navigation.state === "submitting";
+
+  const fetcher = useTypedFetcher<ImageUploadData>();
   const lastResult = useActionData<typeof action>();
-  const [form, values] = useForm({
-    lastResult,
-    onValidate({ formData }) {
-      return parseWithZod(formData, { schema: bottleSchema });
-    },
-    shouldValidate: "onBlur",
-    shouldRevalidate: "onInput",
-  });
+  const submissionSuccessful =
+    fetcher.state === "idle" && typeof fetcher.data !== "undefined";
 
   return (
-    <div className="">
-      <Form method="post" className="flex flex-wrap" {...form}>
-        <div>
-          <label htmlFor="name">Name</label>
-          <input type="text" {...values.name} name={values.name.name} />
-          {values.name.errors ? (
-            <div className="text-red-600">{values.name.errors[0]}</div>
-          ) : null}
-        </div>
-        <div>
-          <label htmlFor="type">Type</label>
-          <input type="text" {...values.type} name={values.type.name} />
-          {values.type.errors ? (
-            <div className="text-red-600">{values.type.errors[0]}</div>
-          ) : null}
-        </div>
-        <div>
-          <label htmlFor="status">Status</label>
-          <select {...values.status} name={values.status.name}>
-            <option value="OPENED">Opened</option>
-            <option value="SEALED">Sealed</option>
-            <option value="FINISHED">Finished</option>
-          </select>
-          {values.status.errors ? (
-            <div className="text-red-600">{values.status.errors[0]}</div>
-          ) : null}
-        </div>
-        <div>
-          <label htmlFor="distillery">Distillery</label>
-          <input
-            type="text"
-            {...values.distillery}
-            name={values.distillery.name}
-          />
-          {values.distillery.errors ? (
-            <div className="text-red-600">{values.distillery.errors[0]}</div>
-          ) : null}
-        </div>
-        <div>
-          <label htmlFor="country">Country</label>
-          <input type="text" {...values.country} name={values.country.name} />
-          {values.country.errors ? (
-            <div className="text-red-600">{values.country.errors[0]}</div>
-          ) : null}
-        </div>
-        <div>
-          <label htmlFor="region">Region</label>
-          <input type="text" {...values.region} name={values.region.name} />
-          {values.region.errors ? (
-            <div className="text-red-600">{values.region.errors[0]}</div>
-          ) : null}
-        </div>
-        <div>
-          <label htmlFor="price">Price</label>
-          <input type="text" {...values.price} name={values.price.name} />
-          {values.price.errors ? (
-            <div className="text-red-600">{values.price.errors[0]}</div>
-          ) : null}
-        </div>
-        <div>
-          <label htmlFor="age">Age</label>
-          <input type="text" {...values.age} name={values.age.name} />
-          {values.age.errors ? (
-            <div className="text-red-600">{values.age.errors[0]}</div>
-          ) : null}
-        </div>
-        <div>
-          <label htmlFor="alcoholPercent">Alcohol Percent</label>
-          <input
-            type="text"
-            {...values.alcoholPercent}
-            name={values.alcoholPercent.name}
-          />
-          {values.alcoholPercent.errors ? (
-            <div className="text-red-600">
-              {values.alcoholPercent.errors[0]}
-            </div>
-          ) : null}
-        </div>
-        <div>
-          <label htmlFor="barrel">Barrel</label>
-          <input type="text" {...values.barrel} name={values.barrel.name} />
-          {values.barrel.errors ? (
-            <div className="text-red-600">{values.barrel.errors[0]}</div>
-          ) : null}
-        </div>
-        <div>
-          <label htmlFor="year">Year</label>
-          <input type="text" {...values.year} name={values.year.name} />
-          {values.year.errors ? (
-            <div className="text-red-600">{values.year.errors[0]}</div>
-          ) : null}
-        </div>
-        <div>
-          <label htmlFor="finishing">Finishing</label>
-          <input
-            type="text"
-            {...values.finishing}
-            name={values.finishing.name}
-          />
-          {values.finishing.errors ? (
-            <div className="text-red-600">{values.finishing.errors[0]}</div>
-          ) : null}
-        </div>
-        <div>
-          <button type="submit">Create Bottle</button>
-        </div>
-      </Form>
-    </div>
+    <BottleForm
+      lastResult={lastResult}
+      fetcher={fetcher}
+      isSubmitting={formSubmitting}
+      imageSubmitting={fetcher.state === "loading"}
+      submissionSuccessful={submissionSuccessful}
+    />
   );
 }
 
 export function ErrorBoundary() {
   const error = useRouteError();
-  if (isRouteErrorResponse(error)) {
-    return (
-      <div>
-        <h1>There was an error</h1>
-        <pre>{error.data}</pre>
-        <pre>Threw response code {error.status}</pre>
-      </div>
-    );
-  } else if (error instanceof Error) {
-    return (
-      <div>
-        <h1>There was an error</h1>
-        <pre>{error.message}</pre>
-        <pre>Stacktrace {error.stack?.toString()} </pre>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <h1>
-          Unknown error! You shouldn&apos;t we here. Press back on your browser
-          or load the homepage in your browser
-        </h1>
-        <pre>ERROR: {JSON.stringify(error, null, 2)}</pre>
-      </div>
-    );
-  }
+  return <ErrorBoundaryComponent error={error} />;
 }

@@ -8,8 +8,8 @@ module.exports = {
     {
       files: ["**/*.{js,jsx,ts,tsx}"],
       rules: {
-        "react/prop-types": "off"
-      }
-    }
-  ]
-}
+        "react/prop-types": "off",
+      },
+    },
+  ],
+};

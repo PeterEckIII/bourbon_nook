@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as cloudinary from "cloudinary";
 import { writeAsyncIterableToWritable } from "@remix-run/node";
 

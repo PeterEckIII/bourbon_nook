@@ -19,7 +19,15 @@ module.exports = {
     commonjs: true,
     es6: true,
   },
-  ignorePatterns: ["!**/.server", "!**/.client"],
+  ignorePatterns: [
+    "!**/.server",
+    "!**/.client",
+    "!**/library/icon/icons/types.ts",
+    "./build",
+    "./coverage",
+    "./.github",
+    "./plugins",
+  ],
 
   // Base config
   extends: ["eslint:recommended", "plugin:storybook/recommended"],
