@@ -1,3 +1,5 @@
 api-gateway/src/main/resources/application.properties
 users-api/src/main/resources/application.properties
 discovery-service/src/main/resources/application.properties
+api-gateway/src/main/resources/
+users-api/src/main/resources/
