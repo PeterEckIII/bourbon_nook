@@ -23,6 +23,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/status/healthcheck")
+    public String healthcheck() {
+        return "OK";
+    }
+
     @GetMapping("/all")
     public String getUsers() {
         return "Working on port " + env.getProperty("local.server.port");
