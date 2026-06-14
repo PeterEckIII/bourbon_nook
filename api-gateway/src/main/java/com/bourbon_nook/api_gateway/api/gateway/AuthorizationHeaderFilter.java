@@ -1,6 +1,7 @@
 package com.bourbon_nook.api_gateway.api.gateway;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.env.Environment;
@@ -13,7 +14,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 
 @Component
@@ -27,7 +27,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     }
 
     public static class Config {
-
+    // Config properties go here
     }
 
     @Override
@@ -41,7 +41,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
             String authorizationHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
             assert authorizationHeader != null;
-            String jwt = authorizationHeader.replace("Bearer", "");
+            String jwt = authorizationHeader.replace("Bearer", "").trim();
 
             if(!isJwtValid(jwt)) {
                 return onError(exchange, "Invalid JWT token");
@@ -59,30 +59,30 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     }
 
     private boolean isJwtValid(String jwt) {
-        boolean returnValue = true;
+        boolean isValid = true;
 
         String subject = null;
         String tokenSecret = environment.getProperty("token.secret");
         assert tokenSecret != null;
-        byte[] secretKeyBytes = Base64.getEncoder().encode(tokenSecret.getBytes());
+        byte[] secretKeyBytes = Base64.getDecoder().decode(tokenSecret);
 
-        SecretKey signingKey = new SecretKeySpec(secretKeyBytes, "HmacSHA256");
+        SecretKey signingKey = Keys.hmacShaKeyFor(secretKeyBytes);
 
         JwtParser jwtParser = Jwts.parserBuilder()
                 .setSigningKey(signingKey)
                 .build();
 
         try {
-            Jwt<Header, Claims> parsedToken = jwtParser.parse(jwt);
-            subject = parsedToken.getBody().getSubject();
+            Claims claims = jwtParser.parseClaimsJws(jwt).getBody();
+            subject = (String) claims.get("sub");
         } catch (Exception ex) {
-            returnValue = false;
+            isValid = false;
         }
 
         if(subject == null || subject.isEmpty()) {
-            returnValue = false;
+            isValid = false;
         }
 
-        return returnValue;
+        return isValid;
     }
 }

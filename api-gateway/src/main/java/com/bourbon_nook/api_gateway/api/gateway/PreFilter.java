@@ -21,7 +21,7 @@ public class PreFilter implements GlobalFilter, Ordered {
         logger.info("First pre-filter executed...");
 
         String requestPath = exchange.getRequest().getPath().toString();
-        logger.info("Request path: " + requestPath);
+        logger.info("Request path: {}", requestPath);
 
         HttpHeaders headers = exchange.getRequest().getHeaders();
 
