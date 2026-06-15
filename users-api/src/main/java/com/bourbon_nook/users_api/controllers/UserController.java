@@ -25,7 +25,7 @@ public class UserController {
 
     @GetMapping("/status/healthcheck")
     public String healthcheck() {
-        return "OK";
+        return "Working on port " +  env.getProperty("local.server.port") + ", with token " + env.getProperty("token.secret");
     }
 
     @GetMapping("/all")

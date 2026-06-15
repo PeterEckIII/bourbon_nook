@@ -68,13 +68,13 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
         SecretKey signingKey = Keys.hmacShaKeyFor(secretKeyBytes);
 
-        JwtParser jwtParser = Jwts.parserBuilder()
-                .setSigningKey(signingKey)
+        JwtParser jwtParser = Jwts.parser()
+                .verifyWith(signingKey)
                 .build();
 
         try {
-            Claims claims = jwtParser.parseClaimsJws(jwt).getBody();
-            subject = (String) claims.get("sub");
+            Claims claims = jwtParser.parseSignedClaims(jwt).getPayload();
+            subject = claims.getSubject();
         } catch (Exception ex) {
             isValid = false;
         }

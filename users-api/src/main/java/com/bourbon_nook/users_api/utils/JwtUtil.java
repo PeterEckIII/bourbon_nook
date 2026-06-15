@@ -3,6 +3,7 @@ package com.bourbon_nook.users_api.utils;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.util.Date;
 
+@RefreshScope
 @Component
 public class JwtUtil {
     @Value("${token.secret}")

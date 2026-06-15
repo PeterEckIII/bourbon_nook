@@ -2,6 +2,7 @@ package com.bourbon_nook.users_api.security;
 
 import com.bourbon_nook.users_api.services.UserService;
 import com.bourbon_nook.users_api.utils.JwtUtil;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
