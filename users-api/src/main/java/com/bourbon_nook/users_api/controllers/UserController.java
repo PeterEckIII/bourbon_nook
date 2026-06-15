@@ -30,7 +30,7 @@ public class UserController {
 
     @GetMapping("/all")
     public String getUsers() {
-        return "Working on port " + env.getProperty("local.server.port");
+        return "All users";
     }
 
     @PostMapping("/new")
