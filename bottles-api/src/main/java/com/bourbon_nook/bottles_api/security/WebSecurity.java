@@ -26,6 +26,7 @@ public class WebSecurity {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/bottles/**").access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
+                .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
         );
 

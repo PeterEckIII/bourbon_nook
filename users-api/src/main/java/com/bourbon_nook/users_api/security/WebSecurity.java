@@ -21,14 +21,10 @@ import org.springframework.security.web.access.expression.WebExpressionAuthoriza
 public class WebSecurity {
 
     private final Environment environment;
-    private final UserService userService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtUtil jwtUtil;
 
-    public WebSecurity(Environment environment, UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder, JwtUtil jwtUtil) {
+    public WebSecurity(Environment environment, JwtUtil jwtUtil) {
         this.environment = environment;
-        this.userService = userService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.jwtUtil = jwtUtil;
     }
 
@@ -47,6 +43,7 @@ public class WebSecurity {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/users/**").access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
+                .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers("/h2-console/**").permitAll())
                 .addFilter(authenticationFilter)
                 .authenticationManager(authenticationManager)
