@@ -3,6 +3,7 @@ package com.bourbon_nook.users_api.controllers;
 import com.bourbon_nook.users_api.dtos.UserDto;
 import com.bourbon_nook.users_api.models.requests.CreateUserRequest;
 import com.bourbon_nook.users_api.models.responses.CreateUserResponse;
+import com.bourbon_nook.users_api.models.responses.UserResponseModel;
 import com.bourbon_nook.users_api.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -44,5 +45,12 @@ public class UserController {
         CreateUserResponse createUserResponse = modelMapper.map(createdUser, CreateUserResponse.class);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createUserResponse);
+    }
+
+    @GetMapping("/{userId}/bottles")
+    public ResponseEntity<UserResponseModel> getUser(@PathVariable("userId") String userId) {
+        UserDto userDto = userService.getUserByUserId(userId);
+        UserResponseModel returnValue = new ModelMapper().map(userDto, UserResponseModel.class);
+        return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
 }

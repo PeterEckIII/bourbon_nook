@@ -2,6 +2,7 @@ package com.bourbon_nook.users_api.security;
 
 import com.bourbon_nook.users_api.services.UserService;
 import com.bourbon_nook.users_api.utils.JwtUtil;
+import com.bourbon_nook.users_api.utils.RestAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -44,10 +45,13 @@ public class WebSecurity {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/users/**").access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
                 .requestMatchers("/actuator/**").permitAll()
-                .requestMatchers("/h2-console/**").permitAll())
+                .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/error").permitAll())
                 .addFilter(authenticationFilter)
                 .authenticationManager(authenticationManager)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http.exceptionHandling(ex -> ex.authenticationEntryPoint(new RestAuthenticationEntryPoint()));
 
         http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
 

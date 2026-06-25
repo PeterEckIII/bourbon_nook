@@ -2,9 +2,14 @@ package com.bourbon_nook.users_api.services;
 
 import com.bourbon_nook.users_api.dtos.UserDto;
 import com.bourbon_nook.users_api.entities.UserEntity;
+import com.bourbon_nook.users_api.models.responses.BottleResponseModel;
 import com.bourbon_nook.users_api.repositories.UserRepository;
+import feign.FeignException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,16 +17,22 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
+    Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BottlesServiceClient bottlesServiceClient;
+    private final Environment environment;
 
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, Environment environment, BottlesServiceClient bottlesServiceClient) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.environment = environment;
+        this.bottlesServiceClient = bottlesServiceClient;
     }
 
     @Override
@@ -62,5 +73,19 @@ public class UserServiceImpl implements UserService {
                 true,
                 new ArrayList<>()
         );
+    }
+
+    @Override
+    public UserDto getUserByUserId(String userId) {
+        UserEntity userEntity = userRepository.findByUserId(userId);
+        if (userEntity == null) throw new UsernameNotFoundException("User not found");
+
+        UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
+
+        List<BottleResponseModel> bottleList = bottlesServiceClient.getBottles(userId);
+
+        userDto.setBottles(bottleList);
+
+        return userDto;
     }
 }
