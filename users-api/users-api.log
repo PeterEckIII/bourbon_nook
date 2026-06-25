@@ -1,0 +1,607 @@
+2026-06-25T12:16:16.888-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] c.c.c.ConfigServicePropertySourceLocator : Fetching config from server at : http://localhost:8012
+2026-06-25T12:16:16.929-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] c.c.c.ConfigServicePropertySourceLocator : Exception on Url - http://localhost:8012:org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8012/users-api/default": Connection refused. Will be trying the next url if available
+2026-06-25T12:16:16.929-05:00  WARN [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] c.c.c.ConfigServicePropertySourceLocator : Could not locate PropertySource: I/O error on GET request for "http://localhost:8012/users-api/default": Connection refused
+2026-06-25T12:16:16.931-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] c.b.users_api.UsersApiApplication        : No active profile set, falling back to 1 default profile: "default"
+2026-06-25T12:16:17.374-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-25T12:16:17.420-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 42 ms. Found 1 JPA repository interface.
+2026-06-25T12:16:17.515-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] faultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2026-06-25T12:16:17.518-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] faultConfiguringBeanFactoryPostProcessor : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2026-06-25T12:16:17.582-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] o.s.cloud.context.scope.GenericScope     : BeanFactory id=19030315-9a45-3518-a00a-2e9fbd33bb9c
+2026-06-25T12:16:17.928-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-06-25T12:16:17.934-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-25T12:16:17.934-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-06-25T12:16:17.954-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-06-25T12:16:17.954-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1015 ms
+2026-06-25T12:16:18.292-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-25T12:16:18.316-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.53.Final
+2026-06-25T12:16:18.328-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-25T12:16:18.425-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-25T12:16:18.435-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-25T12:16:18.603-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@15b97d6c
+2026-06-25T12:16:18.604-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-25T12:16:18.645-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 9.6
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-25T12:16:18.966-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-25T12:16:19.010-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-25T12:16:19.265-05:00  WARN [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-25T12:16:19.410-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-06-25T12:16:19.440-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] o.s.c.openfeign.FeignClientFactoryBean   : For 'bottles-api' URL not provided. Will try picking an instance via load-balancing.
+2026-06-25T12:16:19.944-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoints beneath base path '/actuator'
+2026-06-25T12:16:19.973-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2026-06-25T12:16:20.001-05:00  WARN [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration': Unsatisfied dependency expressed through method 'setFilterChains' parameter 0: Error creating bean with name 'configure' defined in class path resource [com/bourbon_nook/users_api/security/WebSecurity.class]: Failed to instantiate [org.springframework.security.web.SecurityFilterChain]: Factory method 'configure' threw exception with message: Pattern cannot be null or empty
+2026-06-25T12:16:20.005-05:00  WARN [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] s.c.a.AnnotationConfigApplicationContext : Exception thrown from ApplicationListener handling ContextClosedEvent
+
+org.springframework.beans.factory.BeanCreationNotAllowedException: Error creating bean with name 'meterRegistryCloser': Singleton bean creation not allowed while singletons of this factory are in destruction (Do not request a bean from a BeanFactory in a destroy method implementation!)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:303) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.context.event.AbstractApplicationEventMulticaster.retrieveApplicationListeners(AbstractApplicationEventMulticaster.java:267) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.context.event.AbstractApplicationEventMulticaster.getApplicationListeners(AbstractApplicationEventMulticaster.java:223) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:145) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:455) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:461) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:388) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1187) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1150) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.cloud.context.named.NamedContextFactory.destroy(NamedContextFactory.java:114) ~[spring-cloud-context-4.3.3.jar:4.3.3]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:212) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:798) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:748) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1506) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:707) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1499) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1243) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:641) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.15.jar:3.5.15]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.15.jar:3.5.15]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.15.jar:3.5.15]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.15.jar:3.5.15]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.15.jar:3.5.15]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.15.jar:3.5.15]
+	at com.bourbon_nook.users_api.UsersApiApplication.main(UsersApiApplication.java:22) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.5.15.jar:3.5.15]
+
+2026-06-25T12:16:20.007-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-25T12:16:20.008-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-25T12:16:20.010-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-25T12:16:21.016-05:00  WARN [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] z.r.i.AsyncReporter$BoundedAsyncReporter : Timed out waiting for in-flight spans to send
+2026-06-25T12:16:21.020-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-06-25T12:16:21.031-05:00  INFO [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-25T12:16:21.040-05:00 ERROR [users-api, , ] 10448 --- [users-api] [restartedMain] [                                                 ] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration': Unsatisfied dependency expressed through method 'setFilterChains' parameter 0: Error creating bean with name 'configure' defined in class path resource [com/bourbon_nook/users_api/security/WebSecurity.class]: Failed to instantiate [org.springframework.security.web.SecurityFilterChain]: Factory method 'configure' threw exception with message: Pattern cannot be null or empty
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredMethodElement.resolveMethodArguments(AutowiredAnnotationBeanPostProcessor.java:895) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredMethodElement.inject(AutowiredAnnotationBeanPostProcessor.java:848) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1457) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:606) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1235) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1201) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1130) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:991) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:628) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.15.jar:3.5.15]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.15.jar:3.5.15]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.15.jar:3.5.15]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.15.jar:3.5.15]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.15.jar:3.5.15]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.15.jar:3.5.15]
+	at com.bourbon_nook.users_api.UsersApiApplication.main(UsersApiApplication.java:22) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.5.15.jar:3.5.15]
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'configure' defined in class path resource [com/bourbon_nook/users_api/security/WebSecurity.class]: Failed to instantiate [org.springframework.security.web.SecurityFilterChain]: Factory method 'configure' threw exception with message: Pattern cannot be null or empty
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:645) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1373) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1203) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.addCandidateEntry(DefaultListableBeanFactory.java:2029) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1992) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveMultipleBeanCollection(DefaultListableBeanFactory.java:1882) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveMultipleBeans(DefaultListableBeanFactory.java:1850) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1726) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1660) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredMethodElement.resolveMethodArguments(AutowiredAnnotationBeanPostProcessor.java:887) ~[spring-beans-6.2.19.jar:6.2.19]
+	... 25 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.security.web.SecurityFilterChain]: Factory method 'configure' threw exception with message: Pattern cannot be null or empty
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:200) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:89) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:169) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-6.2.19.jar:6.2.19]
+	... 42 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Pattern cannot be null or empty
+	at org.springframework.util.Assert.hasText(Assert.java:253) ~[spring-core-6.2.19.jar:6.2.19]
+	at org.springframework.security.web.util.matcher.AntPathRequestMatcher.<init>(AntPathRequestMatcher.java:155) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.util.matcher.AntPathRequestMatcher.<init>(AntPathRequestMatcher.java:140) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.util.matcher.AntPathRequestMatcher.<init>(AntPathRequestMatcher.java:128) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.util.matcher.AntPathRequestMatcher.<init>(AntPathRequestMatcher.java:117) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.setFilterProcessesUrl(AbstractAuthenticationProcessingFilter.java:398) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at com.bourbon_nook.users_api.security.WebSecurity.configure(WebSecurity.java:43) ~[classes/:na]
+	at com.bourbon_nook.users_api.security.WebSecurity$$SpringCGLIB$$0.CGLIB$configure$0(<generated>) ~[classes/:na]
+	at com.bourbon_nook.users_api.security.WebSecurity$$SpringCGLIB$$FastClass$$1.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258) ~[spring-core-6.2.19.jar:6.2.19]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:400) ~[spring-context-6.2.19.jar:6.2.19]
+	at com.bourbon_nook.users_api.security.WebSecurity$$SpringCGLIB$$0.configure(<generated>) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:172) ~[spring-beans-6.2.19.jar:6.2.19]
+	... 45 common frames omitted
+
+2026-06-25T13:05:41.555-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] c.c.c.ConfigServicePropertySourceLocator : Fetching config from server at : http://localhost:8012
+2026-06-25T13:05:42.354-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] c.c.c.ConfigServicePropertySourceLocator : Located environment: name=users-api, profiles=[default], label=null, version=6216138de39aec2cd6a6d3fe8dd163c2e1a21a0e, state=
+2026-06-25T13:05:42.354-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] b.c.PropertySourceBootstrapConfiguration : Located property source: [BootstrapPropertySource {name='bootstrapProperties-configClient'}, BootstrapPropertySource {name='bootstrapProperties-https://github.com/PeterEckIII/bourbon_nook_configuration/application.properties'}]
+2026-06-25T13:05:42.362-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] c.b.users_api.UsersApiApplication        : No active profile set, falling back to 1 default profile: "default"
+2026-06-25T13:05:42.969-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-25T13:05:43.084-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 109 ms. Found 1 JPA repository interface.
+2026-06-25T13:05:43.340-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] faultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2026-06-25T13:05:43.349-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] faultConfiguringBeanFactoryPostProcessor : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2026-06-25T13:05:43.485-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.cloud.context.scope.GenericScope     : BeanFactory id=19030315-9a45-3518-a00a-2e9fbd33bb9c
+2026-06-25T13:05:43.862-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-06-25T13:05:43.870-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-25T13:05:43.870-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-06-25T13:05:43.889-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-06-25T13:05:43.889-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1522 ms
+2026-06-25T13:05:44.220-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-25T13:05:44.247-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.53.Final
+2026-06-25T13:05:44.263-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-25T13:05:44.361-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-25T13:05:44.372-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-25T13:05:44.487-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@ecbb920
+2026-06-25T13:05:44.488-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-25T13:05:44.523-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 9.6
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-25T13:05:44.905-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-25T13:05:44.929-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-25T13:05:45.176-05:00  WARN [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-25T13:05:45.361-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-06-25T13:05:45.395-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.c.openfeign.FeignClientFactoryBean   : For 'bottles-api' URL not provided. Will try picking an instance via load-balancing.
+2026-06-25T13:05:45.975-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoints beneath base path '/actuator'
+2026-06-25T13:05:46.027-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2026-06-25T13:05:46.401-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.c.s.m.DirectWithAttributesChannel    : Channel 'application-1.springCloudBusInput' has 1 subscriber(s).
+2026-06-25T13:05:46.574-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bourbon_nook?serverTimezone=UTC'
+2026-06-25T13:05:46.656-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-06-25T13:05:46.705-05:00  WARN [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-06-25T13:05:46.840-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] figuration$IntegrationJmxConfiguration$1 : Registering MessageChannel errorChannel
+2026-06-25T13:05:46.844-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] figuration$IntegrationJmxConfiguration$1 : Registering MessageChannel springCloudBusInput
+2026-06-25T13:05:46.847-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] figuration$IntegrationJmxConfiguration$1 : Registering MessageChannel nullChannel
+2026-06-25T13:05:46.856-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] figuration$IntegrationJmxConfiguration$1 : Registering MessageHandler _org.springframework.integration.errorLogger
+2026-06-25T13:05:46.872-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-06-25T13:05:46.872-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.i.channel.PublishSubscribeChannel    : Channel 'application-1.errorChannel' has 1 subscriber(s).
+2026-06-25T13:05:46.873-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.i.endpoint.EventDrivenConsumer       : started bean '_org.springframework.integration.errorLogger'
+2026-06-25T13:05:46.919-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-06-25T13:05:46.933-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-06-25T13:05:46.934-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T13:05:46.938-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-06-25T13:05:46.938-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-06-25T13:05:46.938-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-06-25T13:05:46.938-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-06-25T13:05:46.938-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-06-25T13:05:46.938-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-06-25T13:05:46.938-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-06-25T13:05:47.035-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-06-25T13:05:47.035-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-06-25T13:05:47.036-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-06-25T13:05:47.036-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1782410747036 with initial instances count: 0
+2026-06-25T13:05:47.043-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application USERS-API with eureka with status UP
+2026-06-25T13:05:47.043-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1782410747043, current=UP, previous=STARTING]
+2026-06-25T13:05:47.044-05:00  INFO [users-api, , ] 32799 --- [users-api] [DiscoveryClient-InstanceInfoReplicator-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USERS-API/users-api:66d390a8ed20429be40bbf6e4cad66af: registering service...
+2026-06-25T13:05:47.044-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.c.s.binder.DefaultBinderFactory      : Creating binder: rabbit
+2026-06-25T13:05:47.044-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.c.s.binder.DefaultBinderFactory      : Constructing binder child context for rabbit
+2026-06-25T13:05:47.064-05:00  INFO [users-api, , ] 32799 --- [users-api] [DiscoveryClient-InstanceInfoReplicator-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USERS-API/users-api:66d390a8ed20429be40bbf6e4cad66af - registration status: 204
+2026-06-25T13:05:47.084-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.c.s.binder.DefaultBinderFactory      : Caching the binder: rabbit
+2026-06-25T13:05:47.092-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] c.s.b.r.p.RabbitExchangeQueueProvisioner : declaring queue for inbound: springCloudBus.anonymous.tR6FkiBGSVaki7SlokLMvQ, bound to: springCloudBus
+2026-06-25T13:05:47.095-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [localhost:5672]
+2026-06-25T13:05:47.129-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#4c8af03f:0/SimpleConnection@763c9936 [delegate=amqp://peter@127.0.0.1:5672/, localPort=58198]
+2026-06-25T13:05:47.170-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.c.stream.binder.BinderErrorChannel   : Channel 'rabbit-559179109.springCloudBusInput.errors' has 1 subscriber(s).
+2026-06-25T13:05:47.171-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.c.stream.binder.BinderErrorChannel   : Channel 'rabbit-559179109.springCloudBusInput.errors' has 2 subscriber(s).
+2026-06-25T13:05:47.182-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.i.a.i.AmqpInboundChannelAdapter      : started bean 'inbound.springCloudBus.anonymous.tR6FkiBGSVaki7SlokLMvQ'
+2026-06-25T13:05:47.188-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2026-06-25T13:05:47.189-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8081
+2026-06-25T13:05:47.226-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] figuration$IntegrationJmxConfiguration$1 : Registering MessageChannel rabbit-559179109.springCloudBusInput.errors
+2026-06-25T13:05:47.232-05:00  INFO [users-api, , ] 32799 --- [users-api] [restartedMain] [                                                 ] c.b.users_api.UsersApiApplication        : Started UsersApiApplication in 6.444 seconds (process running for 6.994)
+2026-06-25T13:05:47.660-05:00  INFO [users-api, , ] 32799 --- [users-api] [RMI TCP Connection(4)-127.0.0.1] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-25T13:05:47.660-05:00  INFO [users-api, , ] 32799 --- [users-api] [RMI TCP Connection(4)-127.0.0.1] [                                                 ] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-25T13:05:47.661-05:00  INFO [users-api, , ] 32799 --- [users-api] [RMI TCP Connection(4)-127.0.0.1] [                                                 ] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-06-25T13:06:17.041-05:00  INFO [users-api, , ] 32799 --- [users-api] [DiscoveryClient-CacheRefreshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-06-25T13:06:17.043-05:00  INFO [users-api, , ] 32799 --- [users-api] [DiscoveryClient-CacheRefreshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-06-25T13:06:17.043-05:00  INFO [users-api, , ] 32799 --- [users-api] [DiscoveryClient-CacheRefreshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-06-25T13:06:17.043-05:00  INFO [users-api, , ] 32799 --- [users-api] [DiscoveryClient-CacheRefreshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-06-25T13:06:17.043-05:00  INFO [users-api, , ] 32799 --- [users-api] [DiscoveryClient-CacheRefreshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-06-25T13:06:17.043-05:00  INFO [users-api, , ] 32799 --- [users-api] [DiscoveryClient-CacheRefreshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+2026-06-25T13:06:17.043-05:00  INFO [users-api, , ] 32799 --- [users-api] [DiscoveryClient-CacheRefreshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-06-25T13:06:17.065-05:00  INFO [users-api, , ] 32799 --- [users-api] [DiscoveryClient-CacheRefreshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-06-25T13:10:46.944-05:00  INFO [users-api, , ] 32799 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T13:14:34.431-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application USERS-API with eureka with status DOWN
+2026-06-25T13:14:34.433-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1782411274433, current=DOWN, previous=UP]
+2026-06-25T13:14:34.434-05:00  INFO [users-api, , ] 32799 --- [users-api] [DiscoveryClient-InstanceInfoReplicator-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USERS-API/users-api:66d390a8ed20429be40bbf6e4cad66af: registering service...
+2026-06-25T13:14:34.443-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-25T13:14:34.448-05:00  INFO [users-api, , ] 32799 --- [users-api] [DiscoveryClient-InstanceInfoReplicator-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USERS-API/users-api:66d390a8ed20429be40bbf6e4cad66af - registration status: 204
+2026-06-25T13:14:34.452-05:00  INFO [users-api, , ] 32799 --- [users-api] [tomcat-shutdown] [                                                 ] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2026-06-25T13:14:34.466-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] o.s.a.r.l.SimpleMessageListenerContainer : Waiting for workers to finish.
+2026-06-25T13:14:35.186-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] o.s.a.r.l.SimpleMessageListenerContainer : Successfully waited for workers to finish.
+2026-06-25T13:14:35.187-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] o.s.i.a.i.AmqpInboundChannelAdapter      : stopped bean 'inbound.springCloudBus.anonymous.tR6FkiBGSVaki7SlokLMvQ'
+2026-06-25T13:14:35.336-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] o.s.c.stream.binder.BinderErrorChannel   : Channel 'application-1.rabbit-559179109.springCloudBusInput.errors' has 1 subscriber(s).
+2026-06-25T13:14:35.366-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] o.s.c.stream.binder.BinderErrorChannel   : Channel 'application-1.rabbit-559179109.springCloudBusInput.errors' has 0 subscriber(s).
+2026-06-25T13:14:35.403-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] o.s.i.endpoint.EventDrivenConsumer       : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-06-25T13:14:35.405-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] o.s.i.channel.PublishSubscribeChannel    : Channel 'application-1.errorChannel' has 0 subscriber(s).
+2026-06-25T13:14:35.405-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] o.s.i.endpoint.EventDrivenConsumer       : stopped bean '_org.springframework.integration.errorLogger'
+2026-06-25T13:14:35.431-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-25T13:14:35.444-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-25T13:14:35.458-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-25T13:14:36.402-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2026-06-25T13:14:39.407-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2026-06-25T13:14:39.411-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8010/eureka/} exception=I/O error on DELETE request for "http://localhost:8010/eureka/apps/USERS-API/users-api:66d390a8ed20429be40bbf6e4cad66af": Connect to http://localhost:8010 failed: Connection refused
+
+org.springframework.web.client.ResourceAccessException: I/O error on DELETE request for "http://localhost:8010/eureka/apps/USERS-API/users-api:66d390a8ed20429be40bbf6e4cad66af": Connect to http://localhost:8010 failed: Connection refused
+	at org.springframework.web.client.RestTemplate.createResourceAccessException(RestTemplate.java:926) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:906) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:841) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:702) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.cancel(RestTemplateEurekaHttpClient.java:100) ~[spring-cloud-netflix-eureka-client-4.3.3.jar:4.3.3]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:90) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:934) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:915) ~[eureka-client-2.0.6.jar:2.0.6]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:457) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:415) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:239) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:203) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:196) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:387) ~[spring-cloud-context-4.3.3.jar:4.3.3]
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:134) ~[spring-cloud-context-4.3.3.jar:4.3.3]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:212) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:798) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:748) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1506) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:707) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1499) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1243) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1204) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:179) ~[spring-boot-3.5.15.jar:3.5.15]
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1150) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147) ~[spring-boot-3.5.15.jar:3.5.15]
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116) ~[spring-boot-3.5.15.jar:3.5.15]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8010 failed: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:226) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:168) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:88) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:117) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateTransportClientFactory.lambda$restTemplate$2(RestTemplateTransportClientFactory.java:145) ~[spring-cloud-netflix-eureka-client-4.3.3.jar:4.3.3]
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:88) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:72) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:48) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:900) ~[spring-web-6.2.19.jar:6.2.19]
+	... 37 common frames omitted
+
+2026-06-25T13:14:39.413-05:00  WARN [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on DELETE request for "http://localhost:8010/eureka/apps/USERS-API/users-api:66d390a8ed20429be40bbf6e4cad66af": Connect to http://localhost:8010 failed: Connection refused
+2026-06-25T13:14:39.417-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8010/eureka/}, exception=I/O error on DELETE request for "http://localhost:8010/eureka/apps/USERS-API/users-api:66d390a8ed20429be40bbf6e4cad66af": Connect to http://localhost:8010 failed: Connection refused
+
+org.springframework.web.client.ResourceAccessException: I/O error on DELETE request for "http://localhost:8010/eureka/apps/USERS-API/users-api:66d390a8ed20429be40bbf6e4cad66af": Connect to http://localhost:8010 failed: Connection refused
+	at org.springframework.web.client.RestTemplate.createResourceAccessException(RestTemplate.java:926) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:906) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:841) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:702) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.cancel(RestTemplateEurekaHttpClient.java:100) ~[spring-cloud-netflix-eureka-client-4.3.3.jar:4.3.3]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:120) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:79) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:934) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:915) ~[eureka-client-2.0.6.jar:2.0.6]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:457) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:415) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:239) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:203) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:196) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:387) ~[spring-cloud-context-4.3.3.jar:4.3.3]
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:134) ~[spring-cloud-context-4.3.3.jar:4.3.3]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:212) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:798) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:748) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1506) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:707) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1499) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1243) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1204) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:179) ~[spring-boot-3.5.15.jar:3.5.15]
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1150) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147) ~[spring-boot-3.5.15.jar:3.5.15]
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116) ~[spring-boot-3.5.15.jar:3.5.15]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8010 failed: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:226) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:168) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183) ~[httpclient5-5.5.2.jar:5.5.2]
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:88) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:117) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateTransportClientFactory.lambda$restTemplate$2(RestTemplateTransportClientFactory.java:145) ~[spring-cloud-netflix-eureka-client-4.3.3.jar:4.3.3]
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:88) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:72) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:48) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:900) ~[spring-web-6.2.19.jar:6.2.19]
+	... 38 common frames omitted
+
+2026-06-25T13:14:39.418-05:00  WARN [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on DELETE request for "http://localhost:8010/eureka/apps/USERS-API/users-api:66d390a8ed20429be40bbf6e4cad66af": Connect to http://localhost:8010 failed: Connection refused
+2026-06-25T13:14:39.418-05:00 ERROR [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USERS-API/users-api:66d390a8ed20429be40bbf6e4cad66af - de-registration failedCannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:934) ~[eureka-client-2.0.6.jar:2.0.6]
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:915) ~[eureka-client-2.0.6.jar:2.0.6]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:457) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:415) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:239) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:203) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:196) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:387) ~[spring-cloud-context-4.3.3.jar:4.3.3]
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:134) ~[spring-cloud-context-4.3.3.jar:4.3.3]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:212) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:798) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:748) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1506) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:707) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1499) ~[spring-beans-6.2.19.jar:6.2.19]
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1243) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1204) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:179) ~[spring-boot-3.5.15.jar:3.5.15]
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1150) ~[spring-context-6.2.19.jar:6.2.19]
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147) ~[spring-boot-3.5.15.jar:3.5.15]
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116) ~[spring-boot-3.5.15.jar:3.5.15]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+
+2026-06-25T13:14:39.419-05:00  INFO [users-api, , ] 32799 --- [users-api] [SpringApplicationShutdownHook] [                                                 ] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
+2026-06-25T13:15:04.018-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] c.c.c.ConfigServicePropertySourceLocator : Fetching config from server at : http://localhost:8012
+2026-06-25T13:15:04.706-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] c.c.c.ConfigServicePropertySourceLocator : Located environment: name=users-api, profiles=[default], label=null, version=6216138de39aec2cd6a6d3fe8dd163c2e1a21a0e, state=
+2026-06-25T13:15:04.707-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] b.c.PropertySourceBootstrapConfiguration : Located property source: [BootstrapPropertySource {name='bootstrapProperties-configClient'}, BootstrapPropertySource {name='bootstrapProperties-https://github.com/PeterEckIII/bourbon_nook_configuration/application.properties'}]
+2026-06-25T13:15:04.715-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] c.b.users_api.UsersApiApplication        : No active profile set, falling back to 1 default profile: "default"
+2026-06-25T13:15:05.108-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-25T13:15:05.157-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 42 ms. Found 1 JPA repository interface.
+2026-06-25T13:15:05.245-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] faultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2026-06-25T13:15:05.248-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] faultConfiguringBeanFactoryPostProcessor : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2026-06-25T13:15:05.317-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.cloud.context.scope.GenericScope     : BeanFactory id=19030315-9a45-3518-a00a-2e9fbd33bb9c
+2026-06-25T13:15:05.665-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-06-25T13:15:05.670-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-25T13:15:05.671-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-06-25T13:15:05.685-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-06-25T13:15:05.685-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 964 ms
+2026-06-25T13:15:05.982-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-25T13:15:06.006-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.53.Final
+2026-06-25T13:15:06.018-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-25T13:15:06.108-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-25T13:15:06.118-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-25T13:15:06.232-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@12ee5e81
+2026-06-25T13:15:06.233-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-25T13:15:06.263-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 9.6
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-25T13:15:06.581-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-25T13:15:06.606-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-25T13:15:06.812-05:00  WARN [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-25T13:15:06.991-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-06-25T13:15:07.025-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.c.openfeign.FeignClientFactoryBean   : For 'bottles-api' URL not provided. Will try picking an instance via load-balancing.
+2026-06-25T13:15:07.493-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoints beneath base path '/actuator'
+2026-06-25T13:15:07.518-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2026-06-25T13:15:07.787-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.c.s.m.DirectWithAttributesChannel    : Channel 'application-1.springCloudBusInput' has 1 subscriber(s).
+2026-06-25T13:15:07.923-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bourbon_nook?serverTimezone=UTC'
+2026-06-25T13:15:07.977-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-06-25T13:15:08.018-05:00  WARN [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-06-25T13:15:08.108-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] figuration$IntegrationJmxConfiguration$1 : Registering MessageChannel errorChannel
+2026-06-25T13:15:08.110-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] figuration$IntegrationJmxConfiguration$1 : Registering MessageChannel springCloudBusInput
+2026-06-25T13:15:08.112-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] figuration$IntegrationJmxConfiguration$1 : Registering MessageChannel nullChannel
+2026-06-25T13:15:08.116-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] figuration$IntegrationJmxConfiguration$1 : Registering MessageHandler _org.springframework.integration.errorLogger
+2026-06-25T13:15:08.124-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-06-25T13:15:08.124-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.i.channel.PublishSubscribeChannel    : Channel 'application-1.errorChannel' has 1 subscriber(s).
+2026-06-25T13:15:08.124-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.i.endpoint.EventDrivenConsumer       : started bean '_org.springframework.integration.errorLogger'
+2026-06-25T13:15:08.146-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-06-25T13:15:08.155-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-06-25T13:15:08.156-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T13:15:08.159-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-06-25T13:15:08.159-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-06-25T13:15:08.159-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-06-25T13:15:08.159-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-06-25T13:15:08.159-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-06-25T13:15:08.159-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-06-25T13:15:08.159-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-06-25T13:15:08.244-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-06-25T13:15:08.245-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-06-25T13:15:08.246-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-06-25T13:15:08.246-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1782411308246 with initial instances count: 1
+2026-06-25T13:15:08.253-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application USERS-API with eureka with status UP
+2026-06-25T13:15:08.253-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1782411308253, current=UP, previous=STARTING]
+2026-06-25T13:15:08.254-05:00  INFO [users-api, , ] 36724 --- [users-api] [DiscoveryClient-InstanceInfoReplicator-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USERS-API/users-api:4024f38bf8ff22f9947ed168905bdfd0: registering service...
+2026-06-25T13:15:08.254-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.c.s.binder.DefaultBinderFactory      : Creating binder: rabbit
+2026-06-25T13:15:08.254-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.c.s.binder.DefaultBinderFactory      : Constructing binder child context for rabbit
+2026-06-25T13:15:08.272-05:00  INFO [users-api, , ] 36724 --- [users-api] [DiscoveryClient-InstanceInfoReplicator-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USERS-API/users-api:4024f38bf8ff22f9947ed168905bdfd0 - registration status: 204
+2026-06-25T13:15:08.295-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.c.s.binder.DefaultBinderFactory      : Caching the binder: rabbit
+2026-06-25T13:15:08.302-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] c.s.b.r.p.RabbitExchangeQueueProvisioner : declaring queue for inbound: springCloudBus.anonymous.4rkWS0NERFO3V0bTJ60lXg, bound to: springCloudBus
+2026-06-25T13:15:08.304-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [localhost:5672]
+2026-06-25T13:15:08.327-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#50cfa0a8:0/SimpleConnection@76320994 [delegate=amqp://peter@127.0.0.1:5672/, localPort=61103]
+2026-06-25T13:15:08.350-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.c.stream.binder.BinderErrorChannel   : Channel 'rabbit-739764882.springCloudBusInput.errors' has 1 subscriber(s).
+2026-06-25T13:15:08.350-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.c.stream.binder.BinderErrorChannel   : Channel 'rabbit-739764882.springCloudBusInput.errors' has 2 subscriber(s).
+2026-06-25T13:15:08.356-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.i.a.i.AmqpInboundChannelAdapter      : started bean 'inbound.springCloudBus.anonymous.4rkWS0NERFO3V0bTJ60lXg'
+2026-06-25T13:15:08.360-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2026-06-25T13:15:08.361-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8081
+2026-06-25T13:15:08.402-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] figuration$IntegrationJmxConfiguration$1 : Registering MessageChannel rabbit-739764882.springCloudBusInput.errors
+2026-06-25T13:15:08.418-05:00  INFO [users-api, , ] 36724 --- [users-api] [restartedMain] [                                                 ] c.b.users_api.UsersApiApplication        : Started UsersApiApplication in 4.694 seconds (process running for 5.102)
+2026-06-25T13:15:08.971-05:00  INFO [users-api, , ] 36724 --- [users-api] [RMI TCP Connection(1)-127.0.0.1] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-25T13:15:08.971-05:00  INFO [users-api, , ] 36724 --- [users-api] [RMI TCP Connection(1)-127.0.0.1] [                                                 ] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-25T13:15:08.972-05:00  INFO [users-api, , ] 36724 --- [users-api] [RMI TCP Connection(1)-127.0.0.1] [                                                 ] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-06-25T13:16:33.450-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.users_api.services.UserServiceImpl   : Before calling bottles Microservice
+2026-06-25T13:16:33.458-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] ---> GET http://bottles-api/users/ec8a8f0a-3e2e-4779-9d9a-81ac719da94f/bottles HTTP/1.1
+2026-06-25T13:16:33.458-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] ---> END HTTP (0-byte body)
+2026-06-25T13:16:33.605-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] <--- HTTP/1.1 200 (146ms)
+2026-06-25T13:16:33.605-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] cache-control: no-cache, no-store, max-age=0, must-revalidate
+2026-06-25T13:16:33.605-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] connection: keep-alive
+2026-06-25T13:16:33.605-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] content-type: application/json
+2026-06-25T13:16:33.605-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] date: Thu, 25 Jun 2026 18:16:33 GMT
+2026-06-25T13:16:33.605-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] expires: 0
+2026-06-25T13:16:33.605-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] keep-alive: timeout=60
+2026-06-25T13:16:33.605-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] pragma: no-cache
+2026-06-25T13:16:33.605-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] transfer-encoding: chunked
+2026-06-25T13:16:33.605-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] x-content-type-options: nosniff
+2026-06-25T13:16:33.605-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] x-frame-options: SAMEORIGIN
+2026-06-25T13:16:33.606-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] x-xss-protection: 0
+2026-06-25T13:16:33.606-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] 
+2026-06-25T13:16:33.608-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] [{"id":"68dc2226-e7eb-4ae2-b6b4-6980566a784a","userId":"ec8a8f0a-3e2e-4779-9d9a-81ac719da94f","name":"Buffalo Trace","type":"Bourbon","distillery":"Buffalo Trace"},{"id":"a670d4f8-d8f7-4914-bd45-e21faf8b06df","userId":"ec8a8f0a-3e2e-4779-9d9a-81ac719da94f","name":"Elijah Craig Small Batch","type":"Bourbon","distillery":"Elijah Craig"}]
+2026-06-25T13:16:33.609-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.u.services.BottlesServiceClient      : [BottlesServiceClient#getBottles] <--- END HTTP (337-byte body)
+2026-06-25T13:16:33.614-05:00 DEBUG [users-api, 6a3d7081f21167095a91555bb7b9f6b0, d8d528f928b7c5e6] 36724 --- [users-api] [http-nio-8081-exec-1] [6a3d7081f21167095a91555bb7b9f6b0-d8d528f928b7c5e6] c.b.users_api.services.UserServiceImpl   : After calling bottles Microservice
+2026-06-25T13:20:08.164-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T13:25:08.166-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T13:30:08.173-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T13:35:08.179-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T13:40:08.183-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T13:45:08.189-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T13:50:08.206-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T13:55:08.212-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T14:00:08.217-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T14:05:08.222-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T14:10:08.256-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T14:15:08.263-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T14:20:08.266-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T14:25:08.275-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T14:30:08.287-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T14:33:40.327-05:00  WARN [users-api, , ] 36724 --- [users-api] [AsyncReporter{ZipkinHttpClientSender{http://localhost:9411/api/v2/spans}}] [                                                 ] z.r.i.AsyncReporter$BoundedAsyncReporter : Spans were dropped due to exceptions. All subsequent errors will be logged at FINE level.
+2026-06-25T14:33:40.328-05:00  WARN [users-api, , ] 36724 --- [users-api] [AsyncReporter{ZipkinHttpClientSender{http://localhost:9411/api/v2/spans}}] [                                                 ] z.r.i.AsyncReporter$BoundedAsyncReporter : Dropped 2 spans due to ConnectException()
+
+java.net.ConnectException
+	at java.net.http/jdk.internal.net.http.HttpClientImpl.send(HttpClientImpl.java:923) ~[java.net.http:na]
+	at java.net.http/jdk.internal.net.http.HttpClientFacade.send(HttpClientFacade.java:133) ~[java.net.http:na]
+	at org.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinHttpClientSender.postSpans(ZipkinHttpClientSender.java:60) ~[spring-boot-actuator-autoconfigure-3.5.15.jar:3.5.15]
+	at org.springframework.boot.actuate.autoconfigure.tracing.zipkin.HttpSender.postSpans(HttpSender.java:69) ~[spring-boot-actuator-autoconfigure-3.5.15.jar:3.5.15]
+	at org.springframework.boot.actuate.autoconfigure.tracing.zipkin.HttpSender.postSpans(HttpSender.java:41) ~[spring-boot-actuator-autoconfigure-3.5.15.jar:3.5.15]
+	at zipkin2.reporter.BaseHttpSender.send(BaseHttpSender.java:123) ~[zipkin-reporter-3.5.3.jar:na]
+	at zipkin2.reporter.internal.AsyncReporter$BoundedAsyncReporter.flush(AsyncReporter.java:266) ~[zipkin-reporter-3.5.3.jar:na]
+	at zipkin2.reporter.internal.AsyncReporter$Flusher.run(AsyncReporter.java:352) ~[zipkin-reporter-3.5.3.jar:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: java.net.ConnectException
+	at java.net.http/jdk.internal.net.http.common.Utils.toConnectException(Utils.java:1070) ~[java.net.http:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.connectAsync(PlainHttpConnection.java:223) ~[java.net.http:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.checkRetryConnect(PlainHttpConnection.java:277) ~[java.net.http:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.lambda$connectAsync$0(PlainHttpConnection.java:235) ~[java.net.http:na]
+	at java.base/java.util.concurrent.CompletableFuture.uniHandle(CompletableFuture.java:955) ~[na:na]
+	at java.base/java.util.concurrent.CompletableFuture$UniHandle.tryFire(CompletableFuture.java:932) ~[na:na]
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:531) ~[na:na]
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1794) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	... 1 common frames omitted
+Caused by: java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpen(SocketChannelImpl.java:204) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.connect(SocketChannelImpl.java:942) ~[na:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.connectAsync(PlainHttpConnection.java:211) ~[java.net.http:na]
+	... 9 common frames omitted
+
+2026-06-25T14:35:08.291-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T14:40:08.294-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T14:45:08.302-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-06-25T14:50:08.309-05:00  INFO [users-api, , ] 36724 --- [users-api] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
