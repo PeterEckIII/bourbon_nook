@@ -1,6 +1,7 @@
 package com.bourbon_nook.bottles_api.security;
 
 import com.bourbon_nook.bottles_api.services.BottleService;
+import com.bourbon_nook.bottles_api.utils.RestAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -25,10 +26,13 @@ public class WebSecurity {
     protected SecurityFilterChain configure(HttpSecurity http, BottleService bottleService) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/bottles/**").access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
+                .requestMatchers("/bottles/**", "/users/**").access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
                 .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/error").permitAll()
         );
+
+        http.exceptionHandling(ex -> ex.authenticationEntryPoint(new RestAuthenticationEntryPoint()));
 
         http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
 
