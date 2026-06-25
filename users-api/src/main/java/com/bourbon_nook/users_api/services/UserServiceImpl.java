@@ -82,7 +82,9 @@ public class UserServiceImpl implements UserService {
 
         UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
 
+        logger.debug("Before calling bottles Microservice");
         List<BottleResponseModel> bottleList = bottlesServiceClient.getBottles(userId);
+        logger.debug("After calling bottles Microservice");
 
         userDto.setBottles(bottleList);
 
