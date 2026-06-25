@@ -2,11 +2,14 @@ package com.bourbon_nook.bottles_api.entities;
 
 import com.bourbon_nook.bottles_api.enums.BottleStatus;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="bottles")
@@ -16,7 +19,10 @@ public class BottleEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private String id;
+
+    @Column(name = "user_id")
+    private String userId;
 
     @Column(nullable = false)
     private String name;
@@ -24,6 +30,7 @@ public class BottleEntity implements Serializable {
     @Column(nullable = false)
     private String type;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BottleStatus status;
 
@@ -66,12 +73,28 @@ public class BottleEntity implements Serializable {
     @Column
     private LocalDate killDate;
 
-    public Long getId() {
+    @Column
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @Column
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -200,5 +223,21 @@ public class BottleEntity implements Serializable {
 
     public void setKillDate(LocalDate killDate) {
         this.killDate = killDate;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
