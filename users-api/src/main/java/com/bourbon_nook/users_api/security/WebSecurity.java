@@ -6,6 +6,7 @@ import com.bourbon_nook.users_api.utils.RestAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -44,7 +45,8 @@ public class WebSecurity {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/users/**").access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
-                .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/actuator/health").access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
+                .requestMatchers(HttpMethod.GET, "/actuator/circuitbreakerevents").access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/error").permitAll())
                 .addFilter(authenticationFilter)
