@@ -30,7 +30,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/actuator/busrefresh").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/encrypt").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/decrypt").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/**").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/**").hasAnyRole("CLIENT", "ADMIN")
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/actuator/busrefresh", "/encrypt", "/decrypt"))
                 .httpBasic(Customizer.withDefaults());
