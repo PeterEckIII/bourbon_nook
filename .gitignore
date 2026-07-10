@@ -7,3 +7,5 @@ api-gateway/src/main/resources/
 users-api/src/main/resources/
 configuration-server/src/main/resources/
 bottles-api/src/main/resources/
+.idea/
+.claude/

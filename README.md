@@ -48,6 +48,7 @@ BourbonNook relies on `logstash`, `elasticsearch`, and `kibana` to handle aggreg
 
   bin/elasticsearch
 ```
+Connect to ElasticSearch at http://localhost:9200
 
 ##### Start Logstash
 ```
