@@ -10,3 +10,4 @@ bottles-api/src/main/resources/
 .idea/
 .claude/
 *.log
+*.log.*
