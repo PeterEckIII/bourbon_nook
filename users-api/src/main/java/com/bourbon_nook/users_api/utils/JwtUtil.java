@@ -26,17 +26,19 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails, String userId) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expirationMs);
 
         return Jwts.builder()
                 .subject(userDetails.getUsername())
+                .claim("userId", userId)
                 .claim("roles", userDetails
                         .getAuthorities()
                         .stream()
                         .map(GrantedAuthority::getAuthority)
                         .toList())
+                
                 .issuedAt(now)
                 .expiration(expiryDate)
                 .signWith(getSigningKey(), Jwts.SIG.HS256)
