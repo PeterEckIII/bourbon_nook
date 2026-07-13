@@ -6,7 +6,6 @@ import com.bourbon_nook.bottles_api.models.requests.CreateBottleRequest;
 import com.bourbon_nook.bottles_api.models.responses.BottleResponseModel;
 import com.bourbon_nook.bottles_api.services.BottleService;
 
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
@@ -27,13 +26,11 @@ public class BottleController {
 
     private final Environment env;
     private final BottleService bottleService;
-    private final ModelMapper modelMapper;
     private final BottleMapper bottleMapper;
 
-    public BottleController(Environment env, BottleService bottleService, ModelMapper modelMapper, BottleMapper bottleMapper) {
+    public BottleController(Environment env, BottleService bottleService, BottleMapper bottleMapper) {
         this.env = env;
         this.bottleService = bottleService;
-        this.modelMapper = modelMapper;
         this.bottleMapper = bottleMapper;
     }
 
@@ -124,7 +121,7 @@ public class BottleController {
         String userId = authentication.getName();
         BottleDto bottleDto = bottleMapper.fromCreateRequest(createBottleRequest);
         BottleDto createdBottle = bottleService.createBottle(userId, bottleDto);
-        BottleResponseModel returnValue = modelMapper.map(createdBottle, BottleResponseModel.class);
+        BottleResponseModel returnValue = bottleMapper.toResponseModel(createdBottle);
         return ResponseEntity.status(HttpStatus.CREATED).body(returnValue);
     }
 
@@ -140,7 +137,7 @@ public class BottleController {
         if(updatedBottleDto == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(modelMapper.map(updatedBottleDto, BottleResponseModel.class));
+        return ResponseEntity.status(HttpStatus.OK).body(bottleMapper.toResponseModel(updatedBottleDto));
     }
 
     @PreAuthorize("isAuthenticated()")

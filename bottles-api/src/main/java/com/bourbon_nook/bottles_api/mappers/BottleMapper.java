@@ -87,6 +87,8 @@ public class BottleMapper {
         if(dto == null) return null;
 
         BottleResponseModel model = new BottleResponseModel();
+        model.setId(dto.id());
+        model.setUserId(dto.userId());
         model.setName(dto.name());
         model.setType(dto.type());
         model.setDistillery(dto.distillery());
