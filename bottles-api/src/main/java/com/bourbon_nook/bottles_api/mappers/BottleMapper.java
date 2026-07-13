@@ -2,10 +2,37 @@ package com.bourbon_nook.bottles_api.mappers;
 
 import com.bourbon_nook.bottles_api.dtos.BottleDto;
 import com.bourbon_nook.bottles_api.entities.BottleEntity;
+import com.bourbon_nook.bottles_api.models.requests.CreateBottleRequest;
+import com.bourbon_nook.bottles_api.models.responses.BottleResponseModel;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BottleMapper {
+    public BottleDto fromCreateRequest(CreateBottleRequest request) {
+        if(request == null) return null;
+
+        return new BottleDto(
+                null,
+                null,
+                request.getName(),
+                request.getType(),
+                request.getStatus(),
+                request.getDistillery(),
+                request.getProducer(),
+                request.getCountry(),
+                request.getRegion(),
+                request.getPrice(),
+                request.getAge(),
+                request.getProof(),
+                request.getReleaseYear(),
+                request.getBarrelInformation(),
+                request.getFinishing(),
+                request.getImageUrl(),
+                request.getOpenDate(),
+                request.getKillDate()
+        );
+    }
+
     public BottleDto toDto(BottleEntity entity) {
         if(entity == null) return null;
 
@@ -54,6 +81,15 @@ public class BottleMapper {
         entity.setKillDate(dto.killDate());
 
         return entity;
+    }
 
+    public BottleResponseModel toResponseModel(BottleDto dto) {
+        if(dto == null) return null;
+
+        BottleResponseModel model = new BottleResponseModel();
+        model.setName(dto.name());
+        model.setType(dto.type());
+        model.setDistillery(dto.distillery());
+        return model;
     }
 }

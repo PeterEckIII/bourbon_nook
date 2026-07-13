@@ -18,7 +18,7 @@ public class BottleEntity implements Serializable {
     private static final long serialVersionUID = 487687345876523L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @Column(name = "user_id")
