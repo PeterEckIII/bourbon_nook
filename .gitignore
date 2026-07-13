@@ -9,3 +9,4 @@ configuration-server/src/main/resources/
 bottles-api/src/main/resources/
 .idea/
 .claude/
+*.log
