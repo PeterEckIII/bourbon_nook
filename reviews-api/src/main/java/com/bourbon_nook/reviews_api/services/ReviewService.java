@@ -7,6 +7,7 @@ import java.util.List;
 public interface ReviewService {
     List<ReviewDto> getUserReviews(String userId);
     ReviewDto getReviewByIdAndUserId(String userId, String id);
+
     ReviewDto createReview(String userId, ReviewDto reviewDto);
     ReviewDto updateReview(String userId, String id, ReviewDto reviewDto);
     void addNoteToReview(String reviewId,
