@@ -3,10 +3,13 @@ users-api/src/main/resources/application.properties
 discovery-service/src/main/resources/application.properties
 configuration-server/src/main/resources/application.properties
 bottles-api/src/main/resources/application.properties
+reviews-api/src/main/resources/application.properties
 api-gateway/src/main/resources/
 users-api/src/main/resources/
 configuration-server/src/main/resources/
 bottles-api/src/main/resources/
+reviews-api/src/main/resources/
+
 .idea/
 .claude/
 *.log
