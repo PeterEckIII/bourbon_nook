@@ -1,0 +1,7 @@
+package com.bourbon_nook.reviews_api.exceptions;
+
+public class InternalServiceErrorException extends RuntimeException {
+    public InternalServiceErrorException(String message) {
+        super(message);
+    }
+}
