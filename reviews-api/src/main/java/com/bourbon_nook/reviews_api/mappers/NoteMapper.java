@@ -4,6 +4,7 @@ import com.bourbon_nook.reviews_api.dtos.NoteCategoryDto;
 import com.bourbon_nook.reviews_api.dtos.NoteDto;
 import com.bourbon_nook.reviews_api.entities.NoteCategoryEntity;
 import com.bourbon_nook.reviews_api.entities.NoteEntity;
+import com.bourbon_nook.reviews_api.models.responses.NoteResponseModel;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,6 +13,17 @@ public class NoteMapper {
 
     public NoteMapper(NoteCategoryMapper noteCategoryMapper) {
         this.noteCategoryMapper = noteCategoryMapper;
+    }
+
+    public NoteResponseModel toResponseModel(NoteDto noteDto) {
+        if(noteDto == null) return null;
+
+        NoteResponseModel noteResponse = new NoteResponseModel();
+        noteResponse.setNoteId(noteDto.id());
+        noteResponse.setCategory(noteDto.category());
+        noteResponse.setName(noteDto.name());
+
+        return noteResponse;
     }
 
     public NoteDto toDto(NoteEntity noteEntity) {
