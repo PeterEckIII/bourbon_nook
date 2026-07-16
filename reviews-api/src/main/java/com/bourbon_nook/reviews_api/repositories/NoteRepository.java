@@ -7,9 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface NoteRepository extends JpaRepository<NoteEntity, String> {
     List<NoteEntity> findByCategory(@NotNull NoteCategoryEntity category);
-    NoteEntity createNote(NoteEntity note);
+    Optional<NoteEntity> findByCategoryAndNameAndCreatedBy(NoteCategoryEntity category, String name, String createdBy);
 }
