@@ -6,8 +6,6 @@ import com.bourbon_nook.reviews_api.models.requests.CreateReviewRequest;
 import com.bourbon_nook.reviews_api.models.responses.ReviewResponseModel;
 import com.bourbon_nook.reviews_api.services.ReviewService;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +19,6 @@ import java.util.List;
 @RestController()
 @RequestMapping("/reviews")
 public class ReviewController {
-    Logger logger = LoggerFactory.getLogger(ReviewController.class);
 
     private final Environment environment;
     private final ReviewService reviewService;
@@ -51,7 +48,6 @@ public class ReviewController {
             ReviewResponseModel responseModel = reviewMapper.toResponseModel(review);
             returnValue.add(responseModel);
         }
-        logger.info("Returning {} reviews for user id {}", returnValue.size(), userId);
 
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
