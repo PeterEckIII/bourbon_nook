@@ -73,7 +73,7 @@ public class ReviewEntity implements Serializable {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "reviewEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ReviewNoteEntity> reviewNotes = new HashSet<>();
 
     public void addNote(NoteEntity note, int score) {
