@@ -3,6 +3,8 @@ package com.bourbon_nook.reviews_api.services;
 import com.bourbon_nook.reviews_api.dtos.NoteDto;
 import com.bourbon_nook.reviews_api.entities.NoteCategoryEntity;
 import com.bourbon_nook.reviews_api.entities.NoteEntity;
+import com.bourbon_nook.reviews_api.exceptions.NoteCategoryNotFoundException;
+import com.bourbon_nook.reviews_api.exceptions.NoteNotFoundException;
 import com.bourbon_nook.reviews_api.mappers.NoteMapper;
 import com.bourbon_nook.reviews_api.repositories.NoteCategoryRepository;
 import com.bourbon_nook.reviews_api.repositories.NoteRepository;
@@ -30,7 +32,7 @@ public class NoteServiceImpl implements NoteService {
     public List<NoteDto> getCategoryNotes(String categoryId) {
         NoteCategoryEntity noteCategory = noteCategoryRepository.findById(categoryId).orElse(null);
         if (noteCategory == null) {
-            return null;
+            throw new NoteCategoryNotFoundException("Category with id: " + categoryId + " not found");
         }
 
         List<NoteDto> notes = new ArrayList<>();
@@ -42,22 +44,28 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public NoteDto getNoteById(String id) {
-        return noteMapper.toDto(noteRepository.findById(id).orElse(null));
+    public NoteEntity findOrCreateNoteEntity(String categoryId, String noteName, String userId) {
+        NoteCategoryEntity category = noteCategoryRepository.findById(categoryId).orElse(null);
+        if (category == null) {
+            throw new NoteCategoryNotFoundException("Category with ID " + categoryId + " does not exist");
+        }
+
+        return noteRepository
+                .findByCategoryAndNameAndCreatedBy(category, noteName, userId)
+                .orElseGet(() -> noteRepository.save(NoteEntity.userNote(category, noteName, userId)));
     }
 
     @Override
-    public NoteDto createNote(NoteDto noteDto) {
-        NoteEntity noteEntity = noteMapper.toEntity(noteDto);
-        noteRepository.save(noteEntity);
-        return noteMapper.toDto(noteEntity);
+    public NoteEntity getNoteEntityById(String id) {
+        return noteRepository.findById(id).orElse(null);
     }
 
     @Override
-    public boolean deleteNote(String id) {
+    public void deleteNote(String id) {
         NoteEntity noteEntity = noteRepository.findById(id).orElse(null);
-        if (noteEntity == null) return false;
+        if (noteEntity == null) {
+            throw new NoteNotFoundException("Note with id: " + id + " not found");
+        }
         noteRepository.delete(noteEntity);
-        return true;
     }
 }
