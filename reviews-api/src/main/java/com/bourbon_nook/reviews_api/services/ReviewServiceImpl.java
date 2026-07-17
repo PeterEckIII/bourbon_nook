@@ -1,5 +1,6 @@
 package com.bourbon_nook.reviews_api.services;
 
+import com.bourbon_nook.reviews_api.dtos.AddNoteToReviewDto;
 import com.bourbon_nook.reviews_api.dtos.ReviewDto;
 import com.bourbon_nook.reviews_api.entities.NoteEntity;
 import com.bourbon_nook.reviews_api.entities.ReviewEntity;
@@ -8,6 +9,7 @@ import com.bourbon_nook.reviews_api.mappers.NoteMapper;
 import com.bourbon_nook.reviews_api.mappers.ReviewMapper;
 import com.bourbon_nook.reviews_api.repositories.ReviewRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,6 +90,21 @@ public class ReviewServiceImpl implements ReviewService {
 
         NoteEntity note = noteService.findOrCreateNoteEntity(categoryId, noteName, userId);
         review.addNote(note, score);
+        reviewRepository.save(review);
+    }
+
+    @Override
+    @Transactional
+    public void addNotesToReview(String reviewId, List<AddNoteToReviewDto> notes, String userId) {
+        ReviewEntity review = reviewRepository
+                .findByIdAndUserId(reviewId, userId)
+                .orElseThrow(() -> new ReviewNotFoundException("Review with id: " + reviewId + " not found"));
+
+        for (AddNoteToReviewDto noteRequest : notes) {
+            NoteEntity note = noteService.findOrCreateNoteEntity(noteRequest.categoryId(), noteRequest.noteName(), userId);
+            review.addNote(note, noteRequest.score());
+        }
+
         reviewRepository.save(review);
     }
 

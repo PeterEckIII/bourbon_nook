@@ -1,5 +1,6 @@
 package com.bourbon_nook.reviews_api.controllers;
 
+import com.bourbon_nook.reviews_api.dtos.AddNoteToReviewDto;
 import com.bourbon_nook.reviews_api.dtos.ReviewDto;
 import com.bourbon_nook.reviews_api.mappers.ReviewMapper;
 import com.bourbon_nook.reviews_api.models.requests.AddNoteToReviewRequest;
@@ -99,13 +100,28 @@ public class ReviewController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/{reviewId}/notes")
+    @PostMapping("/{reviewId}/note")
     public ResponseEntity<Void> addNoteToReview(@PathVariable String reviewId,
                                                 @Valid @RequestBody AddNoteToReviewRequest request,
                                                 Authentication authentication
     ) {
         String userId = authentication.getName();
         reviewService.addNoteToReview(reviewId, request.getCategoryId(), request.getName(), request.getScore(), userId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/{reviewId}/notes")
+    public ResponseEntity<Void> addNotesToReview(@PathVariable String reviewId,
+                                                 @Valid @RequestBody List<AddNoteToReviewRequest> requests,
+                                                 Authentication authentication
+    ) {
+        String userId = authentication.getName();
+        List<AddNoteToReviewDto> notes = requests.stream()
+                .map(request -> new AddNoteToReviewDto(request.getCategoryId(), request.getName(), request.getScore()))
+                .toList();
+        reviewService.addNotesToReview(reviewId, notes, userId);
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

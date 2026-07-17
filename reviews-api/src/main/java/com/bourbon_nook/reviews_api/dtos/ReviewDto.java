@@ -1,9 +1,7 @@
 package com.bourbon_nook.reviews_api.dtos;
 
-import com.bourbon_nook.reviews_api.entities.ReviewNoteEntity;
-
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 public record ReviewDto (
         String id,
@@ -19,5 +17,5 @@ public record ReviewDto (
         String thoughts,
         Integer valueScore,
         Integer overallRating,
-        Set<ReviewNoteEntity> reviewNotes
+        List<ReviewNoteDto> reviewNotes
 ) {}

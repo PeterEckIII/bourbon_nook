@@ -1,5 +1,6 @@
 package com.bourbon_nook.reviews_api.services;
 
+import com.bourbon_nook.reviews_api.dtos.AddNoteToReviewDto;
 import com.bourbon_nook.reviews_api.dtos.ReviewDto;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public interface ReviewService {
                          Integer score,
                          String userId
     );
+    void addNotesToReview(String reviewId, List<AddNoteToReviewDto> notes, String userId);
     void removeNoteFromReview(String reviewId, String noteId, String userId);
     boolean deleteReview(String userId, String id);
 }
