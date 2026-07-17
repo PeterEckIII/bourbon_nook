@@ -1,8 +1,11 @@
 package com.bourbon_nook.reviews_api.mappers;
 
 import com.bourbon_nook.reviews_api.dtos.ReviewDto;
+import com.bourbon_nook.reviews_api.dtos.ReviewNoteDto;
 import com.bourbon_nook.reviews_api.entities.ReviewEntity;
+import com.bourbon_nook.reviews_api.entities.ReviewNoteEntity;
 import com.bourbon_nook.reviews_api.models.requests.CreateReviewRequest;
+import com.bourbon_nook.reviews_api.models.responses.ReviewNoteResponseModel;
 import com.bourbon_nook.reviews_api.models.responses.ReviewResponseModel;
 import org.springframework.stereotype.Component;
 
@@ -47,7 +50,17 @@ public class ReviewMapper {
                 reviewEntity.getThoughts(),
                 reviewEntity.getValueScore(),
                 reviewEntity.getOverallRating(),
-                reviewEntity.getReviewNotes()
+                reviewEntity.getReviewNotes().stream().map(this::toReviewNoteDto).toList()
+        );
+    }
+
+    private ReviewNoteDto toReviewNoteDto(ReviewNoteEntity reviewNoteEntity) {
+        return new ReviewNoteDto(
+                reviewNoteEntity.getNote().getId(),
+                reviewNoteEntity.getNote().getName(),
+                reviewNoteEntity.getNote().getCategory().getId(),
+                reviewNoteEntity.getNote().getCategory().getName(),
+                reviewNoteEntity.getScore()
         );
     }
 
@@ -87,9 +100,21 @@ public class ReviewMapper {
         model.setThoughts(dto.thoughts());
         model.setValueScore(dto.valueScore());
         model.setOverallRating(dto.overallRating());
-        model.setReviewNotes(dto.reviewNotes());
+        model.setReviewNotes(dto.reviewNotes() == null
+                ? null
+                : dto.reviewNotes().stream().map(this::toReviewNoteResponseModel).toList());
 
         return model;
 
+    }
+
+    private ReviewNoteResponseModel toReviewNoteResponseModel(ReviewNoteDto reviewNoteDto) {
+        ReviewNoteResponseModel model = new ReviewNoteResponseModel();
+        model.setNoteId(reviewNoteDto.noteId());
+        model.setNoteName(reviewNoteDto.noteName());
+        model.setCategoryId(reviewNoteDto.categoryId());
+        model.setCategoryName(reviewNoteDto.categoryName());
+        model.setScore(reviewNoteDto.score());
+        return model;
     }
 }

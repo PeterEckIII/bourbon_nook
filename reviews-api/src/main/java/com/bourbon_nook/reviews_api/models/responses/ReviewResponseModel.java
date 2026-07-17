@@ -1,9 +1,7 @@
 package com.bourbon_nook.reviews_api.models.responses;
 
-import com.bourbon_nook.reviews_api.entities.ReviewNoteEntity;
-
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 public class ReviewResponseModel {
     private String id;
@@ -18,7 +16,7 @@ public class ReviewResponseModel {
     private String thoughts;
     private Integer valueScore;
     private Integer overallRating;
-    private Set<ReviewNoteEntity> reviewNotes;
+    private List<ReviewNoteResponseModel> reviewNotes;
 
     public String getId() {
         return id;
@@ -116,11 +114,11 @@ public class ReviewResponseModel {
         this.overallRating = overallRating;
     }
 
-    public Set<ReviewNoteEntity> getReviewNotes() {
+    public List<ReviewNoteResponseModel> getReviewNotes() {
         return reviewNotes;
     }
 
-    public void setReviewNotes(Set<ReviewNoteEntity> reviewNotes) {
+    public void setReviewNotes(List<ReviewNoteResponseModel> reviewNotes) {
         this.reviewNotes = reviewNotes;
     }
 }
