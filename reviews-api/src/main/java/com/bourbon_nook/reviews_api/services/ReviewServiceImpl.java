@@ -1,6 +1,5 @@
 package com.bourbon_nook.reviews_api.services;
 
-import com.bourbon_nook.reviews_api.dtos.NoteDto;
 import com.bourbon_nook.reviews_api.dtos.ReviewDto;
 import com.bourbon_nook.reviews_api.entities.NoteEntity;
 import com.bourbon_nook.reviews_api.entities.ReviewEntity;
@@ -38,7 +37,10 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDto getReviewByIdAndUserId(String userId, String id) {
-        ReviewEntity review = reviewRepository.findByIdAndUserId(id, userId);
+        ReviewEntity review = reviewRepository.findByIdAndUserId(id, userId).orElse(null);
+        if (review == null) {
+            throw new ReviewNotFoundException("Review with id: " + id + " not found");
+        }
         return reviewMapper.toDto(review);
     }
 
@@ -52,9 +54,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDto updateReview(String userId, String id, ReviewDto reviewDto) {
-        ReviewEntity existingReview = reviewRepository.findByIdAndUserId(id, userId);
+        ReviewEntity existingReview = reviewRepository.findByIdAndUserId(id, userId).orElse(null);
         if(existingReview == null) {
-            return null;
+            throw new ReviewNotFoundException("Review with id: " + id + " not found");
         }
 
         existingReview.setUserId(userId);
@@ -81,7 +83,7 @@ public class ReviewServiceImpl implements ReviewService {
                                 String userId
     ) {
         ReviewEntity review = reviewRepository
-                .findById(reviewId)
+                .findByIdAndUserId(reviewId, userId)
                 .orElseThrow(() -> new ReviewNotFoundException("Review with id: " + reviewId + " not found"));
 
         NoteEntity note = noteService.findOrCreateNoteEntity(categoryId, noteName, userId);
@@ -90,9 +92,9 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void removeNoteFromReview(String reviewId, String noteId) {
+    public void removeNoteFromReview(String reviewId, String noteId, String userId) {
         ReviewEntity review = reviewRepository
-                .findById(reviewId)
+                .findByIdAndUserId(reviewId, userId)
                 .orElseThrow(() -> new ReviewNotFoundException("Review with id: " + reviewId + " not found"));
 
         NoteEntity note = noteService.getNoteEntityById(noteId);
@@ -102,7 +104,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public boolean deleteReview(String userId, String id) {
-        ReviewEntity existingReview = reviewRepository.findByIdAndUserId(id, userId);
+        ReviewEntity existingReview = reviewRepository.findByIdAndUserId(id, userId).orElse(null);
         if(existingReview == null) return false;
         reviewRepository.delete(existingReview);
         return true;

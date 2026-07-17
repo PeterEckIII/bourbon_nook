@@ -16,6 +16,6 @@ public interface ReviewService {
                          Integer score,
                          String userId
     );
-    void removeNoteFromReview(String reviewId, String noteId);
+    void removeNoteFromReview(String reviewId, String noteId, String userId);
     boolean deleteReview(String userId, String id);
 }
