@@ -7,6 +7,7 @@ import java.util.Set;
 
 public class ReviewResponseModel {
     private String id;
+    private String bottleId;
     private String setting;
     private LocalDate reviewDate;
     private Integer restTimeMin;
@@ -25,6 +26,14 @@ public class ReviewResponseModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getBottleId() {
+        return bottleId;
+    }
+
+    public void setBottleId(String bottleId) {
+        this.bottleId = bottleId;
     }
 
     public String getSetting() {

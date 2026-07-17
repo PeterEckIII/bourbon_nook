@@ -7,6 +7,10 @@ import java.time.LocalDate;
 import java.util.Set;
 
 public class CreateReviewRequest {
+
+    @NotNull(message = "Bottle ID is required")
+    private String bottleId;
+
     @NotNull(message = "Setting is required")
     private String setting;
 
@@ -40,6 +44,10 @@ public class CreateReviewRequest {
     private Set<ReviewNoteEntity>  reviewNotes;
 
     public CreateReviewRequest() {}
+
+    public String getBottleId() { return bottleId; }
+
+    public void setBottleId(String bottleId) { this.bottleId = bottleId; }
 
     public String getSetting() {
         return setting;
