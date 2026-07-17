@@ -9,12 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReviewMapper {
 
-    public ReviewDto fromCreateRequest(CreateReviewRequest request) {
+    public ReviewDto fromCreateRequest(CreateReviewRequest request, String userId) {
         if (request == null) return null;
 
         return new ReviewDto(
                 null,
-                null,
+                request.getBottleId(),
+                userId,
                 request.getSetting(),
                 request.getReviewDate(),
                 request.getRestTimeMin(),
@@ -35,6 +36,7 @@ public class ReviewMapper {
         return new ReviewDto(
                 reviewEntity.getId(),
                 reviewEntity.getUserId(),
+                reviewEntity.getBottleId(),
                 reviewEntity.getSetting(),
                 reviewEntity.getReviewDate(),
                 reviewEntity.getRestTimeMin(),
@@ -53,6 +55,8 @@ public class ReviewMapper {
         if(reviewDto == null) return null;
 
         ReviewEntity reviewEntity = new ReviewEntity();
+        reviewEntity.setBottleId(reviewDto.bottleId());
+        reviewEntity.setUserId(reviewDto.userId());
         reviewEntity.setSetting(reviewDto.setting());
         reviewEntity.setReviewDate(reviewDto.reviewDate());
         reviewEntity.setRestTimeMin(reviewDto.restTimeMin());
@@ -73,6 +77,7 @@ public class ReviewMapper {
 
         ReviewResponseModel model = new ReviewResponseModel();
         model.setId(dto.id());
+        model.setBottleId(dto.bottleId());
         model.setNose(dto.nose());
         model.setReviewDate(dto.reviewDate());
         model.setRestTimeMin(dto.restTimeMin());
