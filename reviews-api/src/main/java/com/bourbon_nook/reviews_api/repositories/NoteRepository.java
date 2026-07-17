@@ -12,5 +12,6 @@ import java.util.Optional;
 @Repository
 public interface NoteRepository extends JpaRepository<NoteEntity, String> {
     List<NoteEntity> findByCategory(@NotNull NoteCategoryEntity category);
+    List<NoteEntity> findBySystem(boolean system);
     Optional<NoteEntity> findByCategoryAndNameAndCreatedBy(NoteCategoryEntity category, String name, String createdBy);
 }
