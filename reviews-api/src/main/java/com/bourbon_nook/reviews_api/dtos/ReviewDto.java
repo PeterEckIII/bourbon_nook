@@ -7,6 +7,7 @@ import java.util.Set;
 
 public record ReviewDto (
         String id,
+        String bottleId,
         String userId,
         String setting,
         LocalDate reviewDate,
