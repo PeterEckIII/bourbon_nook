@@ -1,7 +1,9 @@
 package com.bourbon_nook.reviews_api.controllers;
 
+import com.bourbon_nook.reviews_api.dtos.NoteCategoryWithNotesDto;
 import com.bourbon_nook.reviews_api.dtos.NoteDto;
 import com.bourbon_nook.reviews_api.mappers.NoteMapper;
+import com.bourbon_nook.reviews_api.models.responses.CategoryNoteResponseModel;
 import com.bourbon_nook.reviews_api.models.responses.NoteResponseModel;
 import com.bourbon_nook.reviews_api.services.NoteService;
 import org.springframework.core.env.Environment;
@@ -32,6 +34,33 @@ public class NoteController {
 
     @GetMapping("/status/healthcheck")
     public String healthcheck() { return "Notes: Working on port " + env.getProperty("local.server.port"); }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping
+    public ResponseEntity<List<NoteResponseModel>> allNotes() {
+        List<NoteDto> notes = noteService.getAllNotes();
+        List<NoteResponseModel> returnValue = new ArrayList<>();
+        for (NoteDto note : notes) {
+            NoteResponseModel responseModel = noteMapper.toResponseModel(note);
+            returnValue.add(responseModel);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{noteId}")
+    public ResponseEntity<NoteResponseModel> note(@PathVariable String noteId) {
+         NoteDto note = noteService.getNoteById(noteId);
+         NoteResponseModel returnValue = noteMapper.toResponseModel(note);
+         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/categories")
+    public ResponseEntity<List<CategoryNoteResponseModel>> categoriesWithSystemNotes() {
+        List<NoteCategoryWithNotesDto> categories = noteService.getCategoriesWithSystemNotes();
+        return ResponseEntity.status(HttpStatus.OK).body(categories.stream().map(noteMapper::toResponseModel).toList());
+    }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{categoryId}")
