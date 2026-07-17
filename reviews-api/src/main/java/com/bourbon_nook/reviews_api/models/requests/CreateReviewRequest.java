@@ -1,10 +1,8 @@
 package com.bourbon_nook.reviews_api.models.requests;
 
-import com.bourbon_nook.reviews_api.entities.ReviewNoteEntity;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 public class CreateReviewRequest {
 
@@ -40,8 +38,6 @@ public class CreateReviewRequest {
 
     @NotNull(message = "Overall rating is required")
     private Integer overallRating;
-
-    private Set<ReviewNoteEntity>  reviewNotes;
 
     public CreateReviewRequest() {}
 
@@ -127,13 +123,5 @@ public class CreateReviewRequest {
 
     public void setOverallRating(Integer overallRating) {
         this.overallRating = overallRating;
-    }
-
-    public Set<ReviewNoteEntity> getReviewNotes() {
-        return reviewNotes;
-    }
-
-    public void setReviewNotes(Set<ReviewNoteEntity> reviewNotes) {
-        this.reviewNotes = reviewNotes;
     }
 }

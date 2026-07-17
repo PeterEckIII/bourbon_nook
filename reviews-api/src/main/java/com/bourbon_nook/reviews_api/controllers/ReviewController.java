@@ -45,7 +45,7 @@ public class ReviewController {
         List<ReviewResponseModel> returnValue = new ArrayList<>();
 
         if(reviews == null || reviews.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(returnValue);
+            return ResponseEntity.status(HttpStatus.OK).body(returnValue);
         }
 
         for(ReviewDto review : reviews) {

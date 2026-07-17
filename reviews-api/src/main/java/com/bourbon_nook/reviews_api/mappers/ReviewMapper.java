@@ -26,7 +26,7 @@ public class ReviewMapper {
                 request.getThoughts(),
                 request.getValueScore(),
                 request.getOverallRating(),
-                request.getReviewNotes()
+                null
         );
     }
 
@@ -67,7 +67,6 @@ public class ReviewMapper {
         reviewEntity.setThoughts(reviewDto.thoughts());
         reviewEntity.setValueScore(reviewDto.valueScore());
         reviewEntity.setOverallRating(reviewDto.overallRating());
-        reviewEntity.setReviewNotes(reviewDto.reviewNotes());
 
         return reviewEntity;
     }
@@ -78,7 +77,7 @@ public class ReviewMapper {
         ReviewResponseModel model = new ReviewResponseModel();
         model.setId(dto.id());
         model.setBottleId(dto.bottleId());
-        model.setNose(dto.nose());
+        model.setSetting(dto.setting());
         model.setReviewDate(dto.reviewDate());
         model.setRestTimeMin(dto.restTimeMin());
         model.setGlassware(dto.glassware());

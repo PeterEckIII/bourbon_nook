@@ -36,7 +36,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDto getReviewByIdAndUserId(String userId, String id) {
+    public ReviewDto getReviewByIdAndUserId(String id, String userId) {
         ReviewEntity review = reviewRepository.findByIdAndUserId(id, userId).orElse(null);
         if (review == null) {
             throw new ReviewNotFoundException("Review with id: " + id + " not found");
@@ -70,8 +70,8 @@ public class ReviewServiceImpl implements ReviewService {
         existingReview.setThoughts(reviewDto.thoughts());
         existingReview.setValueScore(reviewDto.valueScore());
         existingReview.setOverallRating(reviewDto.overallRating());
-        existingReview.setReviewNotes(reviewDto.reviewNotes());
 
+        reviewRepository.save(existingReview);
         return reviewMapper.toDto(existingReview);
     }
 
