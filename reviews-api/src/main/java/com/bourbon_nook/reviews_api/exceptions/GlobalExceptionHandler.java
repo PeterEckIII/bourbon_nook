@@ -184,6 +184,24 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleUnexpectedError(Exception ex) {
+        log.error("Unhandled exception", ex);
+
+        ErrorResponse error = new ErrorResponse.Builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
+                .errorCode(ErrorCodes.INTERNAL_SERVICE_ERROR)
+                .message("An unexpected error occurred. We're working on fixing it.")
+                .developerMessage(ex.getClass().getSimpleName() + ": " + ex.getMessage())
+                .path(request.getRequestURI())
+                .traceId(getTraceId())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+
     private String getTraceId() {
         return MDC.get("traceId") != null ? MDC.get("traceId") : UUID.randomUUID().toString();
     }
