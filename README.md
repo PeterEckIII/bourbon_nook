@@ -1,71 +1,93 @@
 # Bourbon Nook
 
-### Architecture
-This app uses a microservices architecture with multiple APIs split out to handle specific concerns. A configuration server handles common configuration properties and must be running before any other part of the app is started. An API gateway exposes the individual APIs and a discovery service handles discovery, location, and access of the various services.
+## Prerequisites
+- Java 17
+- Maven
+- MySQL
+- RabbitMQ
 
-### Environment Variables
-The following environment variables are necessary to get this app running -- make sure you set these either in the IDE environment variables (for local development) or in a secrets manager (for production):
+## Architecture
+This app uses a microservices architecture, with each API split out to handle a specific concern. A configuration server manages shared configuration properties and must be running before any other part of the app starts. An API gateway exposes the individual services, and a discovery service handles their registration and lookup.
 
-##### `configuration-server`
-- `CONFIG_SERVER_USER_ADMIN`
+## Services
+| Service | Port |
+|---|---|
+| `configuration-server` | 8012 |
+| `discovery-service` | 8010 |
+| `api-gateway` | 8082 |
+| `users-api` | 8081 |
+| `bottles-api` | 8083 |
+| `reviews-api` | 8084 |
+
+## API Gateway Routing
+All external traffic goes through `api-gateway` on port 8082 -- there's no reason to hit an individual microservice directly outside of local debugging. Each service's routes are exposed under a `/<service-name>/` prefix, which the gateway strips before forwarding the request. For example, `GET http://localhost:8082/reviews-api/notes/categories` is routed to `reviews-api`'s own `GET /notes/categories` endpoint.
+
+## Startup Order
+Start the app in this order -- several services depend on ones earlier in the list being available:
+1. RabbitMQ
+2. `configuration-server`
+3. `discovery-service`
+4. The remaining microservices (`users-api`, `bottles-api`, `reviews-api`, etc.) -- any order among themselves
+5. `api-gateway`
+
+## Environment Variables
+The following environment variables are required to run this app. Set them in your IDE's run configuration for local development, or in a secrets manager for production:
+
+### `configuration-server`
+- `CONFIG_SERVER_USERNAME_ADMIN`
 - `CONFIG_SERVER_PASSWORD_ADMIN`
 - `CONFIG_SERVER_USERNAME_CLIENT`
 - `CONFIG_SERVER_PASSWORD_CLIENT`
-- `GIT_REPO` -- the remote git repo that shared configuration properties are kept
-- `GIT_TOKEN` -- in lieu of passwords, GitHub requires tokens
-- `GIT_USERNAME` -- the owner username of the git repo
+- `GIT_REPO` -- the remote git repo where shared configuration properties are kept
+- `GIT_TOKEN` -- GitHub requires a token in place of a password for authentication
+- `GIT_USERNAME` -- the username of the git repo's owner
 - `RABBIT_MQ_USERNAME`
 - `RABBIT_MQ_PASSWORD`
 
-##### `api-gateway`
-- `CONFIG_SERVER_USER_ADMIN`
-- `CONFIG_SERVER_PASSWORD_ADMIN`
+### `api-gateway`
 - `RABBIT_MQ_USERNAME`
 - `RABBIT_MQ_PASSWORD`
 
-##### Microservices (`user-api`, `bottles-api`, etc.)
-- `CONFIG_SERVER_USER_ADMIN`
-- `CONFIG_SERVER_PASSWORD_ADMIN`
+### Microservices (`users-api`, `bottles-api`, etc.)
+- `CONFIG_SERVER_USERNAME`
+- `CONFIG_SERVER_PASSWORD`
 - `RABBIT_MQ_USERNAME`
 - `RABBIT_MQ_PASSWORD`
 - `MYSQL_DATABASE_NAME`
 - `MYSQL_USERNAME`
 - `MYSQL_PASSWORD`
 
-
-### RabbitMQ
-BourbonNook relies on RabbitMQ as a message broker. A private configuration repository is used to handle sensitive information like usernames and passwords for services, JWT token secrets, and other configuration properties. To get RabbitMQ running locally run the following from a terminal
+## RabbitMQ
+BourbonNook relies on RabbitMQ as a message broker. A private configuration repository holds sensitive information such as service usernames and passwords, JWT token secrets, and other configuration properties. To run RabbitMQ locally, run the following from a terminal:
+```bash
+rabbitmq-server
 ```
-  rabbitmq-server
-```
 
-### Logging
-BourbonNook relies on `logstash`, `elasticsearch`, and `kibana` to handle aggregate logging. In order to get started with these services, run the following in the provided order
+## Logging
+BourbonNook relies on `logstash`, `elasticsearch`, and `kibana` for aggregate logging. Start these services in the following order:
 
-##### Start ElasticSearch
-```
-  cd elasticsearch-<version>
-
-  bin/elasticsearch
+### Start ElasticSearch
+```bash
+cd elasticsearch-<version>
+bin/elasticsearch
 ```
 Connect to ElasticSearch at http://localhost:9200
 
-##### Start Logstash
-```
-  cd logstash-<version>
-  bin/logstash -f logstash.conf
-```
-
-##### Start Kibana
-```
-  cd kibana-<version>
-  bin/kibana
+### Start Logstash
+```bash
+cd logstash-<version>
+bin/logstash -f logstash.conf
 ```
 
-##### Visit Kibana Dashboard
-Visit http://localhost:5601/app/home#/ in a web browser and provide the credentials to login. These credentials were created when you first initialized ElasticSearch and should've been saved. The default user is `elastic` and the password can be re-generated if necessary with
+### Start Kibana
+```bash
+cd kibana-<version>
+bin/kibana
 ```
-  cd elasticsearch-<version>
 
-  bin/elasticsearch-reset-password
+### Visit Kibana Dashboard
+Visit http://localhost:5601/app/home#/ in a web browser and log in with the credentials generated when you first initialized ElasticSearch (make sure you saved them). The default username is `elastic`; if needed, the password can be regenerated with:
+```bash
+cd elasticsearch-<version>
+bin/elasticsearch-reset-password
 ```
