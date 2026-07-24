@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -26,6 +28,25 @@ public class UserEntity implements Serializable {
 
     @Column(nullable = false)
     private String encryptedPassword;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<RoleEntity> roles = new HashSet<>();
+
+    public boolean isAdmin() {
+        boolean result = false;
+        for(RoleEntity role : this.getRoles()) {
+            if(role.getName().equals("ADMIN")) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
 
     public long getId() {
         return id;
@@ -66,4 +87,8 @@ public class UserEntity implements Serializable {
     public void setEncryptedPassword(String encryptedPassword) {
         this.encryptedPassword = encryptedPassword;
     }
+
+    public Set<RoleEntity> getRoles() { return roles; }
+
+    public void setRoles(Set<RoleEntity> roles) { this.roles = roles; }
 }
