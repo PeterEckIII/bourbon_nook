@@ -8,7 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -17,39 +18,37 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurity {
 
     private final Environment environment;
-    private final JwtUtil jwtUtil;
 
-    public WebSecurity(Environment environment, JwtUtil jwtUtil) {
+    public WebSecurity(Environment environment) {
         this.environment = environment;
-        this.jwtUtil = jwtUtil;
     }
 
     @Bean
-    protected SecurityFilterChain configure(HttpSecurity http, UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) throws Exception {
+    public AuthenticationManager authenticationManager(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userService);
+        provider.setPasswordEncoder(bCryptPasswordEncoder);
+        return new ProviderManager(provider);
+    }
 
-        // Configure AuthenticationManagerBuilder
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
-        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+    @Bean
+    protected SecurityFilterChain configure(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
 
-        // Create AuthenticationFilter
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManager, userService, jwtUtil);
-        authenticationFilter.setFilterProcessesUrl(environment.getProperty("login.url.path"));
-
-        http.csrf(AbstractHttpConfigurer::disable);
+        http.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringRequestMatchers("/auth/login", "/auth/register"));
         http.authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/login", "/auth/register").permitAll()
                 .requestMatchers("/users/**").access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
                         .requestMatchers(HttpMethod.GET, "/actuator/health").access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
                 .requestMatchers(HttpMethod.GET, "/actuator/circuitbreakerevents").access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/error").permitAll())
-                .addFilter(authenticationFilter)
                 .authenticationManager(authenticationManager)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
