@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,22 @@ public class GlobalExceptionHandler {
         this.request = request;
     }
 
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorResponse> handleBadCredentialsException(BadCredentialsException ex) {
+        ErrorResponse error = new ErrorResponse.Builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .error(HttpStatus.UNAUTHORIZED.getReasonPhrase())
+                .errorCode(ErrorCodes.UNAUTHORIZED)
+                .message(ex.getMessage())
+                .developerMessage("Invalid email or password")
+                .path(request.getRequestURI())
+                .traceId(getTraceId())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
+
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException ex) {
         log.warn("User not found: {}", ex.getMessage());
@@ -27,7 +44,7 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse.Builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.NOT_FOUND.value())
-                .error(HttpStatus.NOT_ACCEPTABLE.getReasonPhrase())
+                .error(HttpStatus.NOT_FOUND.getReasonPhrase())
                 .errorCode(ErrorCodes.USER_NOT_FOUND)
                 .message(ex.getMessage())
                 .developerMessage("User ID does not exist in the system.")
