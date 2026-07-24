@@ -4,7 +4,6 @@ import com.bourbon_nook.users_api.dtos.UserDto;
 import com.bourbon_nook.users_api.entities.UserEntity;
 import com.bourbon_nook.users_api.models.responses.BottleResponseModel;
 import com.bourbon_nook.users_api.repositories.UserRepository;
-import feign.FeignException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.slf4j.Logger;
@@ -50,19 +49,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserDetailsByEmail(String email) {
-        UserEntity user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new UsernameNotFoundException(email);
-        }
+        UserEntity user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email));
         return new ModelMapper().map(user, UserDto.class);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByEmail(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(username);
-        }
+        UserEntity user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username));
         // Third argument can be set to false if you want to have the user verify their email address
         return new User(
                 user.getEmail(),
