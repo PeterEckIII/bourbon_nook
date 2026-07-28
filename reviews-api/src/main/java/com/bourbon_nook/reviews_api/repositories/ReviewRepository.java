@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface ReviewRepository extends JpaRepository<ReviewEntity, String> {
     List<ReviewEntity> findAllByUserId(String userId);
     Optional<ReviewEntity> findByIdAndUserId(String reviewId, String userId);
+    void deleteAllByUserId(String userId);
 }

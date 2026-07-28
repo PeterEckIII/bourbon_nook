@@ -30,4 +30,5 @@ public interface BottleRepository extends JpaRepository<BottleEntity, String> {
             @Param("minPrice") BigDecimal minPrice,
             @Param("maxPrice") BigDecimal maxPrice
     );
+    void deleteAllByUserId(String userId);
 }

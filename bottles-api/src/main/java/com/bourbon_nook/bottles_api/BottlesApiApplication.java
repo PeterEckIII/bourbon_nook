@@ -1,5 +1,6 @@
 package com.bourbon_nook.bottles_api;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.web.exchanges.HttpExchangeRepository;
 import org.springframework.boot.actuate.web.exchanges.InMemoryHttpExchangeRepository;
@@ -18,6 +19,11 @@ public class BottlesApiApplication {
 	@Bean
 	public HttpExchangeRepository httpExchangeRepository() {
 		return new InMemoryHttpExchangeRepository();
+	}
+
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
 	}
 
 }
