@@ -1,13 +1,16 @@
 package com.bourbon_nook.users_api.services;
 
+import com.bourbon_nook.users_api.config.RabbitConfig;
 import com.bourbon_nook.users_api.dtos.UserDto;
 import com.bourbon_nook.users_api.entities.RoleEntity;
 import com.bourbon_nook.users_api.entities.UserEntity;
 import com.bourbon_nook.users_api.enums.RoleType;
+import com.bourbon_nook.users_api.models.events.UserDeletedEvent;
 import com.bourbon_nook.users_api.models.requests.UpdateUserRequest;
 import com.bourbon_nook.users_api.repositories.RoleRepository;
 import com.bourbon_nook.users_api.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -29,16 +32,19 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ModelMapper modelMapper;
+    private final RabbitTemplate rabbitTemplate;
 
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
                            BCryptPasswordEncoder bCryptPasswordEncoder,
-                           ModelMapper modelMapper
+                           ModelMapper modelMapper,
+                           RabbitTemplate rabbitTemplate
     ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.modelMapper = modelMapper;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     @Override
@@ -92,6 +98,7 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userRepository.findByUserId(userId);
         if (user == null) throw new UsernameNotFoundException("User not found");
         userRepository.delete(user);
+        rabbitTemplate.convertAndSend(RabbitConfig.USER_DELETE_EXCHANGE, "", new UserDeletedEvent(userId));
     }
 
     private RoleEntity getOrCreateRole(RoleType roleType) {
