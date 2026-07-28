@@ -1,17 +1,8 @@
-package com.bourbon_nook.users_api.models.responses;
+package com.bourbon_nook.users_api.models.requests;
 
-public class UserResponseModel {
-    private String userId;
+public class UpdateUserRequest {
     private String email;
     private String username;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public String getEmail() {
         return email;

@@ -1,24 +1,24 @@
 package com.bourbon_nook.users_api.security;
 
-import com.bourbon_nook.users_api.services.UserService;
-import com.bourbon_nook.users_api.utils.JwtUtil;
 import com.bourbon_nook.users_api.utils.RestAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -31,26 +31,34 @@ public class WebSecurity {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userService);
-        provider.setPasswordEncoder(bCryptPasswordEncoder);
-        return new ProviderManager(provider);
+    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(userDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder);
+        return daoAuthenticationProvider;
     }
 
     @Bean
-    protected SecurityFilterChain configure(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
+    }
 
-        http.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringRequestMatchers("/auth/login", "/auth/register"));
-        http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login", "/auth/register").permitAll()
-                .requestMatchers("/users/**").access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
-                        .requestMatchers(HttpMethod.GET, "/actuator/health").access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
-                .requestMatchers(HttpMethod.GET, "/actuator/circuitbreakerevents").access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
-                .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers("/error").permitAll())
+    @Bean
+    protected SecurityFilterChain configure(HttpSecurity http, AuthenticationManager authenticationManager, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+        String gatewayIpExpression = "hasIpAddress('" + environment.getProperty("gateway.ip") + "')";
+
+        http.csrf(AbstractHttpConfigurer::disable);
+        http.authorizeHttpRequests(auth ->
+                        auth
+                                .requestMatchers("/auth/login", "/auth/register", "/auth/refresh").permitAll()
+                                .requestMatchers("/auth/me", "/auth/change-password").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and isAuthenticated()"))
+                                .requestMatchers("/users/**").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and hasRole('ADMIN')"))
+                                .requestMatchers(HttpMethod.GET, "/actuator/**").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and hasRole('ADMIN')"))
+                                .requestMatchers("/h2-console/**").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and hasRole('ADMIN')"))
+                                .requestMatchers("/error").permitAll())
                 .authenticationManager(authenticationManager)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.exceptionHandling(ex -> ex.authenticationEntryPoint(new RestAuthenticationEntryPoint()));
 
