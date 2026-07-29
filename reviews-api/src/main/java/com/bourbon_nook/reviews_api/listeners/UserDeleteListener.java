@@ -6,6 +6,7 @@ import com.bourbon_nook.reviews_api.repositories.NoteRepository;
 import com.bourbon_nook.reviews_api.repositories.ReviewRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class UserDeleteListener {
@@ -17,6 +18,7 @@ public class UserDeleteListener {
         this.noteRepository = noteRepository;
     }
 
+    @Transactional
     @RabbitListener(queues = RabbitConfig.QUEUE)
     public void onUserDeleted(UserDeletedEvent event) {
         reviewRepository.deleteAllByUserId(event.getUserId());

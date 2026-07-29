@@ -5,6 +5,7 @@ import com.bourbon_nook.bottles_api.models.events.UserDeletedEvent;
 import com.bourbon_nook.bottles_api.repositories.BottleRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class UserDeleteListener {
@@ -14,6 +15,7 @@ public class UserDeleteListener {
         this.bottleRepository = bottleRepository;
     }
 
+    @Transactional
     @RabbitListener(queues = RabbitConfig.QUEUE)
     public void onUserDeleted(UserDeletedEvent event) {
         bottleRepository.deleteAllByUserId(event.getUserId());
