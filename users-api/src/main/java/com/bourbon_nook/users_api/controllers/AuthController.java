@@ -215,7 +215,10 @@ public class AuthController {
                 .httpOnly(true)
                 .secure(true)
                 .sameSite("Strict")
-                .path("/auth/refresh")
+                // Must match the path the browser actually requests through the gateway
+                // (api-gateway rewrites /users-api/auth/refresh -> /auth/refresh internally,
+                // but cookie Path-matching happens client-side against the pre-rewrite URL).
+                .path("/users-api/auth/refresh")
                 .maxAge(REFRESH_TOKEN_VALIDITY)
                 .build();
     }
@@ -225,7 +228,7 @@ public class AuthController {
                 .httpOnly(true)
                 .secure(true)
                 .sameSite("Strict")
-                .path("/auth/refresh")
+                .path("/users-api/auth/refresh")
                 .maxAge(0)
                 .build();
     }
