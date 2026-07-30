@@ -54,7 +54,9 @@ public class WebSecurity {
                                 .requestMatchers("/users/**").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and hasRole('ADMIN')"))
                                 .requestMatchers(HttpMethod.GET, "/actuator/**").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and hasRole('ADMIN')"))
                                 .requestMatchers("/h2-console/**").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and hasRole('ADMIN')"))
-                                .requestMatchers("/error").permitAll())
+                                .requestMatchers("/error").permitAll()
+                                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                )
                 .authenticationManager(authenticationManager)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
