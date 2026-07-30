@@ -8,7 +8,10 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate:bottles-api": "orval --config orval.config.ts"
+    "generate:api": "orval --config orval.config.ts",
+    "generate:bottles-api": "orval --config orval.config.ts --project bottlesApi",
+    "generate:users-api": "orval --config orval.config.ts --project usersApi",
+    "generate:reviews-api": "orval --config orval.config.ts --project reviewsApi"
   },
   "dependencies": {
     "axios": "^1.19.0",
