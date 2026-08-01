@@ -9,7 +9,7 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
 import { QueryClient } from '@tanstack/react-query';
 import Navbar from '../components/Navbar';
-import type { AuthState } from '../auth/auth';
+import type { AuthState } from '../auth/types';
 
 export interface MyRouterContext {
   queryClient: QueryClient;

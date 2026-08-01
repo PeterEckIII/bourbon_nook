@@ -2,26 +2,13 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { router } from '../main';
 import { customUsersInstance } from '../api/axios-instance';
 import type { UserResponseModel } from '../api/generated/users-api';
-
-interface User {
-  id: string;
-  username: string;
-  email: string;
-  roles: string[];
-}
-
-export interface AuthState {
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  user: User | null;
-  login: (email: string, password: string) => Promise<void>;
-  register: (
-    email: string,
-    username: string,
-    password: string,
-  ) => Promise<void>;
-  logout: () => void;
-}
+import type {
+  AuthState,
+  ChangePasswordCredentials,
+  LoginCredentials,
+  RegisterCredentials,
+  User,
+} from './types';
 
 const AuthContext = createContext<AuthState | undefined>(undefined);
 
@@ -29,6 +16,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const hasRole = (role: string) => user?.roles.includes(role) ?? false;
+  const hasAnyRole = (roles: string[]) =>
+    roles.some((role) => user?.roles.includes(role)) ?? false;
 
   useEffect(() => {
     let ignore = false;
@@ -62,13 +53,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = async (credentials: LoginCredentials) => {
     try {
       const userData = await customUsersInstance<UserResponseModel>({
         url: '/auth/login',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        data: { email, password },
+        data: {
+          email: credentials.email,
+          password: credentials.password,
+        },
       });
 
       setUser({
@@ -84,17 +78,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const register = async (
-    email: string,
-    username: string,
-    password: string,
-  ) => {
+  const register = async (credentials: RegisterCredentials) => {
     try {
       const userData = await customUsersInstance<UserResponseModel>({
         url: '/auth/register',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        data: { email, username, password },
+        data: {
+          email: credentials.email,
+          username: credentials.username,
+          password: credentials.password,
+        },
       });
 
       setUser({
@@ -119,9 +113,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     router.navigate({ to: '/login', search: { redirect: '/' } });
   };
 
+  const changePassword = async (credentials: ChangePasswordCredentials) => {
+    try {
+      await customUsersInstance<void>({
+        url: '/change-password',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          oldPassword: credentials.oldPassword,
+          newPassword: credentials.newPassword,
+          confirmPassword: credentials.confirmPassword,
+        },
+      });
+    } catch (error) {
+      throw new Error(`Error changing your password: ${error}`);
+    }
+  };
+
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, isLoading, user, login, register, logout }}
+      value={{
+        isAuthenticated,
+        isLoading,
+        user,
+        hasRole,
+        hasAnyRole,
+        login,
+        register,
+        logout,
+        changePassword,
+      }}
     >
       {children}
     </AuthContext.Provider>
