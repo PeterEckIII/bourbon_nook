@@ -1,4 +1,8 @@
-import axios, { type AxiosRequestConfig } from 'axios';
+import axios, {
+  AxiosError,
+  type AxiosRequestConfig,
+  type InternalAxiosRequestConfig,
+} from 'axios';
 
 const GATEWAY_URL = 'http://localhost:8082';
 
@@ -21,8 +25,10 @@ function createServiceInstance(service: string) {
 
   instance.interceptors.response.use(
     (response) => response,
-    async (error) => {
-      const originalRequest = error.config;
+    async (error: AxiosError) => {
+      const originalRequest = error.config as InternalAxiosRequestConfig & {
+        _retry?: boolean;
+      };
       if (error.response?.status !== 401 || originalRequest._retry) {
         return Promise.reject(error);
       }
