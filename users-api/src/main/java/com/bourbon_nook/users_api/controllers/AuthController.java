@@ -6,6 +6,7 @@ import com.bourbon_nook.users_api.models.requests.CreateUserRequest;
 import com.bourbon_nook.users_api.models.requests.DeleteAccountRequest;
 import com.bourbon_nook.users_api.models.requests.LoginRequest;
 import com.bourbon_nook.users_api.models.responses.CreateUserResponse;
+import com.bourbon_nook.users_api.models.responses.UserResponseModel;
 import com.bourbon_nook.users_api.services.AuthService;
 import com.bourbon_nook.users_api.services.RefreshTokenService;
 import com.bourbon_nook.users_api.services.UserService;
@@ -19,6 +20,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,12 +49,19 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<CreateUserResponse> me() {
+    public ResponseEntity<UserResponseModel> me(Authentication auth) {
         UserDto currentUser = authService.getCurrentUser();
         if(currentUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        return ResponseEntity.ok(modelMapper.map(currentUser, CreateUserResponse.class));
+        UserResponseModel userResponseModel = new UserResponseModel();
+        userResponseModel.setEmail(currentUser.getEmail());
+        userResponseModel.setUsername(currentUser.getUsername());
+        userResponseModel.setUserId(currentUser.getUserId());
+        userResponseModel.setRoles(auth.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList());
+        return ResponseEntity.ok(userResponseModel);
     }
 
     @DeleteMapping("/me")
@@ -80,7 +89,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<UserResponseModel> login(@RequestBody LoginRequest loginRequest) {
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
         );
@@ -90,11 +99,19 @@ public class AuthController {
 
         ResponseCookie refreshTokenCookie = issueRefreshTokenCookie(userDto.getUserId());
 
+        UserResponseModel userResponseModel = new UserResponseModel();
+        userResponseModel.setEmail(userDto.getEmail());
+        userResponseModel.setUsername(userDto.getUsername());
+        userResponseModel.setUserId(userDto.getUserId());
+        userResponseModel.setRoles(principal.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList());
+
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
                 .header("userId", userDto.getUserId())
-                .build();
+                .body(userResponseModel);
     }
 
     @PostMapping("/register")

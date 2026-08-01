@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsUtils;
 
 @Configuration
 @EnableWebSecurity
@@ -49,6 +50,7 @@ public class WebSecurity {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(auth ->
                         auth
+                                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                                 .requestMatchers("/auth/login", "/auth/register", "/auth/refresh").permitAll()
                                 .requestMatchers("/auth/me", "/auth/change-password").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and isAuthenticated()"))
                                 .requestMatchers("/users/**").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and hasRole('ADMIN')"))
