@@ -6,6 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 BourbonNook is a whiskey-collection/review app built as a Spring Cloud microservices backend with a React/TypeScript frontend. Each backend concern is split into its own Spring Boot service; a config server and discovery service coordinate them; an API gateway is the single entry point for all client traffic.
 
+## Project-wide rules
+- **Think before coding** -- state your assumptions out loud. If the request is ambiguous, ask. If a simpler approach exists, push back. Stop when you are confused, name what is unclear, do not just pick one interpretation and run,.
+- **Simplicity first** -- write the minimum code that solves the problem. No speculative abstractions. No flexibility that wasn't explicitly asked for. The test: would a senior engineer call this "overcomplicated"
+- **Surgical changes** -- touch only what the task requires. Do not improve neighboring code. Do not refactor what is not broken. Every changed line should trace back to the request.
+- **Goal-driven execution** -- turn vague instructions into verifiable targets before writing a line. "Add validation" should become "write tests for invalid inputs, then make them pass"
+
 ## Services
 
 | Service | Port | Purpose |
