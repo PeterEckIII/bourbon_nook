@@ -1,6 +1,10 @@
 package com.bourbon_nook.users_api.utils;
 
+import com.bourbon_nook.users_api.exceptions.ErrorCodes;
+import com.bourbon_nook.users_api.models.responses.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
@@ -8,29 +12,29 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.time.Instant;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.time.LocalDateTime;
 
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+    private static final ObjectMapper objectMapper = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws java.io.IOException {
-        response.setStatus(HttpStatus.FORBIDDEN.value());
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-        StringWriter stackTrace = new StringWriter();
-        authException.printStackTrace(new PrintWriter(stackTrace));
+        ErrorResponse error = new ErrorResponse.Builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .error(HttpStatus.UNAUTHORIZED.getReasonPhrase())
+                .errorCode(ErrorCodes.UNAUTHORIZED)
+                .message("Authentication is required to access this resource")
+                .developerMessage(authException.getMessage())
+                .path(request.getRequestURI())
+                .build();
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", Instant.now().toString());
-        body.put("status", HttpStatus.FORBIDDEN.value());
-        body.put("message", authException.getMessage());
-        body.put("error", HttpStatus.FORBIDDEN.getReasonPhrase());
-        body.put("trace", stackTrace.toString());
-
-        new ObjectMapper().writeValue(response.getWriter(), body);
+        objectMapper.writeValue(response.getWriter(), error);
     }
 }
