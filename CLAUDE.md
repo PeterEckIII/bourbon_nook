@@ -92,6 +92,40 @@ TanStack Router (file-based routes in `src/routes/`) + TanStack Query + Axios, s
 - `src/api/axios-instance.ts` defines the shared Axios instance orval's mutator uses: base URL is the gateway, `withCredentials: true`, and a response interceptor that on a 401 transparently calls `/users-api/auth/refresh` (coalescing concurrent 401s behind one refresh call) and retries the original request once.
 - Route loaders use `context.queryClient.ensureQueryData(...QueryOptions())` + a `Suspense`-flavored hook (`useXSuspense`) — orval is configured with `useSuspenseQuery: true`, so new data-fetching routes should follow that same loader + suspense-hook pairing rather than fetching in `useEffect`.
 
+#### Implementation rules
+
+- Use TypeScript for all new files.
+- Prefer existing components over creating new ones.
+- Keep business logic outside presentational components.
+- Do not add dependencies without explaining why.
+- Do not modify generated files.
+- Use semantic HTML and accessible labels.
+
+#### Workflow for introducing changes in code
+
+1. Inspect the relevant existing files before editing.
+2. Reuse established patterns from the codebase.
+3. Make the smallest change that solves the task.
+4. Run type checking and relevant tests.
+5. Summarize what changed and mention unresolved issues.
+
+#### UI and design work
+
+- Read `DESIGN.md` before making any user-interface changes.
+- Treat `DESIGN.md` as the source of truth for visual decisions.
+- Use existing design tokens and components.
+- Do not invent new colors, type styles or spacing values.
+- Update `DESIGN.md` when introducing an approved reusable pattern.
+
+#### Design system
+
+For any task that changes UI, styling, interaction, accessibility
+or responsive behavior:
+
+1. Read `frontend/DESIGN.md` before implementation.
+2. Treat it as the source of truth.
+3. Check existing components before creating new ones.
+
 ## Logging
 
 Structured logging with `traceId`/`spanId` (Micrometer tracing) is configured per-service via `logging.pattern.level` in each `application.properties`; log files are written to `<service>.log` in that service's directory (gitignored). Optional ELK stack (`logstash`/`elasticsearch`/`kibana`) can aggregate these — see root `README.md` for the manual startup steps if needed.
