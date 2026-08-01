@@ -26,16 +26,17 @@ import type {
   UseSuspenseQueryResult
 } from '@tanstack/react-query';
 
-import { customInstance } from '../axios-instance';
+import { customUsersInstance } from '../axios-instance';
 export interface UpdateUserRequest {
   email?: string;
   username?: string;
 }
 
 export interface UserResponseModel {
-  userId?: string;
-  email?: string;
-  username?: string;
+  email: string;
+  username: string;
+  userId: string;
+  roles: string[];
 }
 
 export interface CreateUserRequest {
@@ -50,12 +51,6 @@ export interface CreateUserRequest {
      * @maxLength 20
      */
   password: string;
-}
-
-export interface CreateUserResponse {
-  email?: string;
-  username?: string;
-  userId?: string;
 }
 
 export interface LoginRequest {
@@ -102,7 +97,7 @@ export const getUser = (
 ) => {
 
 
-      return customInstance<UserResponseModel>(
+      return customUsersInstance<UserResponseModel>(
       {url: `/users/${id}`, method: 'GET', signal
     },
       );
@@ -242,7 +237,7 @@ export const updateUser = (
 ) => {
 
 
-      return customInstance<UserResponseModel>(
+      return customUsersInstance<UserResponseModel>(
       {url: `/users/${id}`, method: 'PUT',
       headers: {'Content-Type': 'application/json', },
       data: updateUserRequest, signal
@@ -301,7 +296,7 @@ export const deleteUser = (
 ) => {
 
 
-      return customInstance<UserResponseModel>(
+      return customUsersInstance<UserResponseModel>(
       {url: `/users/${id}`, method: 'DELETE', signal
     },
       );
@@ -358,7 +353,7 @@ export const register = (
 ) => {
 
 
-      return customInstance<CreateUserResponse>(
+      return customUsersInstance<UserResponseModel>(
       {url: `/auth/register`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createUserRequest, signal
@@ -417,7 +412,7 @@ export const refreshToken = (
 ) => {
 
 
-      return customInstance<void>(
+      return customUsersInstance<void>(
       {url: `/auth/refresh`, method: 'POST', signal
     },
       );
@@ -474,7 +469,7 @@ export const logout = (
 ) => {
 
 
-      return customInstance<void>(
+      return customUsersInstance<void>(
       {url: `/auth/logout`, method: 'POST', signal
     },
       );
@@ -531,7 +526,7 @@ export const login = (
 ) => {
 
 
-      return customInstance<void>(
+      return customUsersInstance<UserResponseModel>(
       {url: `/auth/login`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: loginRequest, signal
@@ -590,7 +585,7 @@ export const changePassword = (
 ) => {
 
 
-      return customInstance<void>(
+      return customUsersInstance<void>(
       {url: `/auth/change-password`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: changePasswordRequest, signal
@@ -649,7 +644,7 @@ export const healthcheck = (
 ) => {
 
 
-      return customInstance<string>(
+      return customUsersInstance<string>(
       {url: `/users/status/healthcheck`, method: 'GET', signal
     },
       );
@@ -788,7 +783,7 @@ export const getUsers = (
 ) => {
 
 
-      return customInstance<UserResponseModel[]>(
+      return customUsersInstance<UserResponseModel[]>(
       {url: `/users/all`, method: 'GET', signal
     },
       );
@@ -927,7 +922,7 @@ export const me = (
 ) => {
 
 
-      return customInstance<CreateUserResponse>(
+      return customUsersInstance<UserResponseModel>(
       {url: `/auth/me`, method: 'GET', signal
     },
       );
@@ -1066,7 +1061,7 @@ export const deleteAccount = (
 ) => {
 
 
-      return customInstance<void>(
+      return customUsersInstance<void>(
       {url: `/auth/me`, method: 'DELETE',
       headers: {'Content-Type': 'application/json', },
       data: deleteAccountRequest, signal

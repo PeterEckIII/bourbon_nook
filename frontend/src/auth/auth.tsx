@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { router } from '../main';
+import { customUsersInstance } from '../api/axios-instance';
+import type { UserResponseModel } from '../api/generated/users-api';
 
 interface User {
   id: string;
@@ -34,25 +36,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     (async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(
-          'http://localhost:8082/users-api/auth/me',
-          {
-            method: 'GET',
-            credentials: 'include',
-          },
-        );
+        const userData = await customUsersInstance<UserResponseModel>({
+          url: '/auth/me',
+          method: 'GET',
+        });
 
-        if (response.ok) {
-          const userData = await response.json();
-          if (!ignore) {
-            setUser({
-              id: userData.userId,
-              email: userData.email,
-              username: userData.username,
-              roles: userData.roles,
-            });
-            setIsAuthenticated(true);
-          }
+        if (!ignore) {
+          setUser({
+            id: userData.userId,
+            email: userData.email,
+            username: userData.username,
+            roles: userData.roles,
+          });
+          setIsAuthenticated(true);
         }
       } finally {
         if (!ignore) {
@@ -67,25 +63,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const response = await fetch('http://localhost:8082/users-api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-      credentials: 'include',
-    });
-
-    if (response.ok) {
-      const loginResponse = await response.json();
-      setUser({
-        id: loginResponse.userId,
-        email: loginResponse.email,
-        username: loginResponse.username,
-        roles: loginResponse.roles,
+    try {
+      const userData = await customUsersInstance<UserResponseModel>({
+        url: '/auth/login',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        data: { email, password },
       });
+
+      setUser({
+        id: userData.userId,
+        email: userData.email,
+        username: userData.username,
+        roles: userData.roles,
+      });
+
       setIsAuthenticated(true);
-      // set cookie value
-    } else {
-      throw new Error('Authentication failed');
+    } catch (error) {
+      throw new Error(`Authentication failed: ${error}`);
     }
   };
 
@@ -94,37 +89,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     username: string,
     password: string,
   ) => {
-    const response = await fetch(
-      'http://localhost:8082/users-api/auth/register',
-      {
+    try {
+      const userData = await customUsersInstance<UserResponseModel>({
+        url: '/auth/register',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, username, password }),
-        credentials: 'include',
-      },
-    );
+        data: { email, username, password },
+      });
 
-    if (response.ok) {
-      const registerResponse = await response.json();
       setUser({
-        id: registerResponse.userId,
-        email: registerResponse.email,
-        username: registerResponse.username,
-        roles: registerResponse.roles,
+        id: userData.userId,
+        email: userData.email,
+        username: userData.username,
+        roles: userData.roles,
       });
       setIsAuthenticated(true);
-      // set cookie value
-    } else {
-      throw new Error('Registration failed. Please try again.');
+    } catch (error) {
+      throw new Error(`Registration failed. Please try again. -- ${error}`);
     }
   };
 
   const logout = async () => {
-    await fetch('http://localhost:8082/users-api/auth/logout');
+    await customUsersInstance({
+      url: '/auth/logout',
+      method: 'POST',
+    });
     setUser(null);
     setIsAuthenticated(false);
     router.navigate({ to: '/login', search: { redirect: '/' } });
-    // set cookie to null
   };
 
   return (

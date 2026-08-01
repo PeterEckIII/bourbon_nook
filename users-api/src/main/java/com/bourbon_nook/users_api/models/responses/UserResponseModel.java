@@ -1,10 +1,16 @@
 package com.bourbon_nook.users_api.models.responses;
 
 import java.util.List;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 public class UserResponseModel {
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private String email;
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private String username;
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private String userId;
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private List<String> roles;
 
     public String getEmail() {

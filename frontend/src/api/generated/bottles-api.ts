@@ -26,7 +26,7 @@ import type {
   UseSuspenseQueryResult
 } from '@tanstack/react-query';
 
-import { customInstance } from '../axios-instance';
+import { customBottlesInstance } from '../axios-instance';
 export type CreateBottleRequestStatus = typeof CreateBottleRequestStatus[keyof typeof CreateBottleRequestStatus];
 
 
@@ -92,7 +92,7 @@ export const userBottle = (
 ) => {
 
 
-      return customInstance<BottleResponseModel>(
+      return customBottlesInstance<BottleResponseModel>(
       {url: `/bottles/${bottleId}`, method: 'GET', signal
     },
       );
@@ -232,7 +232,7 @@ export const bottleUpdate = (
 ) => {
 
 
-      return customInstance<BottleResponseModel>(
+      return customBottlesInstance<BottleResponseModel>(
       {url: `/bottles/${bottleId}`, method: 'PUT',
       headers: {'Content-Type': 'application/json', },
       data: createBottleRequest, signal
@@ -291,7 +291,7 @@ export const bottleDelete = (
 ) => {
 
 
-      return customInstance<void>(
+      return customBottlesInstance<void>(
       {url: `/bottles/${bottleId}`, method: 'DELETE', signal
     },
       );
@@ -348,7 +348,7 @@ export const bottleCreate = (
 ) => {
 
 
-      return customInstance<BottleResponseModel>(
+      return customBottlesInstance<BottleResponseModel>(
       {url: `/bottles/new`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createBottleRequest, signal
@@ -407,7 +407,7 @@ export const userBottles = (
 ) => {
 
 
-      return customInstance<BottleResponseModel[]>(
+      return customBottlesInstance<BottleResponseModel[]>(
       {url: `/bottles`, method: 'GET', signal
     },
       );
@@ -546,7 +546,7 @@ export const healthcheck = (
 ) => {
 
 
-      return customInstance<string>(
+      return customBottlesInstance<string>(
       {url: `/bottles/status/healthcheck`, method: 'GET', signal
     },
       );
@@ -685,7 +685,7 @@ export const userBottlesFilter = (
 ) => {
 
 
-      return customInstance<BottleResponseModel[]>(
+      return customBottlesInstance<BottleResponseModel[]>(
       {url: `/bottles/filter`, method: 'GET',
         params, signal
     },

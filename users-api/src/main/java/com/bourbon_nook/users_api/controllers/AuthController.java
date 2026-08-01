@@ -5,7 +5,6 @@ import com.bourbon_nook.users_api.models.requests.ChangePasswordRequest;
 import com.bourbon_nook.users_api.models.requests.CreateUserRequest;
 import com.bourbon_nook.users_api.models.requests.DeleteAccountRequest;
 import com.bourbon_nook.users_api.models.requests.LoginRequest;
-import com.bourbon_nook.users_api.models.responses.CreateUserResponse;
 import com.bourbon_nook.users_api.models.responses.UserResponseModel;
 import com.bourbon_nook.users_api.services.AuthService;
 import com.bourbon_nook.users_api.services.RefreshTokenService;
@@ -115,7 +114,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<CreateUserResponse> register(@RequestBody CreateUserRequest createUserRequest) {
+    public ResponseEntity<UserResponseModel> register(@RequestBody CreateUserRequest createUserRequest) {
         UserDto userDto = modelMapper.map(createUserRequest, UserDto.class);
         UserDto createdUser = userService.createUser(userDto, createUserRequest.getPassword());
 
@@ -124,14 +123,20 @@ public class AuthController {
 
         ResponseCookie refreshTokenCookie = issueRefreshTokenCookie(createdUser.getUserId());
 
-        CreateUserResponse createUserResponse = modelMapper.map(createdUser, CreateUserResponse.class);
+        UserResponseModel userResponseModel = new UserResponseModel();
+        userResponseModel.setEmail(userDto.getEmail());
+        userResponseModel.setUsername(userDto.getUsername());
+        userResponseModel.setUserId(userDto.getUserId());
+        userResponseModel.setRoles(principal.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList());
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
                 .header("userId", createdUser.getUserId())
-                .body(createUserResponse);
+                .body(userResponseModel);
     }
 
     @PostMapping("/logout")

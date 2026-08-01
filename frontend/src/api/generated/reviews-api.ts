@@ -26,7 +26,7 @@ import type {
   UseSuspenseQueryResult
 } from '@tanstack/react-query';
 
-import { customInstance } from '../axios-instance';
+import { customReviewsInstance } from '../axios-instance';
 export interface CreateReviewRequest {
   bottleId: string;
   setting: string;
@@ -107,7 +107,7 @@ export const review = (
 ) => {
 
 
-      return customInstance<ReviewResponseModel>(
+      return customReviewsInstance<ReviewResponseModel>(
       {url: `/reviews/${reviewId}`, method: 'GET', signal
     },
       );
@@ -247,7 +247,7 @@ export const reviewUpdate = (
 ) => {
 
 
-      return customInstance<ReviewResponseModel>(
+      return customReviewsInstance<ReviewResponseModel>(
       {url: `/reviews/${reviewId}`, method: 'PUT',
       headers: {'Content-Type': 'application/json', },
       data: createReviewRequest, signal
@@ -306,7 +306,7 @@ export const reviewDelete = (
 ) => {
 
 
-      return customInstance<void>(
+      return customReviewsInstance<void>(
       {url: `/reviews/${reviewId}`, method: 'DELETE', signal
     },
       );
@@ -364,7 +364,7 @@ export const addNotesToReview = (
 ) => {
 
 
-      return customInstance<void>(
+      return customReviewsInstance<void>(
       {url: `/reviews/${reviewId}/notes`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: addNoteToReviewRequest, signal
@@ -424,7 +424,7 @@ export const addNoteToReview = (
 ) => {
 
 
-      return customInstance<void>(
+      return customReviewsInstance<void>(
       {url: `/reviews/${reviewId}/note`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: addNoteToReviewRequest, signal
@@ -483,7 +483,7 @@ export const reviewCreate = (
 ) => {
 
 
-      return customInstance<ReviewResponseModel>(
+      return customReviewsInstance<ReviewResponseModel>(
       {url: `/reviews/new`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createReviewRequest, signal
@@ -542,7 +542,7 @@ export const userReviews = (
 ) => {
 
 
-      return customInstance<ReviewResponseModel[]>(
+      return customReviewsInstance<ReviewResponseModel[]>(
       {url: `/reviews`, method: 'GET', signal
     },
       );
@@ -681,7 +681,7 @@ export const healthcheck = (
 ) => {
 
 
-      return customInstance<string>(
+      return customReviewsInstance<string>(
       {url: `/reviews/status/healthcheck`, method: 'GET', signal
     },
       );
@@ -820,7 +820,7 @@ export const allNotes = (
 ) => {
 
 
-      return customInstance<NoteResponseModel[]>(
+      return customReviewsInstance<NoteResponseModel[]>(
       {url: `/notes`, method: 'GET', signal
     },
       );
@@ -959,7 +959,7 @@ export const note = (
 ) => {
 
 
-      return customInstance<NoteResponseModel>(
+      return customReviewsInstance<NoteResponseModel>(
       {url: `/notes/${noteId}`, method: 'GET', signal
     },
       );
@@ -1098,7 +1098,7 @@ export const categoryNotes = (
 ) => {
 
 
-      return customInstance<NoteResponseModel[]>(
+      return customReviewsInstance<NoteResponseModel[]>(
       {url: `/notes/${categoryId}`, method: 'GET', signal
     },
       );
@@ -1237,7 +1237,7 @@ export const healthcheck1 = (
 ) => {
 
 
-      return customInstance<string>(
+      return customReviewsInstance<string>(
       {url: `/notes/status/healthcheck`, method: 'GET', signal
     },
       );
@@ -1376,7 +1376,7 @@ export const categoriesWithSystemNotes = (
 ) => {
 
 
-      return customInstance<CategoryNoteResponseModel[]>(
+      return customReviewsInstance<CategoryNoteResponseModel[]>(
       {url: `/notes/categories`, method: 'GET', signal
     },
       );
@@ -1516,7 +1516,7 @@ export const deleteNoteFromReview = (
 ) => {
 
 
-      return customInstance<void>(
+      return customReviewsInstance<void>(
       {url: `/reviews/${reviewId}/notes/${noteId}`, method: 'DELETE', signal
     },
       );

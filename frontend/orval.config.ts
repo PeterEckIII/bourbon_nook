@@ -11,7 +11,7 @@ export default defineConfig({
       override: {
         mutator: {
           path: './src/api/axios-instance.ts',
-          name: 'customInstance',
+          name: 'customBottlesInstance',
         },
         query: {
           useSuspenseQuery: true,
@@ -29,7 +29,7 @@ export default defineConfig({
       override: {
         mutator: {
           path: './src/api/axios-instance.ts',
-          name: 'customInstance',
+          name: 'customUsersInstance',
         },
         query: {
           useSuspenseQuery: true,
@@ -47,7 +47,7 @@ export default defineConfig({
       override: {
         mutator: {
           path: './src/api/axios-instance.ts',
-          name: 'customInstance',
+          name: 'customReviewsInstance',
         },
         query: {
           useSuspenseQuery: true,
