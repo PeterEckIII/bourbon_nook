@@ -146,6 +146,11 @@
   resolved "https://registry.yarnpkg.com/@commander-js/extra-typings/-/extra-typings-15.0.0.tgz#5ec61990250ddfe7d3a1c043878b68ba15b110d5"
   integrity sha512-yeJlba62xqmkgELUsn7356MEnzLLu/fw2x4lofFqGnXh6YysRdEs2BaLeLtg1+KU0AXvMeqQvTTp+3hBEBK+EA==
 
+"@date-fns/tz@^1.4.1":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@date-fns/tz/-/tz-1.5.0.tgz#e9e79b7583f0b1322c53db884a0112551095e3f3"
+  integrity sha512-lwYN/vDPeNRULcepoE/LO2Pgx+7/RV+S9ARfbc9lr2DtGkOD7pAiruHvbR1RX3Qyf6ja47EWJDMsNK5vK08DJg==
+
 "@emnapi/core@1.11.1":
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/@emnapi/core/-/core-1.11.1.tgz#b9e1064f3a6b1631e241e638eb48d736bfd372a6"
@@ -923,6 +928,11 @@
   dependencies:
     ws "^8.18.3"
 
+"@tanstack/devtools-event-client@^0.4.1":
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/@tanstack/devtools-event-client/-/devtools-event-client-0.4.4.tgz#c58185e737bee28b3afce206509412225e9f9031"
+  integrity sha512-6T5Yop/793YI+H+5J8Hsyj4kCih9sl4t3ElLgKioW5hk3ocn+ZdSJ94tT7vL7uabxSugWYBZlOTMPzEw2puvQw==
+
 "@tanstack/devtools-event-client@^0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@tanstack/devtools-event-client/-/devtools-event-client-0.5.0.tgz#15de361dff2cd26b9f2cd01aba63e88043943c69"
@@ -937,6 +947,21 @@
     dayjs "^1.11.19"
     goober "^2.1.16"
     solid-js "^1.9.9"
+
+"@tanstack/devtools-ui@^0.5.1":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@tanstack/devtools-ui/-/devtools-ui-0.5.3.tgz#335bdffe5e7e7a16f8fd852b2fdc80b2def7e816"
+  integrity sha512-iJjwWtdXhUGpeHyyW9+3NhXhmlVFhh3v3UBNKCouykG9UFXEtneVVNXgSRpd70DeYJFmvKOY19LafKRI5/cM7A==
+  dependencies:
+    clsx "^2.1.1"
+    dayjs "^1.11.19"
+    goober "^2.1.16"
+    solid-js "^1.9.9"
+
+"@tanstack/devtools-utils@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/devtools-utils/-/devtools-utils-0.4.0.tgz#a8567e50f9212120a0e344a1266b8aa798437fbe"
+  integrity sha512-KsGzYhA8L/fCNgyyMyoUy+TKtx+DjNbzWwqH6wXL48Llzo7kvV9RynYJlaO8Qkzwm+NdHXSgsljQNjQ3CKPpZA==
 
 "@tanstack/devtools@0.13.0":
   version "0.13.0"
@@ -960,10 +985,36 @@
   dependencies:
     "@typescript-eslint/utils" "^8.58.1"
 
+"@tanstack/form-core@1.33.3":
+  version "1.33.3"
+  resolved "https://registry.yarnpkg.com/@tanstack/form-core/-/form-core-1.33.3.tgz#5983021f57e49c99e6fb004946cb3c6b6dfa8102"
+  integrity sha512-htLxe/50GpUxbi2arJleh6uQkw72UOy+3Q0d1AadO3lfBTjs1e51GzyrKk/w8I7qXSkaSnF/JbYlyE+cwbJGNw==
+  dependencies:
+    "@tanstack/devtools-event-client" "^0.4.1"
+    "@tanstack/pacer-lite" "^0.1.1"
+    "@tanstack/store" "^0.11.0"
+
+"@tanstack/form-devtools@0.2.32":
+  version "0.2.32"
+  resolved "https://registry.yarnpkg.com/@tanstack/form-devtools/-/form-devtools-0.2.32.tgz#2f402956397e34a480e8a6948cce345e377e8bb9"
+  integrity sha512-eJX7L7KH0nAYEExg6sWcwYT8fv0vrFUivmw0PKNnDU1hw6juLUjvur4vcaNrLLt/0edimnuIHUgfQyVEaH/jKg==
+  dependencies:
+    "@tanstack/devtools-ui" "^0.5.1"
+    "@tanstack/devtools-utils" "^0.4.0"
+    "@tanstack/form-core" "1.33.3"
+    clsx "^2.1.1"
+    dayjs "^1.11.18"
+    goober "^2.1.16"
+
 "@tanstack/history@1.162.0":
   version "1.162.0"
   resolved "https://registry.yarnpkg.com/@tanstack/history/-/history-1.162.0.tgz#5e12a52edd82a5d6d3b081255ec899ccca335443"
   integrity sha512-79pf/RkhteYZTRgcR4F9kbk84P2N8rugQJswxfIqovlbRiT3yI7eBE+5QorIrZaOKktsgzRlXh1l/du/xpl4iA==
+
+"@tanstack/pacer-lite@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/pacer-lite/-/pacer-lite-0.1.1.tgz#431d3b0ac871280e8326fdbf156bb171d9bb0aa3"
+  integrity sha512-y/xtNPNt/YeyoVxE/JCx+T7yjEzpezmbb+toK8DDD1P4m7Kzs5YR956+7OKexG3f8aXgC3rLZl7b1V+yNUSy5w==
 
 "@tanstack/query-core@5.101.4":
   version "5.101.4"
@@ -981,6 +1032,22 @@
   integrity sha512-lS6mtccEmUaodsWiRORGM/MGKT0jgzcy5v+eY6pzOPxEgzTHUDhca+WGxShFqKxmF4oneRxXjww1gkvMrWq6uw==
   dependencies:
     "@tanstack/devtools" "0.13.0"
+
+"@tanstack/react-form-devtools@^0.2.32":
+  version "0.2.32"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-form-devtools/-/react-form-devtools-0.2.32.tgz#7beda14f67035809b40cda52218e6534ccef6b98"
+  integrity sha512-QpoNvwFIlJPzTrwIV/Lw6/yr+8IqGUEqAAaBwhlZwGKWgm9YYsxcJoFxZXReL84+BM0rQbkJ2EDNzjkqb4SJ3A==
+  dependencies:
+    "@tanstack/devtools-utils" "^0.4.0"
+    "@tanstack/form-devtools" "0.2.32"
+
+"@tanstack/react-form@^1.33.3":
+  version "1.33.3"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-form/-/react-form-1.33.3.tgz#6c47dddceaac7b0f8d465e839270638b7cdf6402"
+  integrity sha512-lkzI/y15fHC8lKvzsLXFLLqGWroa+okvV2cKRCGAL+d0Kdf040fdMZbKh6uCXDMc08Ngpl8G3VZFnZ5KVUkUIw==
+  dependencies:
+    "@tanstack/form-core" "1.33.3"
+    "@tanstack/react-store" "^0.11.0"
 
 "@tanstack/react-query-devtools@^5.101.4":
   version "5.101.4"
@@ -1012,6 +1079,14 @@
     "@tanstack/react-store" "^0.9.3"
     "@tanstack/router-core" "1.171.15"
     isbot "^5.1.22"
+
+"@tanstack/react-store@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-store/-/react-store-0.11.0.tgz#a547563f65b50d0d2b37d5337cc708571af96486"
+  integrity sha512-tX4YXh3PDkmpvGQWkWqKpzs/MSqbtuwY9dWdWhtV9Q50PmO+jOkUKIWIX4G85dwt7lxdHLXsiaEKPdKmC8F41w==
+  dependencies:
+    "@tanstack/store" "0.11.0"
+    use-sync-external-store "^1.6.0"
 
 "@tanstack/react-store@^0.9.3":
   version "0.9.3"
@@ -1081,6 +1156,11 @@
     diff "^8.0.2"
     pathe "^2.0.3"
     tinyglobby "^0.2.15"
+
+"@tanstack/store@0.11.0", "@tanstack/store@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/store/-/store-0.11.0.tgz#8a2e374a67bf9dbb28e72298156996445570102b"
+  integrity sha512-WlzzCt3xi0G6pCAJu1U+2jiECwabETDpQDi3hfkFZvJii9AuZqEKbOiVarX1/bWhTNjU486yQtJCCasi/0q+Cw==
 
 "@tanstack/store@0.9.3":
   version "0.9.3"
@@ -1466,7 +1546,12 @@ csstype@^3.1.0, csstype@^3.2.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.2.3.tgz#ec48c0f3e993e50648c86da559e2610995cf989a"
   integrity sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==
 
-dayjs@^1.11.19:
+date-fns@^4.1.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-4.4.0.tgz#806539edf45c616b2b76b5f78b88c56ed3c7e036"
+  integrity sha512-+1UMbeh68lH1SegH83CGWwpb6OHHbpSgr3+s5Eww5M4CAgswBpoWS0AjTOfEJ33HiYKz1hdj/KTFprzXHmq/6w==
+
+dayjs@^1.11.18, dayjs@^1.11.19:
   version "1.11.21"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.21.tgz#57f87562e62de76f3c704bd2b8d522fc33068eb2"
   integrity sha512-98IT+HOahAisibz/yjKbzuOBwYcjJ7BCLPzARyHiyEBmRz4fatF+KPJszEHXsGYjUG234aH/cOjW1wwTbKUZlA==
@@ -2475,6 +2560,14 @@ punycode@^2.1.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.1.tgz#027422e2faec0b25e1549c3e1bd8309b9133b6e5"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
+
+react-day-picker@^10.0.1:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-10.0.1.tgz#8498e3f0ace2e9d03c209a5458c451a377c2d85c"
+  integrity sha512-eNh6BlwcYInWaJtRv18mXQ06Ys/H6rdTZAnTaSdOYJuTpwP1JMCHNd1FDRadA+gbeinq+psdULN5Xnowy9mV8w==
+  dependencies:
+    "@date-fns/tz" "^1.4.1"
+    date-fns "^4.1.0"
 
 react-dom@^19.2.7:
   version "19.2.8"
