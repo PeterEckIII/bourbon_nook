@@ -13,12 +13,17 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/_admin'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedAdminAdminDashboardRouteImport } from './routes/_authenticated/_admin/admin-dashboard'
 import { Route as AuthenticatedBottlesIndexRouteImport } from './routes/_authenticated/bottles/index'
 import { Route as AuthenticatedBottlesBottleIdRouteImport } from './routes/_authenticated/bottles/$bottleId'
+import { Route as AuthenticatedBottlesNewRouteImport } from './routes/_authenticated/bottles/new'
 import { Route as AuthenticatedReviewsIndexRouteImport } from './routes/_authenticated/reviews/index'
 import { Route as AuthenticatedReviewsReviewIdRouteImport } from './routes/_authenticated/reviews/$reviewId'
+import { Route as AuthenticatedReviewsNewRouteImport } from './routes/_authenticated/reviews/new'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
@@ -39,9 +44,18 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UnauthorizedRoute = UnauthorizedRouteImport.update({
+  id: '/unauthorized',
+  path: '/unauthorized',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/_admin',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
@@ -49,6 +63,12 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedAdminAdminDashboardRoute =
+  AuthenticatedAdminAdminDashboardRouteImport.update({
+    id: '/admin-dashboard',
+    path: '/admin-dashboard',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedBottlesIndexRoute =
   AuthenticatedBottlesIndexRouteImport.update({
     id: '/bottles/',
@@ -61,6 +81,11 @@ const AuthenticatedBottlesBottleIdRoute =
     path: '/bottles/$bottleId',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedBottlesNewRoute = AuthenticatedBottlesNewRouteImport.update({
+  id: '/bottles/new',
+  path: '/bottles/new',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedReviewsIndexRoute =
   AuthenticatedReviewsIndexRouteImport.update({
     id: '/reviews/',
@@ -73,15 +98,24 @@ const AuthenticatedReviewsReviewIdRoute =
     path: '/reviews/$reviewId',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedReviewsNewRoute = AuthenticatedReviewsNewRouteImport.update({
+  id: '/reviews/new',
+  path: '/reviews/new',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/unauthorized': typeof UnauthorizedRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/admin-dashboard': typeof AuthenticatedAdminAdminDashboardRoute
   '/bottles/$bottleId': typeof AuthenticatedBottlesBottleIdRoute
+  '/bottles/new': typeof AuthenticatedBottlesNewRoute
   '/reviews/$reviewId': typeof AuthenticatedReviewsReviewIdRoute
+  '/reviews/new': typeof AuthenticatedReviewsNewRoute
   '/bottles/': typeof AuthenticatedBottlesIndexRoute
   '/reviews/': typeof AuthenticatedReviewsIndexRoute
 }
@@ -89,10 +123,14 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/unauthorized': typeof UnauthorizedRoute
   '/': typeof AuthenticatedIndexRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/admin-dashboard': typeof AuthenticatedAdminAdminDashboardRoute
   '/bottles/$bottleId': typeof AuthenticatedBottlesBottleIdRoute
+  '/bottles/new': typeof AuthenticatedBottlesNewRoute
   '/reviews/$reviewId': typeof AuthenticatedReviewsReviewIdRoute
+  '/reviews/new': typeof AuthenticatedReviewsNewRoute
   '/bottles': typeof AuthenticatedBottlesIndexRoute
   '/reviews': typeof AuthenticatedReviewsIndexRoute
 }
@@ -102,10 +140,15 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/unauthorized': typeof UnauthorizedRoute
+  '/_authenticated/_admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/_admin/admin-dashboard': typeof AuthenticatedAdminAdminDashboardRoute
   '/_authenticated/bottles/$bottleId': typeof AuthenticatedBottlesBottleIdRoute
+  '/_authenticated/bottles/new': typeof AuthenticatedBottlesNewRoute
   '/_authenticated/reviews/$reviewId': typeof AuthenticatedReviewsReviewIdRoute
+  '/_authenticated/reviews/new': typeof AuthenticatedReviewsNewRoute
   '/_authenticated/bottles/': typeof AuthenticatedBottlesIndexRoute
   '/_authenticated/reviews/': typeof AuthenticatedReviewsIndexRoute
 }
@@ -116,9 +159,13 @@ export interface FileRouteTypes {
     | '/about'
     | '/login'
     | '/register'
+    | '/unauthorized'
     | '/dashboard'
+    | '/admin-dashboard'
     | '/bottles/$bottleId'
+    | '/bottles/new'
     | '/reviews/$reviewId'
+    | '/reviews/new'
     | '/bottles/'
     | '/reviews/'
   fileRoutesByTo: FileRoutesByTo
@@ -126,10 +173,14 @@ export interface FileRouteTypes {
     | '/about'
     | '/login'
     | '/register'
-    | '/dashboard'
+    | '/unauthorized'
     | '/'
+    | '/dashboard'
+    | '/admin-dashboard'
     | '/bottles/$bottleId'
+    | '/bottles/new'
     | '/reviews/$reviewId'
+    | '/reviews/new'
     | '/bottles'
     | '/reviews'
   id:
@@ -138,10 +189,15 @@ export interface FileRouteTypes {
     | '/about'
     | '/login'
     | '/register'
+    | '/unauthorized'
+    | '/_authenticated/_admin'
     | '/_authenticated/dashboard'
     | '/_authenticated/'
+    | '/_authenticated/_admin/admin-dashboard'
     | '/_authenticated/bottles/$bottleId'
+    | '/_authenticated/bottles/new'
     | '/_authenticated/reviews/$reviewId'
+    | '/_authenticated/reviews/new'
     | '/_authenticated/bottles/'
     | '/_authenticated/reviews/'
   fileRoutesById: FileRoutesById
@@ -151,6 +207,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
+  UnauthorizedRoute: typeof UnauthorizedRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -183,11 +240,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/unauthorized': {
+      id: '/unauthorized'
+      path: '/unauthorized'
+      fullPath: '/unauthorized'
+      preLoaderRoute: typeof UnauthorizedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/': {
       id: '/_authenticated/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/_admin': {
+      id: '/_authenticated/_admin'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/dashboard': {
@@ -196,6 +267,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/_admin/admin-dashboard': {
+      id: '/_authenticated/_admin/admin-dashboard'
+      path: '/admin-dashboard'
+      fullPath: '/admin-dashboard'
+      preLoaderRoute: typeof AuthenticatedAdminAdminDashboardRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/bottles/': {
       id: '/_authenticated/bottles/'
@@ -209,6 +287,13 @@ declare module '@tanstack/react-router' {
       path: '/bottles/$bottleId'
       fullPath: '/bottles/$bottleId'
       preLoaderRoute: typeof AuthenticatedBottlesBottleIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/bottles/new': {
+      id: '/_authenticated/bottles/new'
+      path: '/bottles/new'
+      fullPath: '/bottles/new'
+      preLoaderRoute: typeof AuthenticatedBottlesNewRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/reviews/': {
@@ -225,23 +310,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReviewsReviewIdRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/reviews/new': {
+      id: '/_authenticated/reviews/new'
+      path: '/reviews/new'
+      fullPath: '/reviews/new'
+      preLoaderRoute: typeof AuthenticatedReviewsNewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminAdminDashboardRoute: typeof AuthenticatedAdminAdminDashboardRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminAdminDashboardRoute: AuthenticatedAdminAdminDashboardRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
 interface AuthenticatedRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedBottlesBottleIdRoute: typeof AuthenticatedBottlesBottleIdRoute
+  AuthenticatedBottlesNewRoute: typeof AuthenticatedBottlesNewRoute
   AuthenticatedReviewsReviewIdRoute: typeof AuthenticatedReviewsReviewIdRoute
+  AuthenticatedReviewsNewRoute: typeof AuthenticatedReviewsNewRoute
   AuthenticatedBottlesIndexRoute: typeof AuthenticatedBottlesIndexRoute
   AuthenticatedReviewsIndexRoute: typeof AuthenticatedReviewsIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedBottlesBottleIdRoute: AuthenticatedBottlesBottleIdRoute,
+  AuthenticatedBottlesNewRoute: AuthenticatedBottlesNewRoute,
   AuthenticatedReviewsReviewIdRoute: AuthenticatedReviewsReviewIdRoute,
+  AuthenticatedReviewsNewRoute: AuthenticatedReviewsNewRoute,
   AuthenticatedBottlesIndexRoute: AuthenticatedBottlesIndexRoute,
   AuthenticatedReviewsIndexRoute: AuthenticatedReviewsIndexRoute,
 }
@@ -255,6 +364,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
+  UnauthorizedRoute: UnauthorizedRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
