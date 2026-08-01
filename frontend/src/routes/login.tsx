@@ -29,7 +29,7 @@ function LoginComponent() {
     setError('');
 
     try {
-      await auth.login(email, password);
+      await auth.login({ email, password });
       navigate({ to: '/dashboard' });
     } catch (error) {
       console.log(`Error! ${JSON.stringify(error, null, 2)}`);
