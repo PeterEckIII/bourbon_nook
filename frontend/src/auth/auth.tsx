@@ -74,7 +74,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       setIsAuthenticated(true);
     } catch (error) {
-      throw new Error(`Authentication failed: ${error}`);
+      throw new Error(`Authentication failed: ${error}`, { cause: error });
     }
   };
 
@@ -99,7 +99,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
       setIsAuthenticated(true);
     } catch (error) {
-      throw new Error(`Registration failed. Please try again. -- ${error}`);
+      throw new Error(`Registration failed. Please try again. -- ${error}`, {
+        cause: error,
+      });
     }
   };
 
@@ -128,7 +130,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         },
       });
     } catch (error) {
-      throw new Error(`Error changing your password: ${error}`);
+      throw new Error(`Error changing your password: ${error}`, {
+        cause: error,
+      });
     }
   };
 

@@ -19,6 +19,23 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
-    ...pluginQuery.configs['flat/recommended-strict'],
   },
+  {
+    files: ['src/routes/**/*.tsx'],
+    rules: {
+      // TanStack Router's file-based routes always export both a `Route`
+      // object and a component; this rule can't be satisfied by that shape.
+      'react-refresh/only-export-components': 'off',
+    },
+  },
+  {
+    files: ['src/auth/auth.tsx'],
+    rules: {
+      'react-refresh/only-export-components': [
+        'error',
+        { allowExportNames: ['useAuth'] },
+      ],
+    },
+  },
+  ...pluginQuery.configs['flat/recommended-strict'],
 ]);

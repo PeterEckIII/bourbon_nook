@@ -37,7 +37,7 @@ function RouteComponent() {
     try {
       await auth.register({ email, username, password });
       navigate({ to: '/dashboard' });
-    } catch (error) {
+    } catch {
       setError('Could not register your account');
     } finally {
       setIsLoading(false);

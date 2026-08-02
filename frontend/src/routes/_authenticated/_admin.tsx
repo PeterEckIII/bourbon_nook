@@ -7,6 +7,7 @@ export const Route = createFileRoute('/_authenticated/_admin')({
         to: '/unauthorized',
         search: {
           redirect: location.href,
+          reason: 'insufficient_role',
         },
       });
     }
