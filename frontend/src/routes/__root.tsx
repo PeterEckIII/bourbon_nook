@@ -29,40 +29,42 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       },
     ],
   }),
-  component: () => {
-    const showNavbar = useMatches({
-      select: (matches) =>
-        !matches.some((m) => m.staticData?.showNavbar === false),
-    });
-    return showNavbar ? (
-      <>
-        <HeadContent />
-        <Navbar />
-        <Outlet />
-        <TanStackDevtools
-          plugins={[
-            {
-              name: 'TanStack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-            { name: 'TanStack Query', render: <ReactQueryDevtoolsPanel /> },
-          ]}
-        />
-      </>
-    ) : (
-      <>
-        <HeadContent />
-        <Outlet />
-        <TanStackDevtools
-          plugins={[
-            {
-              name: 'TanStack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-            { name: 'TanStack Query', render: <ReactQueryDevtoolsPanel /> },
-          ]}
-        />
-      </>
-    );
-  },
+  component: RootComponent,
 });
+
+function RootComponent() {
+  const showNavbar = useMatches({
+    select: (matches) =>
+      !matches.some((m) => m.staticData?.showNavbar === false),
+  });
+  return showNavbar ? (
+    <>
+      <HeadContent />
+      <Navbar />
+      <Outlet />
+      <TanStackDevtools
+        plugins={[
+          {
+            name: 'TanStack Router',
+            render: <TanStackRouterDevtoolsPanel />,
+          },
+          { name: 'TanStack Query', render: <ReactQueryDevtoolsPanel /> },
+        ]}
+      />
+    </>
+  ) : (
+    <>
+      <HeadContent />
+      <Outlet />
+      <TanStackDevtools
+        plugins={[
+          {
+            name: 'TanStack Router',
+            render: <TanStackRouterDevtoolsPanel />,
+          },
+          { name: 'TanStack Query', render: <ReactQueryDevtoolsPanel /> },
+        ]}
+      />
+    </>
+  );
+}
