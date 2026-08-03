@@ -106,12 +106,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const logout = async () => {
-    await customUsersInstance({
-      url: '/auth/logout',
-      method: 'POST',
-    });
-    setUser(null);
-    setIsAuthenticated(false);
+    try {
+      await customUsersInstance({
+        url: '/auth/logout',
+        method: 'POST',
+      });
+      setUser(null);
+      setIsAuthenticated(false);
+    } catch (error) {
+      console.log(`Error logging out: ${error}`);
+    }
     router.navigate({ to: '/login', search: { redirect: '/' } });
   };
 
