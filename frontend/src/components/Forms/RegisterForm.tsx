@@ -5,18 +5,12 @@ import { Link, useNavigate } from '@tanstack/react-router';
 
 const registerSchema = z.object({
   email: z.email('Please enter a valid email address'),
-  username: z.string().min(3, 'Username must be at least 3 characters'),
-  password: z
+  username: z
     .string()
-    .min(8, 'Password must be at least 8 characters')
-    .max(18, 'Password should be less than 18 characters')
-    .regex(
-      /^(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[A-Z])[A-Za-z0-9!@#$%^&*(),.?":{}|<>]{8,18}$/,
-    ),
-  confirmPassword: z
-    .string()
-    .min(8, 'Password must be at least 8 characters')
-    .max(18, 'Password should be less than 18 characters'),
+    .min(3, 'Username must be at least 3 characters')
+    .regex(/[^a-zA-Z0-9\s]/, 'Username cannot contain special characters'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+  confirmPassword: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
 type Register = z.infer<typeof registerSchema>;
@@ -84,7 +78,7 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
               <field.TextField
                 label="Username"
                 type="text"
-                placeholder="flyguy85"
+                placeholder="whiskey_novice55"
                 required
               />
             )}
