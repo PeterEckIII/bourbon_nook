@@ -1,5 +1,5 @@
-import { createFileRoute, Link, redirect } from '@tanstack/react-router';
-import { useState, type SyntheticEvent } from 'react';
+import { createFileRoute, redirect } from '@tanstack/react-router';
+import RegisterForm from '../components/Forms/RegisterForm';
 
 export const Route = createFileRoute('/register')({
   staticData: { showNavbar: false },
@@ -17,35 +17,12 @@ export const Route = createFileRoute('/register')({
 function RouteComponent() {
   const { auth } = Route.useRouteContext();
   const { redirect } = Route.useSearch();
-  const navigate = Route.useNavigate();
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
 
-  const handleSubmit = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError('');
+  return <RegisterForm auth={auth} redirect={redirect} />;
+}
 
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-    }
-
-    try {
-      await auth.register({ email, username, password });
-      navigate({ to: '/dashboard' });
-    } catch {
-      setError('Could not register your account');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <div className="min-h-screen flex items-center justify-center">
+/**
+<div className="min-h-screen flex items-center justify-center">
       <form
         onSubmit={handleSubmit}
         className="max-w-md w-full space-y-4 p-6 border rounded-lg"
@@ -134,5 +111,4 @@ function RouteComponent() {
         </div>
       </form>
     </div>
-  );
-}
+ */
