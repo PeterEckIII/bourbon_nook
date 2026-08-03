@@ -2,13 +2,17 @@ import { z } from 'zod';
 import { useAppForm } from '../../hooks/form';
 import type { AuthState } from '../../auth/types';
 import { Link, useNavigate } from '@tanstack/react-router';
+import {
+  checkEmailAvailability,
+  checkUsernameAvailability,
+} from '../../api/generated/users-api';
 
 const registerSchema = z.object({
   email: z.email('Please enter a valid email address'),
   username: z
     .string()
     .min(3, 'Username must be at least 3 characters')
-    .regex(/[^a-zA-Z0-9\s]/, 'Username cannot contain special characters'),
+    .regex(/^[A-Za-z0-9]+$/, 'Username cannot contain special characters'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   confirmPassword: z.string().min(8, 'Password must be at least 8 characters'),
 });
@@ -61,11 +65,22 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
         <div>
           <form.AppField
             name="email"
+            validators={{
+              onChangeAsyncDebounceMs: 500,
+              onChangeAsync: async ({ value }) => {
+                const isAvailable = await checkEmailAvailability({
+                  email: value,
+                });
+                return isAvailable
+                  ? undefined
+                  : 'Email is already registered at BourbonNook';
+              },
+            }}
             children={(field) => (
               <field.TextField
                 label="Email"
                 type="email"
-                placeholder="john@hopkins.edu"
+                placeholder="john@whiskey.org"
                 required
               />
             )}
@@ -74,6 +89,16 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
         <div>
           <form.AppField
             name="username"
+            validators={{
+              onChangeAsyncDebounceMs: 500,
+              onChangeAsync: async ({ value }) => {
+                if (value.length < 3) return undefined;
+                const isAvailable = await checkUsernameAvailability({
+                  username: value,
+                });
+                return isAvailable ? undefined : 'Username is already taken';
+              },
+            }}
             children={(field) => (
               <field.TextField
                 label="Username"
