@@ -3,6 +3,7 @@ package com.bourbon_nook.users_api.services;
 import com.bourbon_nook.users_api.entities.RefreshTokenEntity;
 import com.bourbon_nook.users_api.repositories.RefreshTokenRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -45,6 +46,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
                 });
     }
 
+    @Transactional
     @Override
     public void revokeAllForUser(String userId) {
         refreshTokenRepository.revokeAllForUser(userId);

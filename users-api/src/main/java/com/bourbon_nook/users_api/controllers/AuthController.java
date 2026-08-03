@@ -113,6 +113,16 @@ public class AuthController {
                 .body(userResponseModel);
     }
 
+    @GetMapping("/check-username")
+    public ResponseEntity<Boolean> checkUsernameAvailability(@RequestParam String username) {
+        return ResponseEntity.ok(userService.isUsernameAvailable(username));
+    }
+
+    @GetMapping("/check-email")
+    public ResponseEntity<Boolean> checkEmailAvailability(@RequestParam String email) {
+        return ResponseEntity.ok(userService.isEmailAvailable(email));
+    }
+
     @PostMapping("/register")
     public ResponseEntity<UserResponseModel> register(@RequestBody CreateUserRequest createUserRequest) {
         UserDto userDto = modelMapper.map(createUserRequest, UserDto.class);

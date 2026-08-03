@@ -42,13 +42,13 @@ export interface UserResponseModel {
 export interface CreateUserRequest {
   email: string;
   /**
-     * @minLength 2
+     * @minLength 3
      * @maxLength 2147483647
      */
   username: string;
   /**
      * @minLength 8
-     * @maxLength 20
+     * @maxLength 2147483647
      */
   password: string;
 }
@@ -75,6 +75,14 @@ export interface ChangePasswordRequest {
 export interface DeleteAccountRequest {
   password: string;
 }
+
+export type CheckUsernameAvailabilityParams = {
+username: string;
+};
+
+export type CheckEmailAvailabilityParams = {
+email: string;
+};
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
@@ -1113,3 +1121,277 @@ const {mutation: mutationOptions} = options ?
       > => {
       return useMutation(getDeleteAccountMutationOptions(options), queryClient);
     }
+
+export const checkUsernameAvailability = (
+    params: CheckUsernameAvailabilityParams,
+ signal?: AbortSignal
+) => {
+
+
+      return customUsersInstance<boolean>(
+      {url: `/auth/check-username`, method: 'GET',
+        params, signal
+    },
+      );
+    }
+
+
+
+
+export const getCheckUsernameAvailabilityQueryKey = (params?: CheckUsernameAvailabilityParams,) => {
+    return [
+    `/auth/check-username`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getCheckUsernameAvailabilityQueryOptions = <TData = Awaited<ReturnType<typeof checkUsernameAvailability>>, TError = unknown>(params: CheckUsernameAvailabilityParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof checkUsernameAvailability>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getCheckUsernameAvailabilityQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof checkUsernameAvailability>>> = ({ signal }) => checkUsernameAvailability(params, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof checkUsernameAvailability>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type CheckUsernameAvailabilityQueryResult = NonNullable<Awaited<ReturnType<typeof checkUsernameAvailability>>>
+export type CheckUsernameAvailabilityQueryError = unknown
+
+
+export function useCheckUsernameAvailability<TData = Awaited<ReturnType<typeof checkUsernameAvailability>>, TError = unknown>(
+ params: CheckUsernameAvailabilityParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof checkUsernameAvailability>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof checkUsernameAvailability>>,
+          TError,
+          Awaited<ReturnType<typeof checkUsernameAvailability>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCheckUsernameAvailability<TData = Awaited<ReturnType<typeof checkUsernameAvailability>>, TError = unknown>(
+ params: CheckUsernameAvailabilityParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof checkUsernameAvailability>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof checkUsernameAvailability>>,
+          TError,
+          Awaited<ReturnType<typeof checkUsernameAvailability>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCheckUsernameAvailability<TData = Awaited<ReturnType<typeof checkUsernameAvailability>>, TError = unknown>(
+ params: CheckUsernameAvailabilityParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof checkUsernameAvailability>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useCheckUsernameAvailability<TData = Awaited<ReturnType<typeof checkUsernameAvailability>>, TError = unknown>(
+ params: CheckUsernameAvailabilityParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof checkUsernameAvailability>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getCheckUsernameAvailabilityQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getCheckUsernameAvailabilitySuspenseQueryOptions = <TData = Awaited<ReturnType<typeof checkUsernameAvailability>>, TError = unknown>(params: CheckUsernameAvailabilityParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof checkUsernameAvailability>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getCheckUsernameAvailabilityQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof checkUsernameAvailability>>> = ({ signal }) => checkUsernameAvailability(params, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof checkUsernameAvailability>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type CheckUsernameAvailabilitySuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof checkUsernameAvailability>>>
+export type CheckUsernameAvailabilitySuspenseQueryError = unknown
+
+
+export function useCheckUsernameAvailabilitySuspense<TData = Awaited<ReturnType<typeof checkUsernameAvailability>>, TError = unknown>(
+ params: CheckUsernameAvailabilityParams, options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof checkUsernameAvailability>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCheckUsernameAvailabilitySuspense<TData = Awaited<ReturnType<typeof checkUsernameAvailability>>, TError = unknown>(
+ params: CheckUsernameAvailabilityParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof checkUsernameAvailability>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCheckUsernameAvailabilitySuspense<TData = Awaited<ReturnType<typeof checkUsernameAvailability>>, TError = unknown>(
+ params: CheckUsernameAvailabilityParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof checkUsernameAvailability>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useCheckUsernameAvailabilitySuspense<TData = Awaited<ReturnType<typeof checkUsernameAvailability>>, TError = unknown>(
+ params: CheckUsernameAvailabilityParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof checkUsernameAvailability>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getCheckUsernameAvailabilitySuspenseQueryOptions(params,options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const checkEmailAvailability = (
+    params: CheckEmailAvailabilityParams,
+ signal?: AbortSignal
+) => {
+
+
+      return customUsersInstance<boolean>(
+      {url: `/auth/check-email`, method: 'GET',
+        params, signal
+    },
+      );
+    }
+
+
+
+
+export const getCheckEmailAvailabilityQueryKey = (params?: CheckEmailAvailabilityParams,) => {
+    return [
+    `/auth/check-email`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getCheckEmailAvailabilityQueryOptions = <TData = Awaited<ReturnType<typeof checkEmailAvailability>>, TError = unknown>(params: CheckEmailAvailabilityParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof checkEmailAvailability>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getCheckEmailAvailabilityQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof checkEmailAvailability>>> = ({ signal }) => checkEmailAvailability(params, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof checkEmailAvailability>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type CheckEmailAvailabilityQueryResult = NonNullable<Awaited<ReturnType<typeof checkEmailAvailability>>>
+export type CheckEmailAvailabilityQueryError = unknown
+
+
+export function useCheckEmailAvailability<TData = Awaited<ReturnType<typeof checkEmailAvailability>>, TError = unknown>(
+ params: CheckEmailAvailabilityParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof checkEmailAvailability>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof checkEmailAvailability>>,
+          TError,
+          Awaited<ReturnType<typeof checkEmailAvailability>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCheckEmailAvailability<TData = Awaited<ReturnType<typeof checkEmailAvailability>>, TError = unknown>(
+ params: CheckEmailAvailabilityParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof checkEmailAvailability>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof checkEmailAvailability>>,
+          TError,
+          Awaited<ReturnType<typeof checkEmailAvailability>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCheckEmailAvailability<TData = Awaited<ReturnType<typeof checkEmailAvailability>>, TError = unknown>(
+ params: CheckEmailAvailabilityParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof checkEmailAvailability>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useCheckEmailAvailability<TData = Awaited<ReturnType<typeof checkEmailAvailability>>, TError = unknown>(
+ params: CheckEmailAvailabilityParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof checkEmailAvailability>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getCheckEmailAvailabilityQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getCheckEmailAvailabilitySuspenseQueryOptions = <TData = Awaited<ReturnType<typeof checkEmailAvailability>>, TError = unknown>(params: CheckEmailAvailabilityParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof checkEmailAvailability>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getCheckEmailAvailabilityQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof checkEmailAvailability>>> = ({ signal }) => checkEmailAvailability(params, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof checkEmailAvailability>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type CheckEmailAvailabilitySuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof checkEmailAvailability>>>
+export type CheckEmailAvailabilitySuspenseQueryError = unknown
+
+
+export function useCheckEmailAvailabilitySuspense<TData = Awaited<ReturnType<typeof checkEmailAvailability>>, TError = unknown>(
+ params: CheckEmailAvailabilityParams, options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof checkEmailAvailability>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCheckEmailAvailabilitySuspense<TData = Awaited<ReturnType<typeof checkEmailAvailability>>, TError = unknown>(
+ params: CheckEmailAvailabilityParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof checkEmailAvailability>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCheckEmailAvailabilitySuspense<TData = Awaited<ReturnType<typeof checkEmailAvailability>>, TError = unknown>(
+ params: CheckEmailAvailabilityParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof checkEmailAvailability>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useCheckEmailAvailabilitySuspense<TData = Awaited<ReturnType<typeof checkEmailAvailability>>, TError = unknown>(
+ params: CheckEmailAvailabilityParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof checkEmailAvailability>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getCheckEmailAvailabilitySuspenseQueryOptions(params,options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}

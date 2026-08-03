@@ -22,6 +22,7 @@ export default function TextField({
   const errorId = `${id}-error`;
   const hasError =
     field.state.meta.isTouched && field.state.meta.errors.length > 0;
+  const isValidating = field.state.meta.isValidating;
 
   return (
     <div className="flex w-full flex-col gap-1.5">
@@ -52,6 +53,9 @@ export default function TextField({
           hasError ? 'border-red-500/70' : 'border-amber-900/40'
         }`}
       />
+      {isValidating && !hasError && (
+        <p className="text-sm text-amber-100/60">Checking…</p>
+      )}
       {hasError && (
         <p id={errorId} role="alert" className="text-sm text-red-400">
           {formatFieldErrors(field.state.meta.errors)}

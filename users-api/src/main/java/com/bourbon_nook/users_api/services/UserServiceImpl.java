@@ -110,6 +110,16 @@ public class UserServiceImpl implements UserService {
         rabbitTemplate.convertAndSend(RabbitConfig.USER_DELETE_EXCHANGE, "", new UserDeletedEvent(userId));
     }
 
+    @Override
+    public boolean isUsernameAvailable(String username) {
+        return !userRepository.existsByUsername(username);
+    }
+
+    @Override
+    public boolean isEmailAvailable(String email) {
+        return !userRepository.existsByEmail(email);
+    }
+
     private RoleEntity getOrCreateRole(RoleType roleType) {
         return roleRepository.findByName(roleType)
                 .orElseGet(() -> roleRepository.save(new RoleEntity(roleType)));
