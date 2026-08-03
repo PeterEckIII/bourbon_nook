@@ -45,7 +45,7 @@ export default function BottleForm() {
   const form = useAppForm({
     defaultValues,
     validators: {
-      onChange: bottleSchema.parse,
+      onChange: bottleSchema,
     },
     onSubmit: ({ value }) => {
       const payload = {

@@ -35,7 +35,7 @@ export default function ReviewForm() {
   const form = useAppForm({
     defaultValues,
     validators: {
-      onChange: reviewSchema.parse,
+      onChange: reviewSchema,
     },
     onSubmit: ({ value }) => {
       const payload = {

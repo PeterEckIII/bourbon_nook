@@ -20,7 +20,11 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     @Override
     public String issue(String userId, Duration validFor) {
         String tokenId = UUID.randomUUID().toString();
-        RefreshTokenEntity entity = new RefreshTokenEntity(tokenId, userId, Instant.now());
+        RefreshTokenEntity entity = new RefreshTokenEntity(
+            tokenId,
+            userId,
+            Instant.now().plus(validFor)
+        );
         refreshTokenRepository.save(entity);
         return tokenId;
     }
