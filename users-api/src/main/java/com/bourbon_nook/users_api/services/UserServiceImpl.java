@@ -5,6 +5,8 @@ import com.bourbon_nook.users_api.dtos.UserDto;
 import com.bourbon_nook.users_api.entities.RoleEntity;
 import com.bourbon_nook.users_api.entities.UserEntity;
 import com.bourbon_nook.users_api.enums.RoleType;
+import com.bourbon_nook.users_api.exceptions.UserEmailAlreadyExistsException;
+import com.bourbon_nook.users_api.exceptions.UserUsernameAlreadyExistsException;
 import com.bourbon_nook.users_api.models.events.UserDeletedEvent;
 import com.bourbon_nook.users_api.models.requests.UpdateUserRequest;
 import com.bourbon_nook.users_api.repositories.RoleRepository;
@@ -73,6 +75,13 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserDto createUser(UserDto userDetails, String rawPassword) {
+        if (userRepository.existsByEmail(userDetails.getEmail())) {
+            throw new UserEmailAlreadyExistsException("Email already in use: " + userDetails.getEmail());
+        }
+        if (userRepository.existsByUsername(userDetails.getUsername())) {
+            throw new UserUsernameAlreadyExistsException("Username already in use: " + userDetails.getUsername());
+        }
+
         userDetails.setUserId(UUID.randomUUID().toString());
         UserEntity userEntity = modelMapper.map(userDetails, UserEntity.class);
         userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(rawPassword));

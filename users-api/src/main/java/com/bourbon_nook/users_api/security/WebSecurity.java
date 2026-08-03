@@ -51,7 +51,7 @@ public class WebSecurity {
         http.authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                                .requestMatchers("/auth/login", "/auth/register", "/auth/refresh").permitAll()
+                                .requestMatchers("/auth/login", "/auth/register", "/auth/logout", "/auth/refresh").permitAll()
                                 .requestMatchers("/auth/me", "/auth/change-password").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and isAuthenticated()"))
                                 .requestMatchers("/users/**").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and hasRole('ADMIN')"))
                                 .requestMatchers(HttpMethod.GET, "/actuator/**").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and hasRole('ADMIN')"))
