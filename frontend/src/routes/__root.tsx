@@ -37,34 +37,22 @@ function RootComponent() {
     select: (matches) =>
       !matches.some((m) => m.staticData?.showNavbar === false),
   });
-  return showNavbar ? (
+  return (
     <>
       <HeadContent />
-      <Navbar />
+      {showNavbar && <Navbar />}
       <Outlet />
-      <TanStackDevtools
-        plugins={[
-          {
-            name: 'TanStack Router',
-            render: <TanStackRouterDevtoolsPanel />,
-          },
-          { name: 'TanStack Query', render: <ReactQueryDevtoolsPanel /> },
-        ]}
-      />
-    </>
-  ) : (
-    <>
-      <HeadContent />
-      <Outlet />
-      <TanStackDevtools
-        plugins={[
-          {
-            name: 'TanStack Router',
-            render: <TanStackRouterDevtoolsPanel />,
-          },
-          { name: 'TanStack Query', render: <ReactQueryDevtoolsPanel /> },
-        ]}
-      />
+      {import.meta.env.DEV && !import.meta.env.VITEST && (
+        <TanStackDevtools
+          plugins={[
+            {
+              name: 'TanStack Router',
+              render: <TanStackRouterDevtoolsPanel />,
+            },
+            { name: 'TanStack Query', render: <ReactQueryDevtoolsPanel /> },
+          ]}
+        />
+      )}
     </>
   );
 }

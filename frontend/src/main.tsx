@@ -2,24 +2,9 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
-import { createRouter } from '@tanstack/react-router';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { routeTree } from './routeTree.gen';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './auth/auth.tsx';
-
-const queryClient = new QueryClient();
-
-export const router = createRouter({
-  routeTree,
-  context: {
-    queryClient,
-    auth: undefined!,
-  },
-  scrollRestoration: true,
-  defaultPreload: 'intent',
-  // Below is so Tanstack Query can manage loading/caching
-  defaultPreloadStaleTime: 0,
-});
+import { router, queryClient } from './router.ts';
 
 declare module '@tanstack/react-router' {
   interface Register {
