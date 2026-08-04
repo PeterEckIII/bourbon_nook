@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { useAuth } from '../auth/auth';
+import { useAuth } from '../auth/context';
 
 const navLinkClass =
   'text-amber-100/90 hover:text-amber-50 font-medium tracking-wide transition-colors duration-150 [&.active]:text-amber-50 [&.active]:font-semibold';

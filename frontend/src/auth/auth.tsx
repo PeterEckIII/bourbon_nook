@@ -1,16 +1,14 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { router } from '../main';
+import React, { useState, useEffect } from 'react';
+import { router } from '../router';
 import { customUsersInstance } from '../api/axios-instance';
 import type { UserResponseModel } from '../api/generated/users-api';
-import type {
-  AuthState,
-  ChangePasswordCredentials,
-  LoginCredentials,
-  RegisterCredentials,
-  User,
+import {
+  type ChangePasswordCredentials,
+  type LoginCredentials,
+  type RegisterCredentials,
+  type User,
 } from './types';
-
-const AuthContext = createContext<AuthState | undefined>(undefined);
+import { AuthContext } from './context';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -157,12 +155,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
 }
