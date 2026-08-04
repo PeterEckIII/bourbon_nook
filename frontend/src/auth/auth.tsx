@@ -52,28 +52,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (credentials: LoginCredentials) => {
-    try {
-      const userData = await customUsersInstance<UserResponseModel>({
-        url: '/auth/login',
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        data: {
-          email: credentials.email,
-          password: credentials.password,
-        },
-      });
+    const userData = await customUsersInstance<UserResponseModel>({
+      url: '/auth/login',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: {
+        email: credentials.email,
+        password: credentials.password,
+      },
+    });
 
-      setUser({
-        id: userData.userId,
-        email: userData.email,
-        username: userData.username,
-        roles: userData.roles,
-      });
+    setUser({
+      id: userData.userId,
+      email: userData.email,
+      username: userData.username,
+      roles: userData.roles,
+    });
 
-      setIsAuthenticated(true);
-    } catch (error) {
-      throw new Error(`Authentication failed: ${error}`, { cause: error });
-    }
+    setIsAuthenticated(true);
   };
 
   const register = async (credentials: RegisterCredentials) => {
