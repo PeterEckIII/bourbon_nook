@@ -29,7 +29,15 @@ function createServiceInstance(service: string) {
       const originalRequest = error.config as InternalAxiosRequestConfig & {
         _retry?: boolean;
       };
-      if (error.response?.status !== 401 || originalRequest._retry) {
+      // A 401 from /auth/login means bad credentials, not an expired access
+      // token — there's no session yet to refresh, so let it propagate as-is
+      // rather than masking it with the refresh call's own (unrelated) error.
+      const isLoginRequest = originalRequest.url === '/auth/login';
+      if (
+        error.response?.status !== 401 ||
+        originalRequest._retry ||
+        isLoginRequest
+      ) {
         return Promise.reject(error);
       }
       originalRequest._retry = true;

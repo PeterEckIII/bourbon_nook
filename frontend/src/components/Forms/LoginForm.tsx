@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import type { AuthState } from '../../auth/types';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
 import { useAppForm } from '../../hooks/form';
+import { getApiErrorMessage } from '../../api/errors';
 
 const loginSchema = z.object({
   email: z.email('Please enter a valid email address'),
@@ -22,17 +24,19 @@ interface LoginFormProps {
 
 export default function LoginForm({ auth, redirect }: LoginFormProps) {
   const navigate = useNavigate();
+  const [serverError, setServerError] = useState<string | null>(null);
   const form = useAppForm({
     defaultValues,
     validators: {
       onChange: loginSchema,
     },
     onSubmit: async ({ value }) => {
+      setServerError(null);
       try {
         await auth.login({ email: value.email, password: value.password });
         navigate({ to: redirect || '/dashboard' });
       } catch (error) {
-        console.log(`Error logging in: ${error}`);
+        setServerError(getApiErrorMessage(error));
       }
     },
   });
@@ -47,6 +51,11 @@ export default function LoginForm({ auth, redirect }: LoginFormProps) {
         }}
       >
         <h1 className="text-2xl font-bold">Login</h1>
+        {serverError && (
+          <p role="alert" className="text-sm text-red-400">
+            {serverError}
+          </p>
+        )}
         <div>
           <form.AppField
             name="email"

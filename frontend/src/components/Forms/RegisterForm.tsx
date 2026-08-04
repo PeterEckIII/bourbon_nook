@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { z } from 'zod';
 import { useAppForm } from '../../hooks/form';
 import type { AuthState } from '../../auth/types';
@@ -6,13 +7,11 @@ import {
   checkEmailAvailability,
   checkUsernameAvailability,
 } from '../../api/generated/users-api';
+import { getApiErrorMessage } from '../../api/errors';
 
 const registerSchema = z.object({
   email: z.email('Please enter a valid email address'),
-  username: z
-    .string()
-    .min(3, 'Username must be at least 3 characters')
-    .regex(/^[A-Za-z0-9]+$/, 'Username cannot contain special characters'),
+  username: z.string().min(3, 'Username must be at least 3 characters'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   confirmPassword: z.string().min(8, 'Password must be at least 8 characters'),
 });
@@ -33,12 +32,14 @@ interface RegisterFormProps {
 
 export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
   const navigate = useNavigate();
+  const [serverError, setServerError] = useState<string | null>(null);
   const form = useAppForm({
     defaultValues,
     validators: {
       onChange: registerSchema,
     },
     onSubmit: async ({ value }) => {
+      setServerError(null);
       try {
         await auth.register({
           email: value.email,
@@ -47,7 +48,7 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
         });
         navigate({ to: redirect || '/dashboard' });
       } catch (error) {
-        console.log(`Error registering user: ${error}`);
+        setServerError(getApiErrorMessage(error));
       }
     },
   });
@@ -62,6 +63,11 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
         }}
       >
         <h1 className="text-2xl font-bold">Join BourbonNook</h1>
+        {serverError && (
+          <p role="alert" className="text-sm text-red-400">
+            {serverError}
+          </p>
+        )}
         <div>
           <form.AppField
             name="email"
