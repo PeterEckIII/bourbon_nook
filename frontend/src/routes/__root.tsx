@@ -8,7 +8,7 @@ import { TanStackDevtools } from '@tanstack/react-devtools';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
 import { QueryClient } from '@tanstack/react-query';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/ui/Navbar';
 import type { AuthState } from '../auth/types';
 
 export interface MyRouterContext {

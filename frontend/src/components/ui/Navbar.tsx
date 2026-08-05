@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { useAuth } from '../auth/context';
-import appIcon from '../assets/brand/svg/app-icon.svg';
+import { useAuth } from '../../auth/context';
+import appIcon from '../../assets/brand/svg/app-icon.svg';
 
 const navLinkClass =
   'text-amber-100/90 hover:text-amber-50 font-medium tracking-wide transition-colors duration-150 [&.active]:text-amber-50 [&.active]:font-semibold';

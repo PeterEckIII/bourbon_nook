@@ -4,10 +4,23 @@ import com.bourbon_nook.bottles_api.dtos.BottleDto;
 import com.bourbon_nook.bottles_api.entities.BottleEntity;
 import com.bourbon_nook.bottles_api.models.requests.CreateBottleRequest;
 import com.bourbon_nook.bottles_api.models.responses.BottleResponseModel;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.config.Configuration;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BottleMapper {
+    private final ModelMapper modelMapper;
+
+    public BottleMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+        // BottleDto is a record, whose accessors (e.g. id()) don't match ModelMapper's
+        // default JavaBean getter convention, so its properties would otherwise map as null.
+        this.modelMapper.getConfiguration()
+                .setFieldMatchingEnabled(true)
+                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
+    }
+
     public BottleDto fromCreateRequest(CreateBottleRequest request) {
         if(request == null) return null;
 
@@ -86,12 +99,6 @@ public class BottleMapper {
     public BottleResponseModel toResponseModel(BottleDto dto) {
         if(dto == null) return null;
 
-        BottleResponseModel model = new BottleResponseModel();
-        model.setId(dto.id());
-        model.setUserId(dto.userId());
-        model.setName(dto.name());
-        model.setType(dto.type());
-        model.setDistillery(dto.distillery());
-        return model;
+        return modelMapper.map(dto, BottleResponseModel.class);
     }
 }

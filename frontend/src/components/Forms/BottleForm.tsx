@@ -1,5 +1,9 @@
 import { z } from 'zod';
 import { useAppForm } from '../../hooks/form';
+import { bottleCreate } from '../../api/generated/bottles-api';
+import { useNavigate } from '@tanstack/react-router';
+import { useState } from 'react';
+import { getApiErrorMessage } from '../../api/errors';
 
 const bottleSchema = z.object({
   name: z.string('Name is required'),
@@ -42,18 +46,45 @@ const defaultValues: Bottle = {
 };
 
 export default function BottleForm() {
+  const [serverError, setServerError] = useState<string | null>(null);
+  const navigate = useNavigate();
   const form = useAppForm({
     defaultValues,
     validators: {
       onChange: bottleSchema,
     },
-    onSubmit: ({ value }) => {
-      const payload = {
-        ...value,
-        openDate: value.openDate || undefined,
-        killDate: value.killDate || undefined,
-      };
-      alert(JSON.stringify(payload, null, 2));
+    onSubmit: async ({ value }) => {
+      try {
+        const payload = {
+          ...value,
+          openDate: value.openDate || undefined,
+          killDate: value.killDate || undefined,
+        };
+        const bottle = await bottleCreate({
+          name: payload.name,
+          type: payload.type,
+          status: payload.status,
+          distillery: payload.distillery || '',
+          producer: payload.producer || '',
+          country: payload.country || '',
+          region: payload.region || '',
+          price: payload.price || 0,
+          age: payload.age || '',
+          proof: payload.proof || 0,
+          releaseYear: payload.releaseYear || 0,
+          barrelInformation: payload.barrelInformation || '',
+          finishing: payload.finishing || '',
+          imageUrl: payload.imageUrl || '',
+          openDate: payload.openDate,
+          killDate: payload.killDate,
+        });
+        navigate({
+          to: '/bottles/$bottleId',
+          params: { bottleId: bottle.id as string },
+        });
+      } catch (error) {
+        setServerError(getApiErrorMessage(error));
+      }
     },
   });
 
@@ -69,6 +100,11 @@ export default function BottleForm() {
         <h1 className="font-caprasimo text-2xl text-center">
           Bottle Information
         </h1>
+        {serverError && (
+          <p role="alert" className="text-sm text-red-700">
+            {serverError}
+          </p>
+        )}
 
         <div className="space-y-4">
           <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
@@ -237,7 +273,7 @@ export default function BottleForm() {
           <form.AppField
             name="imageUrl"
             children={(field) => (
-              <field.TextField label="Image URL" type="url" required />
+              <field.TextField label="Image URL" type="text" required />
             )}
           />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

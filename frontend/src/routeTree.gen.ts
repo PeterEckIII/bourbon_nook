@@ -24,6 +24,7 @@ import { Route as AuthenticatedBottlesNewRouteImport } from './routes/_authentic
 import { Route as AuthenticatedReviewsIndexRouteImport } from './routes/_authenticated/reviews/index'
 import { Route as AuthenticatedReviewsReviewIdRouteImport } from './routes/_authenticated/reviews/$reviewId'
 import { Route as AuthenticatedReviewsNewRouteImport } from './routes/_authenticated/reviews/new'
+import { Route as AuthenticatedBottlesBottleIdEditRouteImport } from './routes/_authenticated/bottles/$bottleId_.edit'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
@@ -103,6 +104,12 @@ const AuthenticatedReviewsNewRoute = AuthenticatedReviewsNewRouteImport.update({
   path: '/reviews/new',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedBottlesBottleIdEditRoute =
+  AuthenticatedBottlesBottleIdEditRouteImport.update({
+    id: '/bottles/$bottleId_/edit',
+    path: '/bottles/$bottleId/edit',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/reviews/new': typeof AuthenticatedReviewsNewRoute
   '/bottles/': typeof AuthenticatedBottlesIndexRoute
   '/reviews/': typeof AuthenticatedReviewsIndexRoute
+  '/bottles/$bottleId/edit': typeof AuthenticatedBottlesBottleIdEditRoute
 }
 export interface FileRoutesByTo {
   '/about': typeof AboutRoute
@@ -133,6 +141,7 @@ export interface FileRoutesByTo {
   '/reviews/new': typeof AuthenticatedReviewsNewRoute
   '/bottles': typeof AuthenticatedBottlesIndexRoute
   '/reviews': typeof AuthenticatedReviewsIndexRoute
+  '/bottles/$bottleId/edit': typeof AuthenticatedBottlesBottleIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -151,6 +160,7 @@ export interface FileRoutesById {
   '/_authenticated/reviews/new': typeof AuthenticatedReviewsNewRoute
   '/_authenticated/bottles/': typeof AuthenticatedBottlesIndexRoute
   '/_authenticated/reviews/': typeof AuthenticatedReviewsIndexRoute
+  '/_authenticated/bottles/$bottleId_/edit': typeof AuthenticatedBottlesBottleIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -168,6 +178,7 @@ export interface FileRouteTypes {
     | '/reviews/new'
     | '/bottles/'
     | '/reviews/'
+    | '/bottles/$bottleId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/about'
@@ -183,6 +194,7 @@ export interface FileRouteTypes {
     | '/reviews/new'
     | '/bottles'
     | '/reviews'
+    | '/bottles/$bottleId/edit'
   id:
     | '__root__'
     | '/_authenticated'
@@ -200,6 +212,7 @@ export interface FileRouteTypes {
     | '/_authenticated/reviews/new'
     | '/_authenticated/bottles/'
     | '/_authenticated/reviews/'
+    | '/_authenticated/bottles/$bottleId_/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -317,6 +330,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReviewsNewRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/bottles/$bottleId_/edit': {
+      id: '/_authenticated/bottles/$bottleId_/edit'
+      path: '/bottles/$bottleId/edit'
+      fullPath: '/bottles/$bottleId/edit'
+      preLoaderRoute: typeof AuthenticatedBottlesBottleIdEditRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
@@ -341,6 +361,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedReviewsNewRoute: typeof AuthenticatedReviewsNewRoute
   AuthenticatedBottlesIndexRoute: typeof AuthenticatedBottlesIndexRoute
   AuthenticatedReviewsIndexRoute: typeof AuthenticatedReviewsIndexRoute
+  AuthenticatedBottlesBottleIdEditRoute: typeof AuthenticatedBottlesBottleIdEditRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -353,6 +374,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedReviewsNewRoute: AuthenticatedReviewsNewRoute,
   AuthenticatedBottlesIndexRoute: AuthenticatedBottlesIndexRoute,
   AuthenticatedReviewsIndexRoute: AuthenticatedReviewsIndexRoute,
+  AuthenticatedBottlesBottleIdEditRoute: AuthenticatedBottlesBottleIdEditRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

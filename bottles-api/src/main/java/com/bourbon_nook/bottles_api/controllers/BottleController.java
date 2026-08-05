@@ -51,13 +51,7 @@ public class BottleController {
         }
 
         for (BottleDto bottle : bottles) {
-            BottleResponseModel model = new BottleResponseModel();
-            model.setId(bottle.id());
-            model.setUserId(bottle.userId());
-            model.setName(bottle.name());
-            model.setType(bottle.type());
-            model.setDistillery(bottle.distillery());
-            returnValue.add(model);
+            returnValue.add(bottleMapper.toResponseModel(bottle));
         }
         logger.info("Returning {} bottles for user id {}", returnValue.size(), userId);
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
@@ -71,13 +65,7 @@ public class BottleController {
         if(bottle == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        BottleResponseModel model = new BottleResponseModel();
-        model.setId(bottle.id());
-        model.setUserId(userId);
-        model.setName(bottle.name());
-        model.setType(bottle.type());
-        model.setDistillery(bottle.distillery());
-        return ResponseEntity.status(HttpStatus.OK).body(model);
+        return ResponseEntity.status(HttpStatus.OK).body(bottleMapper.toResponseModel(bottle));
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -102,13 +90,7 @@ public class BottleController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(returnValue);
         }
         for(BottleDto bottle : filteredBottles) {
-            BottleResponseModel model = new BottleResponseModel();
-            model.setId(bottle.id());
-            model.setUserId(userId);
-            model.setName(bottle.name());
-            model.setType(bottle.type());
-            model.setDistillery(bottle.distillery());
-            returnValue.add(model);
+            returnValue.add(bottleMapper.toResponseModel(bottle));
         }
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
