@@ -28,11 +28,11 @@ export default function TextField({
     <div className="flex w-full flex-col gap-1.5">
       <label
         htmlFor={id}
-        className="text-sm font-medium tracking-wide text-amber-100/90"
+        className="text-sm font-medium tracking-wide text-ink"
       >
         {label}
         {required && (
-          <span aria-hidden="true" className="ml-0.5 text-amber-500">
+          <span aria-hidden="true" className="ml-0.5 text-pour">
             *
           </span>
         )}
@@ -54,10 +54,10 @@ export default function TextField({
         }`}
       />
       {isValidating && !hasError && (
-        <p className="text-sm text-amber-100/60">Checking…</p>
+        <p className="text-sm text-ink/60">Checking…</p>
       )}
       {hasError && (
-        <p id={errorId} role="alert" className="text-sm text-red-400">
+        <p id={errorId} role="alert" className="text-sm text-red-700">
           {formatFieldErrors(field.state.meta.errors)}
         </p>
       )}

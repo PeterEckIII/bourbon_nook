@@ -30,11 +30,11 @@ export default function SelectField({
     <div className="flex w-full flex-col gap-1.5">
       <label
         htmlFor={id}
-        className="text-sm font-medium tracking-wide text-amber-100/90"
+        className="text-sm font-medium tracking-wide text-ink"
       >
         {label}
         {required && (
-          <span aria-hidden="true" className="ml-0.5 text-amber-500">
+          <span aria-hidden="true" className="ml-0.5 text-pour">
             *
           </span>
         )}
@@ -80,7 +80,7 @@ export default function SelectField({
         </svg>
       </div>
       {hasError && (
-        <p id={errorId} role="alert" className="text-sm text-red-400">
+        <p id={errorId} role="alert" className="text-sm text-red-700">
           {formatFieldErrors(field.state.meta.errors)}
         </p>
       )}
