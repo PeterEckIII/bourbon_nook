@@ -8,7 +8,9 @@ describe('Login route', () => {
     renderWithFileRoutes({
       initialLocation: '/login',
     });
-    expect(await screen.findByText('Login')).toBeInTheDocument();
+    expect(
+      await screen.findByText(/Log in to BourbonNook/i),
+    ).toBeInTheDocument();
     expect(
       await screen.getByRole('textbox', { name: /email/i }),
     ).toBeInTheDocument();
