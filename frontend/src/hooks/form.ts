@@ -5,6 +5,7 @@ import NumberField from '../components/Inputs/NumberField';
 import DateField from '../components/Inputs/DateField';
 import SelectField from '../components/Inputs/SelectField';
 import TextareaField from '../components/Inputs/TextareaField';
+import ComboboxField from '../components/Inputs/ComboboxField';
 import SubmitButton from '../components/SubmitButton';
 
 export const { useAppForm, withForm } = createFormHook({
@@ -14,6 +15,7 @@ export const { useAppForm, withForm } = createFormHook({
     DateField,
     SelectField,
     TextareaField,
+    ComboboxField,
   },
   formComponents: {
     SubmitButton,
