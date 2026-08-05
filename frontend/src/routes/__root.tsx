@@ -7,6 +7,7 @@ import {
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
+import { formDevtoolsPlugin } from '@tanstack/react-form-devtools';
 import { QueryClient } from '@tanstack/react-query';
 import Navbar from '../components/ui/Navbar';
 import type { AuthState } from '../auth/types';
@@ -50,6 +51,7 @@ function RootComponent() {
               render: <TanStackRouterDevtoolsPanel />,
             },
             { name: 'TanStack Query', render: <ReactQueryDevtoolsPanel /> },
+            formDevtoolsPlugin(),
           ]}
         />
       )}
