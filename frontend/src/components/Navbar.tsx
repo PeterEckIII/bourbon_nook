@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useAuth } from '../auth/context';
+import appIcon from '../assets/brand/svg/app-icon.svg';
 
 const navLinkClass =
   'text-amber-100/90 hover:text-amber-50 font-medium tracking-wide transition-colors duration-150 [&.active]:text-amber-50 [&.active]:font-semibold';
@@ -25,10 +26,8 @@ export default function Navbar() {
           to="/"
           className="flex items-center gap-2 text-amber-200 hover:text-amber-100 transition-colors"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-amber-600/20 border border-amber-500/40 text-lg">
-            🥃
-          </span>
-          <span className="text-lg font-bold tracking-tight text-amber-100">
+          <img src={appIcon} alt="" className="h-11 w-11 rounded-lg" />
+          <span className="font-caprasimo text-xl text-amber-100">
             Bourbon Nook
           </span>
         </Link>
