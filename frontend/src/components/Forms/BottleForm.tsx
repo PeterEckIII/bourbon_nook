@@ -1,92 +1,14 @@
-import { z } from 'zod';
-import { useAppForm } from '../../hooks/form';
-import { bottleCreate } from '../../api/generated/bottles-api';
-import { useNavigate } from '@tanstack/react-router';
-import { useState } from 'react';
-import { getApiErrorMessage } from '../../api/errors';
+import { type BottleResponseModel } from '../../api/generated/bottles-api';
+import useBottleForm from '../../hooks/useBottleForm';
 
-const bottleSchema = z.object({
-  name: z.string('Name is required'),
-  type: z.string('Type is required'),
-  status: z.enum(['OPENED', 'SEALED', 'FINISHED'], 'Status is required'),
-  distillery: z.string().optional(),
-  producer: z.string().optional(),
-  country: z.string().optional(),
-  region: z.string().optional(),
-  price: z.number().optional(),
-  age: z.string().optional(),
-  proof: z.number().optional(),
-  releaseYear: z.number().optional(),
-  barrelInformation: z.string().optional(),
-  finishing: z.string().optional(),
-  imageUrl: z.string().optional(),
-  openDate: z.iso.date().or(z.literal('')).optional(),
-  killDate: z.iso.date().or(z.literal('')).optional(),
-});
-
-type Bottle = z.infer<typeof bottleSchema>;
-
-const defaultValues: Bottle = {
-  name: '',
-  type: '',
-  status: 'SEALED',
-  distillery: '',
-  producer: '',
-  country: '',
-  region: '',
-  price: 0.0,
-  age: '',
-  proof: 0.0,
-  releaseYear: 0,
-  barrelInformation: '',
-  finishing: '',
-  imageUrl: '',
-  openDate: '',
-  killDate: '',
-};
-
-export default function BottleForm() {
-  const [serverError, setServerError] = useState<string | null>(null);
-  const navigate = useNavigate();
-  const form = useAppForm({
-    defaultValues,
-    validators: {
-      onChange: bottleSchema,
-    },
-    onSubmit: async ({ value }) => {
-      try {
-        const payload = {
-          ...value,
-          openDate: value.openDate || undefined,
-          killDate: value.killDate || undefined,
-        };
-        const bottle = await bottleCreate({
-          name: payload.name,
-          type: payload.type,
-          status: payload.status,
-          distillery: payload.distillery || '',
-          producer: payload.producer || '',
-          country: payload.country || '',
-          region: payload.region || '',
-          price: payload.price || 0,
-          age: payload.age || '',
-          proof: payload.proof || 0,
-          releaseYear: payload.releaseYear || 0,
-          barrelInformation: payload.barrelInformation || '',
-          finishing: payload.finishing || '',
-          imageUrl: payload.imageUrl || '',
-          openDate: payload.openDate,
-          killDate: payload.killDate,
-        });
-        navigate({
-          to: '/bottles/$bottleId',
-          params: { bottleId: bottle.id as string },
-        });
-      } catch (error) {
-        setServerError(getApiErrorMessage(error));
-      }
-    },
-  });
+export default function BottleForm({
+  valuesToEdit,
+  bottleId,
+}: {
+  valuesToEdit?: BottleResponseModel;
+  bottleId?: string;
+}) {
+  const { form, serverError } = useBottleForm({ valuesToEdit, bottleId });
 
   return (
     <div className="min-h-screen px-4 py-8 sm:py-12">
@@ -110,6 +32,22 @@ export default function BottleForm() {
           <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
             Basics
           </h2>
+          {bottleId && (
+            <>
+              <form.AppField
+                name="bottleId"
+                children={(field) => (
+                  <field.TextField type="hidden" label="BottleId" />
+                )}
+              />
+              <form.AppField
+                name="mode"
+                children={(field) => (
+                  <field.TextField type="hidden" label="Mode" />
+                )}
+              />
+            </>
+          )}
           <form.AppField
             name="name"
             children={(field) => (

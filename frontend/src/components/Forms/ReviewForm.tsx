@@ -1,57 +1,21 @@
-import { z } from 'zod';
-import { useAppForm } from '../../hooks/form';
 import { useUserBottlesSuspense } from '../../api/generated/bottles-api';
+import type { ReviewResponseModel } from '../../api/generated/reviews-api';
+import useReviewForm from '../../hooks/useReviewForm';
 
-const reviewSchema = z.object({
-  bottleId: z.string(),
-  setting: z.string(),
-  reviewDate: z.iso.date().or(z.literal('')).optional(),
-  restTimeMin: z.number(),
-  glassware: z.string(),
-  nose: z.string(),
-  palate: z.string(),
-  finish: z.string(),
-  thoughts: z.string(),
-  valueScore: z.number().min(0).max(10),
-  overallRating: z.number().min(0).max(10),
-});
-
-type Review = z.infer<typeof reviewSchema>;
-
-const defaultValues: Review = {
-  bottleId: '',
-  setting: '',
-  reviewDate: '',
-  restTimeMin: 0,
-  glassware: '',
-  nose: '',
-  palate: '',
-  finish: '',
-  thoughts: '',
-  valueScore: 0,
-  overallRating: 0,
-};
-
-export default function ReviewForm() {
+export default function ReviewForm({
+  valuesToEdit,
+  reviewId,
+}: {
+  valuesToEdit?: ReviewResponseModel;
+  reviewId?: string;
+}) {
   const { data: bottles } = useUserBottlesSuspense();
   const bottleOptions = bottles.map((bottle) => ({
     value: bottle.id!,
     label: bottle.name!,
   }));
 
-  const form = useAppForm({
-    defaultValues,
-    validators: {
-      onChange: reviewSchema,
-    },
-    onSubmit: ({ value }) => {
-      const payload = {
-        ...value,
-        reviewDate: value.reviewDate || undefined,
-      };
-      alert(JSON.stringify(payload, null, 2));
-    },
-  });
+  const { form, serverError } = useReviewForm({ valuesToEdit, reviewId });
 
   return (
     <div className="min-h-screen px-4 py-8 sm:py-12">
@@ -65,6 +29,11 @@ export default function ReviewForm() {
         <h1 className="font-caprasimo text-2xl text-center">
           Review Information
         </h1>
+        {serverError && (
+          <p role="alert" className="text-sm text-red-700">
+            {serverError}
+          </p>
+        )}
 
         <div className="space-y-4">
           <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
