@@ -8,6 +8,7 @@ import {
   checkUsernameAvailability,
 } from '../../api/generated/users-api';
 import { getApiErrorMessage } from '../../api/errors';
+import mark from '../../assets/brand/svg/mark-color.svg';
 
 const registerSchema = z.object({
   email: z.email('Please enter a valid email address'),
@@ -56,15 +57,18 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <form
-        className="max-w-md w-full space-y-4 p-6 border rounded-lg"
+        className="max-w-md w-full space-y-4 p-6 border border-ink/15 rounded-lg bg-cream"
         onSubmit={(e) => {
           e.preventDefault();
           form.handleSubmit();
         }}
       >
-        <h1 className="text-2xl font-bold">Join BourbonNook</h1>
+        <img src={mark} alt="Bourbon Nook" className="h-16 w-16 mx-auto" />
+        <h1 className="font-caprasimo text-2xl text-center">
+          Join BourbonNook
+        </h1>
         {serverError && (
-          <p role="alert" className="text-sm text-red-400">
+          <p role="alert" className="text-sm text-red-700">
             {serverError}
           </p>
         )}
@@ -151,7 +155,7 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
           />
         </div>
         <form.AppForm>
-          <form.SubmitButton label="Register" />
+          <form.SubmitButton label="Register" fullWidth />
         </form.AppForm>
         <div>
           Already have an account?{' '}

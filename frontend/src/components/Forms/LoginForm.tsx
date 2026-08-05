@@ -4,6 +4,7 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
 import { useAppForm } from '../../hooks/form';
 import { getApiErrorMessage } from '../../api/errors';
+import mark from '../../assets/brand/svg/mark-color.svg';
 
 const loginSchema = z.object({
   email: z.email('Please enter a valid email address'),
@@ -44,15 +45,18 @@ export default function LoginForm({ auth, redirect }: LoginFormProps) {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <form
-        className="max-w-md w-full space-y-4 p-6 border rounded-lg"
+        className="max-w-md w-full space-y-4 p-6 border border-ink/15 rounded-lg bg-cream"
         onSubmit={(e) => {
           e.preventDefault();
           form.handleSubmit();
         }}
       >
-        <h1 className="text-2xl font-bold">Login</h1>
+        <img src={mark} alt="Bourbon Nook" className="h-16 w-16 mx-auto" />
+        <h1 className="font-caprasimo text-2xl text-center">
+          Log in to BourbonNook
+        </h1>
         {serverError && (
-          <p role="alert" className="text-sm text-red-400">
+          <p role="alert" className="text-sm text-red-700">
             {serverError}
           </p>
         )}
@@ -83,7 +87,7 @@ export default function LoginForm({ auth, redirect }: LoginFormProps) {
           />
         </div>
         <form.AppForm>
-          <form.SubmitButton label="Log in" />
+          <form.SubmitButton label="Log in" fullWidth />
         </form.AppForm>
         <div>
           Not a member?{' '}
