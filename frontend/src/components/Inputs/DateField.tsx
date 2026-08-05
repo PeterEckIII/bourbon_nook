@@ -67,11 +67,11 @@ export default function DateField({ label, required }: DateFieldProps) {
     <div ref={containerRef} className="relative flex w-full flex-col gap-1.5">
       <label
         htmlFor={id}
-        className="text-sm font-medium tracking-wide text-amber-100/90"
+        className="text-sm font-medium tracking-wide text-ink"
       >
         {label}
         {required && (
-          <span aria-hidden="true" className="ml-0.5 text-amber-500">
+          <span aria-hidden="true" className="ml-0.5 text-pour">
             *
           </span>
         )}
@@ -104,7 +104,7 @@ export default function DateField({ label, required }: DateFieldProps) {
               field.handleBlur();
             }}
             aria-label={`Clear ${label}`}
-            className="shrink-0 cursor-pointer rounded-md border border-amber-900/40 px-2 py-2 text-amber-100/70 transition-colors duration-150 hover:border-amber-500/70 hover:text-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-500/70"
+            className="shrink-0 cursor-pointer rounded-md border border-ink/20 px-2 py-2 text-ink/70 transition-colors duration-150 hover:border-pour hover:text-ink focus:outline-none focus:ring-2 focus:ring-amber-500/70"
           >
             ✕
           </button>
@@ -132,7 +132,7 @@ export default function DateField({ label, required }: DateFieldProps) {
         </div>
       )}
       {hasError && (
-        <p id={errorId} role="alert" className="text-sm text-red-400">
+        <p id={errorId} role="alert" className="text-sm text-red-700">
           {formatFieldErrors(field.state.meta.errors)}
         </p>
       )}
