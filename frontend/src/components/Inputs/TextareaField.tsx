@@ -6,6 +6,7 @@ interface TextareaFieldProps {
   label: string;
   placeholder?: string;
   required?: boolean;
+  defaultValue?: string;
   rows?: number;
 }
 
@@ -13,6 +14,7 @@ export default function TextareaField({
   label,
   placeholder,
   required,
+  defaultValue,
   rows = 4,
 }: TextareaFieldProps) {
   const field = useFieldContext<string>();
@@ -40,6 +42,7 @@ export default function TextareaField({
         value={field.state.value}
         placeholder={placeholder}
         required={required}
+        defaultValue={defaultValue}
         rows={rows}
         onBlur={field.handleBlur}
         onChange={(event) => field.handleChange(event.target.value)}

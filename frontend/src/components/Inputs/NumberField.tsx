@@ -6,6 +6,7 @@ interface NumberFieldProps {
   label: string;
   placeholder?: string;
   required?: boolean;
+  defaultValue?: number;
   min?: number;
   max?: number;
   step?: number;
@@ -15,6 +16,7 @@ export default function NumberField({
   label,
   placeholder,
   required,
+  defaultValue,
   min,
   max,
   step,
@@ -46,6 +48,7 @@ export default function NumberField({
         value={Number.isNaN(field.state.value) ? '' : field.state.value}
         placeholder={placeholder}
         required={required}
+        defaultValue={defaultValue}
         min={min}
         max={max}
         step={step}
