@@ -1,6 +1,7 @@
 import { useId } from 'react';
 import { useFieldContext } from '../../hooks/form-context';
 import { formatFieldErrors } from '../../utils/formFieldErrors';
+import type { BottleResponseModelStatus } from '../../api/generated/bottles-api';
 
 interface SelectOption {
   value: string;
@@ -12,6 +13,7 @@ interface SelectFieldProps {
   options: SelectOption[];
   placeholder?: string;
   required?: boolean;
+  defaultValue?: BottleResponseModelStatus;
 }
 
 export default function SelectField({
@@ -19,6 +21,7 @@ export default function SelectField({
   options,
   placeholder,
   required,
+  defaultValue,
 }: SelectFieldProps) {
   const field = useFieldContext<string>();
   const id = useId();
@@ -45,6 +48,7 @@ export default function SelectField({
           name={field.name}
           value={field.state.value}
           required={required}
+          defaultValue={defaultValue}
           onBlur={field.handleBlur}
           onChange={(event) => field.handleChange(event.target.value)}
           aria-invalid={hasError}

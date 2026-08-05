@@ -4,9 +4,10 @@ import { formatFieldErrors } from '../../utils/formFieldErrors';
 
 interface TextFieldProps {
   label: string;
-  type?: 'text' | 'email' | 'password' | 'url';
+  type?: 'text' | 'email' | 'password' | 'url' | 'hidden';
   placeholder?: string;
   required?: boolean;
+  defaultValue?: string;
   autoComplete?: string;
 }
 
@@ -15,6 +16,7 @@ export default function TextField({
   type = 'text',
   placeholder,
   required,
+  defaultValue,
   autoComplete,
 }: TextFieldProps) {
   const field = useFieldContext<string>();
@@ -26,17 +28,19 @@ export default function TextField({
 
   return (
     <div className="flex w-full flex-col gap-1.5">
-      <label
-        htmlFor={id}
-        className="text-sm font-medium tracking-wide text-ink"
-      >
-        {label}
-        {required && (
-          <span aria-hidden="true" className="ml-0.5 text-pour">
-            *
-          </span>
-        )}
-      </label>
+      {type !== 'hidden' && (
+        <label
+          htmlFor={id}
+          className="text-sm font-medium tracking-wide text-ink"
+        >
+          {label}
+          {required && (
+            <span aria-hidden="true" className="ml-0.5 text-pour">
+              *
+            </span>
+          )}
+        </label>
+      )}
       <input
         id={id}
         name={field.name}
@@ -44,6 +48,7 @@ export default function TextField({
         value={field.state.value}
         placeholder={placeholder}
         required={required}
+        defaultValue={defaultValue}
         autoComplete={autoComplete}
         onBlur={field.handleBlur}
         onChange={(event) => field.handleChange(event.target.value)}
