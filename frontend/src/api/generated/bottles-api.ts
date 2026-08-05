@@ -55,12 +55,34 @@ export interface CreateBottleRequest {
   killDate?: string;
 }
 
+export type BottleResponseModelStatus = typeof BottleResponseModelStatus[keyof typeof BottleResponseModelStatus];
+
+
+export const BottleResponseModelStatus = {
+  OPENED: 'OPENED',
+  SEALED: 'SEALED',
+  FINISHED: 'FINISHED',
+} as const;
+
 export interface BottleResponseModel {
   id?: string;
   userId?: string;
   name?: string;
   type?: string;
+  status?: BottleResponseModelStatus;
   distillery?: string;
+  producer?: string;
+  country?: string;
+  region?: string;
+  price?: number;
+  age?: string;
+  proof?: number;
+  releaseYear?: number;
+  barrelInformation?: string;
+  finishing?: string;
+  imageUrl?: string;
+  openDate?: string;
+  killDate?: string;
 }
 
 export type UserBottlesFilterParams = {
