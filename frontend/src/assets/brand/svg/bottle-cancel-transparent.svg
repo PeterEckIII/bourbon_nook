@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="Whiskey bottle cancel mark">
+  <path d="M482 232h60v122c0 26 8 38 22 54 26 30 40 60 40 102v242c0 30-24 54-54 54H474c-30 0-54-24-54-54V510c0-42 14-72 40-102 14-16 22-28 22-54Z" fill="#c67139"></path>
+  <rect x="474" y="176" width="76" height="52" rx="14" fill="#c67139"></rect>
+  <g fill="none" stroke-linecap="round">
+    <circle cx="512" cy="500" r="300" stroke="#f9f4ec" stroke-width="118"></circle>
+    <line x1="300" y1="712" x2="724" y2="288" stroke="#f9f4ec" stroke-width="118"></line>
+    <circle cx="512" cy="500" r="300" stroke="#6d3a17" stroke-width="60"></circle>
+    <line x1="300" y1="712" x2="724" y2="288" stroke="#6d3a17" stroke-width="60"></line>
+  </g>
+</svg>

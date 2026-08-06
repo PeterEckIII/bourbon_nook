@@ -211,7 +211,7 @@ export default function BottleForm({
           <form.AppField
             name="imageUrl"
             children={(field) => (
-              <field.TextField label="Image URL" type="text" required />
+              <field.TextField label="Image URL" type="text" />
             )}
           />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
