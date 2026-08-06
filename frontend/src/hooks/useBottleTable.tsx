@@ -7,7 +7,7 @@ import {
   tableFeatures,
   useTable,
 } from '@tanstack/react-table';
-import ActionButtons from '../components/Tables/ActionButtons';
+import ActionButtons from '../components/ui/ActionButtons';
 import type { BottleResponseModel } from '../api/generated/bottles-api';
 import StatusPill from '../components/Tables/StatusPill';
 
@@ -60,19 +60,9 @@ const columns = columnHelper.columns([
         cell: (info) => info.getValue(),
         footer: (props) => props.column.id,
       }),
-      columnHelper.accessor('producer', {
-        header: 'Producer',
-        cell: (info) => info.getValue(),
-        footer: (props) => props.column.id,
-      }),
       columnHelper.accessor('country', {
-        header: 'Country',
-        cell: (info) => info.getValue(),
-        footer: (props) => props.column.id,
-      }),
-      columnHelper.accessor('region', {
-        header: 'Region',
-        cell: (info) => info.getValue(),
+        header: 'Location',
+        cell: (info) => info.row.original.region + ', ' + info.getValue(),
         footer: (props) => props.column.id,
       }),
     ]),
@@ -86,11 +76,6 @@ const columns = columnHelper.columns([
         cell: (info) => `$ ${info.getValue()?.toFixed(2)}`,
         footer: (props) => props.column.id,
       }),
-      columnHelper.accessor('age', {
-        header: 'Age',
-        cell: (info) => info.getValue(),
-        footer: (props) => props.column.id,
-      }),
       columnHelper.accessor('proof', {
         header: 'Proof',
         cell: (info) => info.getValue(),
@@ -98,22 +83,6 @@ const columns = columnHelper.columns([
       }),
       columnHelper.accessor('releaseYear', {
         header: 'Release Year',
-        cell: (info) => info.getValue(),
-        footer: (props) => props.column.id,
-      }),
-    ]),
-  }),
-  columnHelper.group({
-    header: 'Barrel',
-    footer: (props) => props.column.id,
-    columns: columnHelper.columns([
-      columnHelper.accessor('barrelInformation', {
-        header: 'Barrel Details',
-        cell: (info) => info.getValue(),
-        footer: (props) => props.column.id,
-      }),
-      columnHelper.accessor('finishing', {
-        header: 'Finishing',
         cell: (info) => info.getValue(),
         footer: (props) => props.column.id,
       }),

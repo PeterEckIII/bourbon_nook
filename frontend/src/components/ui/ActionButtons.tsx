@@ -4,14 +4,26 @@ import { useState } from 'react';
 import PlusIcon from '../Icons/PlusIcon';
 import EditIcon from '../Icons/EditIcon';
 import DeleteIcon from '../Icons/DeleteIcon';
-import ConfirmDialog from '../ui/ConfirmDialog';
+import ConfirmDialog from './ConfirmDialog';
 import {
   useBottleDelete,
   getUserBottlesQueryKey,
 } from '../../api/generated/bottles-api';
 import { getApiErrorMessage } from '../../api/errors';
+import LinkIcon from '../Icons/LinkIcon';
 
-export default function ActionButtons({ bottleId }: { bottleId: string }) {
+const labeledButtonClasses =
+  'inline-flex cursor-pointer items-center gap-2 rounded-md border border-ink/20 px-3 py-2 text-sm font-medium text-ink transition-colors duration-150 hover:bg-ink/5 focus:outline-none focus:ring-2 focus:ring-amber-500/70 focus:ring-offset-2 focus:ring-offset-cream';
+
+export default function ActionButtons({
+  bottleId,
+  onDeleted,
+  showLabels = false,
+}: {
+  bottleId: string;
+  onDeleted?: () => void;
+  showLabels?: boolean;
+}) {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const queryClient = useQueryClient();
   const {
@@ -23,15 +35,24 @@ export default function ActionButtons({ bottleId }: { bottleId: string }) {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: getUserBottlesQueryKey() });
         setIsConfirmOpen(false);
+        onDeleted?.();
       },
     },
   });
   return (
-    <div className="flex justify-around">
+    <div
+      className={showLabels ? 'flex flex-wrap gap-3' : 'flex justify-around'}
+    >
       <div>
         <button type="button">
-          <Link to="/reviews/new" title="Write Review" aria-label="Add Review">
+          <Link
+            to="/reviews/new"
+            title="Write Review"
+            aria-label="Add Review"
+            className={showLabels ? labeledButtonClasses : undefined}
+          >
             <PlusIcon />
+            {showLabels && 'Write Review'}
           </Link>
         </button>
       </div>
@@ -42,8 +63,10 @@ export default function ActionButtons({ bottleId }: { bottleId: string }) {
             params={{ bottleId }}
             title="Edit Bottle"
             aria-label="Edit Bottle"
+            className={showLabels ? labeledButtonClasses : undefined}
           >
             <EditIcon />
+            {showLabels && 'Edit Bottle'}
           </Link>
         </button>
       </div>
@@ -53,8 +76,10 @@ export default function ActionButtons({ bottleId }: { bottleId: string }) {
           title="Delete Bottle"
           aria-label="Delete Bottle"
           onClick={() => setIsConfirmOpen(true)}
+          className={showLabels ? labeledButtonClasses : 'cursor-pointer'}
         >
           <DeleteIcon />
+          {showLabels && 'Delete Bottle'}
         </button>
         <ConfirmDialog
           open={isConfirmOpen}
@@ -68,6 +93,21 @@ export default function ActionButtons({ bottleId }: { bottleId: string }) {
           onCancel={() => setIsConfirmOpen(false)}
         />
       </div>
+      {!showLabels && (
+        <div>
+          <button type="button">
+            <Link
+              to="/bottles/$bottleId"
+              params={{ bottleId }}
+              title="View Bottle"
+              aria-label="View Bottle"
+              className="cursor-pointer"
+            >
+              <LinkIcon />
+            </Link>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
