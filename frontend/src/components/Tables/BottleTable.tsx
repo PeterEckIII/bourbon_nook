@@ -15,7 +15,7 @@ const columnHelper = createColumnHelper<typeof features, BottleResponseModel>();
 
 const columns = columnHelper.columns([
   columnHelper.group({
-    header: 'Information',
+    header: 'Bottle',
     footer: (props) => props.column.id,
     columns: columnHelper.columns([
       columnHelper.accessor('name', {
@@ -108,57 +108,6 @@ const columns = columnHelper.columns([
     ),
   }),
 ]);
-//   {
-//     accessorKey: 'name',
-//     header: 'Name',
-//     cell: (info) => info.getValue(),
-//   },
-//   {
-//     accessorKey: 'type',
-//     header: 'Type',
-//     cell: (info) => info.getValue(),
-//   },
-//   {
-//     accessorKey: 'status',
-//     header: 'Status',
-//
-//   },
-//   {
-//     accessorKey: 'distillery',
-//     header: 'Distillery',
-//     cell: (info) => info.getValue(),
-//   },
-//   {
-//     accessorKey: 'producer',
-//     header: 'Producer',
-//     cell: (info) => info.getValue(),
-//   },
-//   {
-//     accessorKey: 'country',
-//     header: 'Country',
-//     cell: (info) => info.getValue(),
-//   },
-//   {
-//     accessorKey: 'region',
-//     header: 'Region',
-//     cell: (info) => info.getValue(),
-//   },
-//   {
-//     accessorKey: 'price',
-//     header: 'Price ($)',
-//     cell: (info) => '$' + info.getValue(),
-//   },
-//   {
-//     accessorKey: 'age',
-//     header: 'Age',
-//     cell: (info) => info.getValue(),
-//   },
-//   {
-//     accessorKey: 'proof',
-//     header: 'Proof',
-//     cell: (info) => info.getValue(),
-//   },
-// ];
 
 export default function BottleTable({ data }: { data: BottleResponseModel[] }) {
   const table = useTable({

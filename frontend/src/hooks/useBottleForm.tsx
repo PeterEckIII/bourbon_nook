@@ -69,6 +69,8 @@ export default function useBottleForm({
             ...defaultValues,
             ...valuesToEdit,
             status: valuesToEdit.status ?? defaultValues.status,
+            openDate: valuesToEdit.openDate || undefined,
+            killDate: valuesToEdit.killDate || undefined,
             mode: 'edit',
             bottleId: bottleId ?? '',
           }
@@ -124,7 +126,7 @@ export default function useBottleForm({
             openDate: value.openDate || undefined,
             killDate: value.killDate || undefined,
           };
-          await bottleUpdate(bottleId!, {
+          await bottleUpdate(payload.bottleId!, {
             name: payload.name,
             type: payload.type,
             status: payload.status,
@@ -144,7 +146,7 @@ export default function useBottleForm({
           });
           navigate({
             to: '/bottles/$bottleId',
-            params: { bottleId: bottleId! },
+            params: { bottleId: payload.bottleId! },
           });
         } catch (error) {
           setServerError(getApiErrorMessage(error));
