@@ -1,11 +1,31 @@
 import { Link } from '@tanstack/react-router';
+import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import PlusIcon from '../Icons/PlusIcon';
 import EditIcon from '../Icons/EditIcon';
 import DeleteIcon from '../Icons/DeleteIcon';
-import useBottleDeleteForm from '../../hooks/useBottleDeleteForm';
+import ConfirmDialog from '../ui/ConfirmDialog';
+import {
+  useBottleDelete,
+  getUserBottlesQueryKey,
+} from '../../api/generated/bottles-api';
+import { getApiErrorMessage } from '../../api/errors';
 
 export default function ActionButtons({ bottleId }: { bottleId: string }) {
-  const { form } = useBottleDeleteForm({ bottleId });
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const queryClient = useQueryClient();
+  const {
+    mutate: deleteBottle,
+    isPending,
+    error,
+  } = useBottleDelete({
+    mutation: {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: getUserBottlesQueryKey() });
+        setIsConfirmOpen(false);
+      },
+    },
+  });
   return (
     <div className="flex justify-around">
       <div>
@@ -28,26 +48,25 @@ export default function ActionButtons({ bottleId }: { bottleId: string }) {
         </button>
       </div>
       <div>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            form.handleSubmit();
-          }}
+        <button
+          type="button"
+          title="Delete Bottle"
+          aria-label="Delete Bottle"
+          onClick={() => setIsConfirmOpen(true)}
         >
-          <form.AppField
-            name="bottleId"
-            children={(field) => (
-              <field.TextField type="hidden" label="bottleId" />
-            )}
-          />
-          <button
-            type="submit"
-            title="Delete Bottle"
-            aria-label="Delete Bottle"
-          >
-            <DeleteIcon />
-          </button>
-        </form>
+          <DeleteIcon />
+        </button>
+        <ConfirmDialog
+          open={isConfirmOpen}
+          title="Delete this bottle?"
+          description={
+            error ? getApiErrorMessage(error) : 'This action cannot be undone.'
+          }
+          confirmLabel="Delete"
+          isConfirming={isPending}
+          onConfirm={() => deleteBottle({ bottleId })}
+          onCancel={() => setIsConfirmOpen(false)}
+        />
       </div>
     </div>
   );
