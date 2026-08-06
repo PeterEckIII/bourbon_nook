@@ -1,17 +1,17 @@
 import { Link } from '@tanstack/react-router';
-import type { BottleResponseModel } from '../../api/generated/bottles-api';
-import useBottleTable from '../../hooks/useBottleTable';
+import type { ReviewResponseModel } from '../../api/generated/reviews-api';
+import useReviewTable from '../../hooks/useReviewTable';
 import TBody from './shared/TBody';
 import THead from './shared/THead';
 
-export default function BottleTable({ data }: { data: BottleResponseModel[] }) {
-  const { table } = useBottleTable({ data });
+export default function ReviewTable({ data }: { data: ReviewResponseModel[] }) {
+  const { table } = useReviewTable({ data });
 
   if (data.length === 0) {
     return (
       <div className="rounded-lg border border-amber-900/15 bg-cream px-4 py-12 text-center text-sm text-ink/60">
-        No bottles yet.
-        <Link to="/bottles/new">Add one</Link>
+        No reviews yet.
+        <Link to="/reviews/new">Add one</Link>
       </div>
     );
   }
