@@ -20,7 +20,7 @@ function RouteComponent() {
   const { data: bottle } = useUserBottleSuspense(bottleId);
   return (
     <>
-      <BottleForm valuesToEdit={bottle} />
+      <BottleForm valuesToEdit={bottle} bottleId={bottleId} />
     </>
   );
 }
