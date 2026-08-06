@@ -126,9 +126,7 @@ public class BottleController {
     @DeleteMapping("/{bottleId}")
     public ResponseEntity<Void> bottleDelete(@PathVariable String bottleId, Authentication authentication) {
         String userId = authentication.getName();
-        if(!bottleService.deleteBottle(userId, bottleId)) {
-            return ResponseEntity.notFound().build();
-        }
+        bottleService.deleteBottle(userId, bottleId);
         return ResponseEntity.noContent().build();
     }
 }

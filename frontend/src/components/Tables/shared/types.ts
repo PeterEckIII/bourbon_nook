@@ -10,22 +10,32 @@ import type { BottleResponseModel } from '../../../api/generated/bottles-api';
 import type { ReviewResponseModel } from '../../../api/generated/reviews-api';
 import type { ReviewTableFeatures } from '../../../hooks/useReviewTable';
 
-export type TableType =
-  | ReactTable<BottleTableFeatures, BottleResponseModel>
-  | ReactTable<ReviewTableFeatures, ReviewResponseModel>;
+// TABLE TYPES
+type BottleTable = ReactTable<BottleTableFeatures, BottleResponseModel>;
+type ReviewTable = ReactTable<ReviewTableFeatures, ReviewResponseModel>;
 
-export type HeaderGroupType =
-  | HeaderGroup<BottleTableFeatures, BottleResponseModel>
-  | HeaderGroup<ReviewTableFeatures, ReviewResponseModel>;
+export type TableType = BottleTable | ReviewTable;
 
-export type HeaderType =
-  | Header_Core<BottleTableFeatures, BottleResponseModel>
-  | Header_Core<ReviewTableFeatures, ReviewResponseModel>;
+// HEADER GROUP TYPES
+type BottleHeaderGroups = HeaderGroup<BottleTableFeatures, BottleResponseModel>;
+type ReviewHeaderGroups = HeaderGroup<ReviewTableFeatures, ReviewResponseModel>;
 
-export type RowType =
-  | Row_Core<BottleTableFeatures, BottleResponseModel>
-  | Row_Core<ReviewTableFeatures, ReviewResponseModel>;
+export type HeaderGroupType = BottleHeaderGroups | ReviewHeaderGroups;
 
-export type CellType =
-  | Cell_Core<BottleTableFeatures, BottleResponseModel>
-  | Cell_Core<ReviewTableFeatures, ReviewResponseModel>;
+// HEADER TYPES
+type BottleHeaders = Header_Core<BottleTableFeatures, BottleResponseModel>;
+type ReviewHeaders = Header_Core<ReviewTableFeatures, ReviewResponseModel>;
+
+export type HeaderType = BottleHeaders | ReviewHeaders;
+
+// ROW TYPES
+type BottleRow = Row_Core<BottleTableFeatures, BottleResponseModel>;
+type ReviewRow = Row_Core<ReviewTableFeatures, ReviewResponseModel>;
+
+export type RowType = BottleRow | ReviewRow;
+
+// CELL TYPES
+type BottleCell = Cell_Core<BottleTableFeatures, BottleResponseModel>;
+type ReviewCell = Cell_Core<ReviewTableFeatures, ReviewResponseModel>;
+
+export type CellType = BottleCell | ReviewCell;

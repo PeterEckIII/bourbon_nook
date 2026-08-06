@@ -2,6 +2,7 @@ package com.bourbon_nook.bottles_api.services;
 
 import com.bourbon_nook.bottles_api.dtos.BottleDto;
 import com.bourbon_nook.bottles_api.entities.BottleEntity;
+import com.bourbon_nook.bottles_api.exceptions.BottleNotFoundException;
 import com.bourbon_nook.bottles_api.mappers.BottleMapper;
 import com.bourbon_nook.bottles_api.repositories.BottleRepository;
 import org.springframework.stereotype.Service;
@@ -89,10 +90,9 @@ public class BottleServiceImpl implements BottleService {
 
     @Override
     @Transactional
-    public boolean deleteBottle(String userId, String id) {
-        BottleEntity bottleToDelete = bottleRepository.findByIdAndUserId(id, userId).orElse(null);
-        if(bottleToDelete == null) return false;
+    public void deleteBottle(String userId, String id) {
+        BottleEntity bottleToDelete = bottleRepository.findByIdAndUserId(id, userId)
+                .orElseThrow(() -> new BottleNotFoundException("Bottle with id: " + id + " not found"));
         bottleRepository.delete(bottleToDelete);
-        return true;
     }
 }

@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse.Builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.NOT_FOUND.value())
-                .error(HttpStatus.NOT_ACCEPTABLE.getReasonPhrase())
+                .error(HttpStatus.NOT_FOUND.getReasonPhrase())
                 .errorCode(ErrorCodes.BOTTLE_NOT_FOUND)
                 .message(ex.getMessage())
                 .developerMessage("Bottle ID does not exist in the system.")

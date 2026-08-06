@@ -10,7 +10,7 @@ public interface BottleService {
     List<BottleDto> getUserBottles(String userId);
     BottleDto createBottle(String userId, BottleDto bottleDto);
     BottleDto updateBottle(String userId, String id, BottleDto bottleDto);
-    boolean deleteBottle(String userId, String id);
+    void deleteBottle(String userId, String id);
     List<BottleDto> filterBottles(String userId,
                                   String name,
                                   String distillery,
