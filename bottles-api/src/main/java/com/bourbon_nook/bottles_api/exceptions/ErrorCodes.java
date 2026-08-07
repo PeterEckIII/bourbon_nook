@@ -10,5 +10,5 @@ public class ErrorCodes {
     public static final String DATABASE_ERROR = "DATABASE_ERROR";
     public static final String EXTERNAL_SERVICE_ERROR = "EXTERNAL_SERVICE_ERROR";
     public static final String INTERNAL_SERVICE_ERROR = "INTERNAL_SERVICE_ERROR";
-
+    public static final String IMAGE_UPLOAD_FAILED = "IMAGE_UPLOAD_FAILED";
 }

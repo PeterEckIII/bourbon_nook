@@ -1,11 +1,14 @@
 package com.bourbon_nook.bottles_api.controllers;
 
 import com.bourbon_nook.bottles_api.dtos.BottleDto;
+import com.bourbon_nook.bottles_api.dtos.ImageDto;
 import com.bourbon_nook.bottles_api.mappers.BottleMapper;
 import com.bourbon_nook.bottles_api.models.requests.CreateBottleRequest;
 import com.bourbon_nook.bottles_api.models.responses.BottleResponseModel;
+import com.bourbon_nook.bottles_api.models.responses.ImageResponseModel;
 import com.bourbon_nook.bottles_api.services.BottleService;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
@@ -14,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -22,16 +26,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/bottles")
 public class BottleController {
+    private final ModelMapper modelMapper;
     Logger logger = LoggerFactory.getLogger(BottleController.class);
 
     private final Environment env;
     private final BottleService bottleService;
     private final BottleMapper bottleMapper;
 
-    public BottleController(Environment env, BottleService bottleService, BottleMapper bottleMapper) {
+    public BottleController(Environment env, BottleService bottleService, BottleMapper bottleMapper, ModelMapper modelMapper) {
         this.env = env;
         this.bottleService = bottleService;
         this.bottleMapper = bottleMapper;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/status/healthcheck")
@@ -105,6 +111,18 @@ public class BottleController {
         BottleDto createdBottle = bottleService.createBottle(userId, bottleDto);
         BottleResponseModel returnValue = bottleMapper.toResponseModel(createdBottle);
         return ResponseEntity.status(HttpStatus.CREATED).body(returnValue);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping(path="/{bottleId}/image", consumes="multipart/form-data")
+    public ResponseEntity<ImageResponseModel> imageCreate(@PathVariable String bottleId,
+                                                          @RequestParam("file") MultipartFile file,
+                                                          Authentication authentication
+    ) {
+        String userId = authentication.getName();
+        ImageDto image = bottleService.uploadImage(userId, bottleId, file);
+        ImageResponseModel imageResponse = modelMapper.map(image, ImageResponseModel.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(imageResponse);
     }
 
     @PreAuthorize("isAuthenticated()")
