@@ -5,11 +5,14 @@ import com.bourbon_nook.users_api.dtos.UserSummaryDto;
 import com.bourbon_nook.users_api.entities.FollowEntity;
 import com.bourbon_nook.users_api.entities.UserEntity;
 import com.bourbon_nook.users_api.exceptions.AlreadyFollowingException;
+import com.bourbon_nook.users_api.exceptions.FollowException;
+import com.bourbon_nook.users_api.exceptions.InvalidFollowerException;
 import com.bourbon_nook.users_api.exceptions.NotFollowingException;
 import com.bourbon_nook.users_api.exceptions.SelfFollowException;
 import com.bourbon_nook.users_api.exceptions.UserNotFoundException;
 import com.bourbon_nook.users_api.repositories.FollowRepository;
 import com.bourbon_nook.users_api.repositories.UserRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -37,11 +40,19 @@ public class FollowServiceImpl implements FollowService {
             throw new AlreadyFollowingException("You're already following this user");
         }
 
+        if(!userRepository.existsById(followerId)) {
+            throw new InvalidFollowerException("Authenticated user " + followerId + " could not be found");
+        }
+
         UserEntity follower = userRepository.getReferenceById(followerId);
         UserEntity followee = userRepository.findById(followeeId).orElseThrow(() -> new UserNotFoundException("Cannot find user " + followeeId));
 
         FollowEntity follow = new FollowEntity(follower, followee);
-        followRepository.save(follow);
+        try {
+            followRepository.save(follow);
+        } catch (DataIntegrityViolationException ex) {
+            throw new FollowException("Unable to complete follow request");
+        }
     }
 
     @Override
