@@ -85,6 +85,15 @@ export interface BottleResponseModel {
   killDate?: string;
 }
 
+export interface ImageResponseModel {
+  imageUrl?: string;
+  bottleId?: string;
+}
+
+export type ImageCreateBody = {
+  file: Blob;
+};
+
 export type UserBottlesFilterParams = {
 name?: string;
 distillery?: string;
@@ -362,6 +371,70 @@ const {mutation: mutationOptions} = options ?
         TContext
       > => {
       return useMutation(getBottleDeleteMutationOptions(options), queryClient);
+    }
+
+export const imageCreate = (
+    bottleId: string,
+    imageCreateBody?: ImageCreateBody,
+ signal?: AbortSignal
+) => {
+
+      const formData = new FormData();
+if(imageCreateBody?.file !== undefined) {
+ formData.append(`file`, imageCreateBody.file);
+ }
+
+      return customBottlesInstance<ImageResponseModel>(
+      {url: `/bottles/${bottleId}/image`, method: 'POST',
+      headers: {'Content-Type': 'multipart/form-data', },
+       data: formData, signal
+    },
+      );
+    }
+
+
+
+
+export const getImageCreateMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof imageCreate>>, TError,{bottleId: string;data?: ImageCreateBody}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof imageCreate>>, TError,{bottleId: string;data?: ImageCreateBody}, TContext> => {
+
+const mutationKey = ['imageCreate'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof imageCreate>>, {bottleId: string;data?: ImageCreateBody}> = (props) => {
+          const {bottleId,data} = props ?? {};
+
+          return  imageCreate(bottleId,data,)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ImageCreateMutationResult = NonNullable<Awaited<ReturnType<typeof imageCreate>>>
+    export type ImageCreateMutationBody = ImageCreateBody | undefined
+    export type ImageCreateMutationError = unknown
+
+    export const useImageCreate = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof imageCreate>>, TError,{bottleId: string;data?: ImageCreateBody}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof imageCreate>>,
+        TError,
+        {bottleId: string;data?: ImageCreateBody},
+        TContext
+      > => {
+      return useMutation(getImageCreateMutationOptions(options), queryClient);
     }
 
 export const bottleCreate = (
