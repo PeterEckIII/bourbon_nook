@@ -52,7 +52,7 @@ public class WebSecurity {
                         auth
                                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                                 .requestMatchers("/auth/login", "/auth/register", "/auth/logout", "/auth/refresh", "/auth/check-username", "/auth/check-email").permitAll()
-                                .requestMatchers("/auth/me", "/auth/change-password").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and isAuthenticated()"))
+                                .requestMatchers("/auth/me", "/auth/change-password", "/follows/**").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and isAuthenticated()"))
                                 .requestMatchers("/users/**").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and hasRole('ADMIN')"))
                                 .requestMatchers(HttpMethod.GET, "/actuator/**").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and hasRole('ADMIN')"))
                                 .requestMatchers("/h2-console/**").access(new WebExpressionAuthorizationManager(gatewayIpExpression + " and hasRole('ADMIN')"))

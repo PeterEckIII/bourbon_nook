@@ -111,6 +111,96 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
+    @ExceptionHandler(SelfFollowException.class)
+    public ResponseEntity<ErrorResponse> handleSelfFollowException(SelfFollowException ex) {
+        log.warn("Self follow attempt: {}", ex.getMessage());
+
+        ErrorResponse error = new ErrorResponse.Builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .errorCode(ErrorCodes.CANNOT_SELF_FOLLOW)
+                .message(ex.getMessage())
+                .developerMessage("A user cannot follow themselves")
+                .path(request.getRequestURI())
+                .traceId(getTraceId())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(AlreadyFollowingException.class)
+    public ResponseEntity<ErrorResponse> handleAlreadyFollowingException(AlreadyFollowingException ex) {
+        log.warn("Already following: {}", ex.getMessage());
+
+        ErrorResponse error = new ErrorResponse.Builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.CONFLICT.value())
+                .error(HttpStatus.CONFLICT.getReasonPhrase())
+                .errorCode(ErrorCodes.ALREADY_FOLLOWING)
+                .message(ex.getMessage())
+                .developerMessage("Follow relationship already exists")
+                .path(request.getRequestURI())
+                .traceId(getTraceId())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+
+    @ExceptionHandler(NotFollowingException.class)
+    public ResponseEntity<ErrorResponse> handleNotFollowingException(NotFollowingException ex) {
+        log.warn("Not following: {}", ex.getMessage());
+
+        ErrorResponse error = new ErrorResponse.Builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.NOT_FOUND.value())
+                .error(HttpStatus.NOT_FOUND.getReasonPhrase())
+                .errorCode(ErrorCodes.NOT_FOLLOWING)
+                .message(ex.getMessage())
+                .developerMessage("Follow relationship does not exist")
+                .path(request.getRequestURI())
+                .traceId(getTraceId())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(InvalidFollowerException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidFollowerException(InvalidFollowerException ex) {
+        log.warn("Invalid follower: {}", ex.getMessage());
+
+        ErrorResponse error = new ErrorResponse.Builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .error(HttpStatus.UNAUTHORIZED.getReasonPhrase())
+                .errorCode(ErrorCodes.INVALID_FOLLOWER)
+                .message(ex.getMessage())
+                .developerMessage("Authenticated user could not be resolved to an existing account")
+                .path(request.getRequestURI())
+                .traceId(getTraceId())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
+
+    @ExceptionHandler(FollowException.class)
+    public ResponseEntity<ErrorResponse> handleFollowException(FollowException ex) {
+        log.warn("Follow error: {}", ex.getMessage());
+
+        ErrorResponse error = new ErrorResponse.Builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .errorCode(ErrorCodes.CANNOT_FOLLOW)
+                .message(ex.getMessage())
+                .developerMessage("Follow operation could not be completed")
+                .path(request.getRequestURI())
+                .traceId(getTraceId())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<ErrorResponse> handleUnauthorizedException(UnauthorizedException ex) {
         log.warn("Unauthorized: {}", ex.getMessage());
