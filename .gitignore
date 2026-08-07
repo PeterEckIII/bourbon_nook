@@ -17,3 +17,5 @@ reviews-api/src/main/resources/
 
 .env
 .dev/
+
+frontend/.tanstack
