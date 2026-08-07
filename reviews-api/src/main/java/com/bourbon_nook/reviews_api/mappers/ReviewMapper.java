@@ -38,8 +38,8 @@ public class ReviewMapper {
 
         return new ReviewDto(
                 reviewEntity.getId(),
-                reviewEntity.getUserId(),
                 reviewEntity.getBottleId(),
+                reviewEntity.getUserId(),
                 reviewEntity.getSetting(),
                 reviewEntity.getReviewDate(),
                 reviewEntity.getRestTimeMin(),
