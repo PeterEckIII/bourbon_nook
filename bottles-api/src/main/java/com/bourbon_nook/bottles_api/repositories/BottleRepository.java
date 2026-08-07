@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface BottleRepository extends JpaRepository<BottleEntity, String> {
     List<BottleEntity> findAllByUserId(String userId);
     Optional<BottleEntity> findByIdAndUserId(String id, String userId);
+    Long countBottlesByUserId(String userId);
     @Query("SELECT b FROM BottleEntity b WHERE " +
                     "(:userId IS NULL OR b.userId = :userId) AND " +
                     "(:name IS NULL OR LOWER(b.name) LIKE LOWER(CONCAT('%', :name, '%'))) AND " +

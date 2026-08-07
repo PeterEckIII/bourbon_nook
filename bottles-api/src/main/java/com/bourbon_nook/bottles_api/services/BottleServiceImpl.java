@@ -127,4 +127,9 @@ public class BottleServiceImpl implements BottleService {
                 .orElseThrow(() -> new BottleNotFoundException("Bottle with id: " + id + " not found"));
         bottleRepository.delete(bottleToDelete);
     }
+
+    @Override
+    public long countBottles(String userId) {
+        return bottleRepository.countBottlesByUserId(userId);
+    }
 }

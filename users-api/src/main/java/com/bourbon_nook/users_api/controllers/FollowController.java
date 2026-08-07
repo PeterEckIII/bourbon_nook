@@ -25,39 +25,39 @@ public class FollowController {
     }
 
     @PostMapping("/{followeeId}")
-    public ResponseEntity<Void> follow(@PathVariable("followeeId") Long followeeId) {
-        followService.follow(authService.getCurrentUserId(), followeeId);
+    public ResponseEntity<Void> follow(@PathVariable("followeeId") String followeeId) {
+        followService.follow(authService.getCurrentUserUuid(), followeeId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{followeeId}")
-    public ResponseEntity<Void> unfollow(@PathVariable("followeeId") Long followeeId) {
-        followService.unfollow(authService.getCurrentUserId(), followeeId);
+    public ResponseEntity<Void> unfollow(@PathVariable("followeeId") String followeeId) {
+        followService.unfollow(authService.getCurrentUserUuid(), followeeId);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{userId}/followers")
-    public Page<UserSummaryDto> getFollowers(@PathVariable("userId") Long userId,
+    public Page<UserSummaryDto> followers(@PathVariable("userId") String userId,
                                              @PageableDefault(size=20) Pageable pageable
     ) {
         return followService.getFollowers(userId, pageable);
     }
 
     @GetMapping("/{userId}/following")
-    public Page<UserSummaryDto> getFollowing(@PathVariable("userId") Long userId,
+    public Page<UserSummaryDto> following(@PathVariable("userId") String userId,
                                              @PageableDefault(size=20) Pageable pageable
     ) {
         return followService.getFollowing(userId, pageable);
     }
 
     @GetMapping("/{userId}/counts")
-    public FollowCountsDto getCounts(@PathVariable("userId") Long userId) {
+    public FollowCountsDto counts(@PathVariable("userId") String userId) {
         return followService.getCounts(userId);
     }
 
     @GetMapping("/{userId}/is-following")
-    public Map<String, Boolean> isFollowing(@PathVariable("userId") Long userId) {
-        return Map.of("following", followService.isFollowing(authService.getCurrentUserId(), userId));
+    public Map<String, Boolean> isFollowing(@PathVariable("userId") String userId) {
+        return Map.of("following", followService.isFollowing(authService.getCurrentUserUuid(), userId));
     }
 
 }
