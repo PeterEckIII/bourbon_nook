@@ -4,6 +4,7 @@ import {
   useUserBottleSuspense,
 } from '../../../api/generated/bottles-api';
 import ActionButtons from '../../../components/ui/ActionButtons';
+import BottleImageUpload from '../../../components/Forms/BottleImageUpload';
 import StatusPill from '../../../components/Tables/StatusPill';
 import noBottleImage from '../../../assets/brand/png/bottle-cancel-1024.png';
 
@@ -58,22 +59,25 @@ function RouteComponent() {
       </Link>
 
       <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[320px_1fr]">
-        <div className="aspect-3/4 w-full overflow-hidden rounded-lg border border-amber-900/15 bg-cream p-4">
-          {bottle.imageUrl ? (
-            <img
-              src={bottle.imageUrl}
-              alt={bottle.name ?? 'Bottle'}
-              className="h-full w-full object-contain"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center text-center text-sm text-ink/40">
+        <div className="space-y-3">
+          <div className="aspect-3/4 w-full overflow-hidden rounded-lg border border-amber-900/15 bg-cream p-4">
+            {bottle.imageUrl ? (
               <img
-                src={noBottleImage}
-                alt="No bottle image"
+                src={bottle.imageUrl}
+                alt={bottle.name ?? 'Bottle'}
                 className="h-full w-full object-contain"
               />
-            </div>
-          )}
+            ) : (
+              <div className="flex h-full w-full items-center justify-center text-center text-sm text-ink/40">
+                <img
+                  src={noBottleImage}
+                  alt="No bottle image"
+                  className="h-full w-full object-contain"
+                />
+              </div>
+            )}
+          </div>
+          <BottleImageUpload bottleId={bottleId} hasImage={!!bottle.imageUrl} />
         </div>
 
         <div className="space-y-6">

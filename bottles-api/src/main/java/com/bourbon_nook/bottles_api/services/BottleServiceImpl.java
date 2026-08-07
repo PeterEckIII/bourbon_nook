@@ -1,25 +1,39 @@
 package com.bourbon_nook.bottles_api.services;
 
 import com.bourbon_nook.bottles_api.dtos.BottleDto;
+import com.bourbon_nook.bottles_api.dtos.ImageDto;
 import com.bourbon_nook.bottles_api.entities.BottleEntity;
 import com.bourbon_nook.bottles_api.exceptions.BottleNotFoundException;
+import com.bourbon_nook.bottles_api.exceptions.ImageUploadException;
 import com.bourbon_nook.bottles_api.mappers.BottleMapper;
 import com.bourbon_nook.bottles_api.repositories.BottleRepository;
+import io.awspring.cloud.s3.S3Resource;
+import io.awspring.cloud.s3.S3Template;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class BottleServiceImpl implements BottleService {
     private final BottleRepository bottleRepository;
     private final BottleMapper bottleMapper;
+    private final S3Template s3Template;
 
-    public BottleServiceImpl(BottleRepository bottleRepository, BottleMapper bottleMapper) {
+    @Value("${s3.bucket.name}")
+    private String bucketName;
+
+    public BottleServiceImpl(BottleRepository bottleRepository, BottleMapper bottleMapper, S3Template s3Template) {
         this.bottleRepository = bottleRepository;
         this.bottleMapper = bottleMapper;
+        this.s3Template = s3Template;
     }
 
     @Override
@@ -56,6 +70,24 @@ public class BottleServiceImpl implements BottleService {
         bottle.setUserId(userId);
         BottleEntity savedBottle = bottleRepository.save(bottle);
         return bottleMapper.toDto(savedBottle);
+    }
+
+    @Override
+    @Transactional
+    public ImageDto uploadImage(String userId, String bottleId, MultipartFile file) {
+        BottleEntity bottle = bottleRepository.findByIdAndUserId(bottleId, userId)
+                .orElseThrow(() -> new BottleNotFoundException("Bottle with id: " + bottleId + " not found"));
+
+        String key = bottleId + "/" + UUID.randomUUID() + "-" + file.getOriginalFilename();
+
+        try (InputStream stream = file.getInputStream()) {
+            S3Resource resource = s3Template.upload(bucketName, key, stream);
+            String imageUrl = resource.getURL().toString();
+            bottle.setImageUrl(imageUrl);
+            return new ImageDto(imageUrl, bottleId);
+        } catch (IOException e) {
+            throw new ImageUploadException("Image upload failed: " + e.getMessage());
+        }
     }
 
     @Transactional

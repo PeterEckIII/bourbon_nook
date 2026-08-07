@@ -10,6 +10,7 @@ import {
 import ActionButtons from '../components/ui/ActionButtons';
 import type { BottleResponseModel } from '../api/generated/bottles-api';
 import StatusPill from '../components/Tables/StatusPill';
+import BottleName from '../components/Tables/shared/BottleName';
 
 export const features = tableFeatures({
   rowSortingFeature,
@@ -39,7 +40,12 @@ const columns = columnHelper.columns([
     columns: columnHelper.columns([
       columnHelper.accessor('name', {
         header: 'Name',
-        cell: (info) => info.getValue(),
+        cell: (info) => (
+          <BottleName
+            name={info.getValue()!}
+            bottleId={info.row.original.id!}
+          />
+        ),
       }),
       columnHelper.accessor('type', {
         header: 'Type',

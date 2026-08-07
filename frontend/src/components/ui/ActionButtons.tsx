@@ -10,7 +10,6 @@ import {
   getUserBottlesQueryKey,
 } from '../../api/generated/bottles-api';
 import { getApiErrorMessage } from '../../api/errors';
-import LinkIcon from '../Icons/LinkIcon';
 
 const labeledButtonClasses =
   'inline-flex cursor-pointer items-center gap-2 rounded-md border border-ink/20 px-3 py-2 text-sm font-medium text-ink transition-colors duration-150 hover:bg-ink/5 focus:outline-none focus:ring-2 focus:ring-amber-500/70 focus:ring-offset-2 focus:ring-offset-cream';
@@ -93,21 +92,6 @@ export default function ActionButtons({
           onCancel={() => setIsConfirmOpen(false)}
         />
       </div>
-      {!showLabels && (
-        <div>
-          <button type="button">
-            <Link
-              to="/bottles/$bottleId"
-              params={{ bottleId }}
-              title="View Bottle"
-              aria-label="View Bottle"
-              className="cursor-pointer"
-            >
-              <LinkIcon />
-            </Link>
-          </button>
-        </div>
-      )}
     </div>
   );
 }
