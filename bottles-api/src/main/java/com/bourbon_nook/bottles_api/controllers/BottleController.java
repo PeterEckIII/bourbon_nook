@@ -75,6 +75,14 @@ public class BottleController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @GetMapping("/count")
+    public ResponseEntity<Long> countBottles(Authentication authentication) {
+        String userId = authentication.getName();
+        Long bottleCount = bottleService.countBottles(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(bottleCount);
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/filter")
     public ResponseEntity<List<BottleResponseModel>> userBottlesFilter(Authentication authentication,
                                                                        @RequestParam(required = false) String name,

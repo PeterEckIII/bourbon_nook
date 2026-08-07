@@ -21,6 +21,7 @@ import { Route as AuthenticatedAdminAdminDashboardRouteImport } from './routes/_
 import { Route as AuthenticatedBottlesIndexRouteImport } from './routes/_authenticated/bottles/index'
 import { Route as AuthenticatedBottlesBottleIdRouteImport } from './routes/_authenticated/bottles/$bottleId'
 import { Route as AuthenticatedBottlesNewRouteImport } from './routes/_authenticated/bottles/new'
+import { Route as AuthenticatedProfileIndexRouteImport } from './routes/_authenticated/profile/index'
 import { Route as AuthenticatedReviewsIndexRouteImport } from './routes/_authenticated/reviews/index'
 import { Route as AuthenticatedReviewsReviewIdRouteImport } from './routes/_authenticated/reviews/$reviewId'
 import { Route as AuthenticatedReviewsNewRouteImport } from './routes/_authenticated/reviews/new'
@@ -87,6 +88,12 @@ const AuthenticatedBottlesNewRoute = AuthenticatedBottlesNewRouteImport.update({
   path: '/bottles/new',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedProfileIndexRoute =
+  AuthenticatedProfileIndexRouteImport.update({
+    id: '/profile/',
+    path: '/profile/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedReviewsIndexRoute =
   AuthenticatedReviewsIndexRouteImport.update({
     id: '/reviews/',
@@ -124,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/reviews/$reviewId': typeof AuthenticatedReviewsReviewIdRoute
   '/reviews/new': typeof AuthenticatedReviewsNewRoute
   '/bottles/': typeof AuthenticatedBottlesIndexRoute
+  '/profile/': typeof AuthenticatedProfileIndexRoute
   '/reviews/': typeof AuthenticatedReviewsIndexRoute
   '/bottles/$bottleId/edit': typeof AuthenticatedBottlesBottleIdEditRoute
 }
@@ -140,6 +148,7 @@ export interface FileRoutesByTo {
   '/reviews/$reviewId': typeof AuthenticatedReviewsReviewIdRoute
   '/reviews/new': typeof AuthenticatedReviewsNewRoute
   '/bottles': typeof AuthenticatedBottlesIndexRoute
+  '/profile': typeof AuthenticatedProfileIndexRoute
   '/reviews': typeof AuthenticatedReviewsIndexRoute
   '/bottles/$bottleId/edit': typeof AuthenticatedBottlesBottleIdEditRoute
 }
@@ -159,6 +168,7 @@ export interface FileRoutesById {
   '/_authenticated/reviews/$reviewId': typeof AuthenticatedReviewsReviewIdRoute
   '/_authenticated/reviews/new': typeof AuthenticatedReviewsNewRoute
   '/_authenticated/bottles/': typeof AuthenticatedBottlesIndexRoute
+  '/_authenticated/profile/': typeof AuthenticatedProfileIndexRoute
   '/_authenticated/reviews/': typeof AuthenticatedReviewsIndexRoute
   '/_authenticated/bottles/$bottleId_/edit': typeof AuthenticatedBottlesBottleIdEditRoute
 }
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/reviews/$reviewId'
     | '/reviews/new'
     | '/bottles/'
+    | '/profile/'
     | '/reviews/'
     | '/bottles/$bottleId/edit'
   fileRoutesByTo: FileRoutesByTo
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/reviews/$reviewId'
     | '/reviews/new'
     | '/bottles'
+    | '/profile'
     | '/reviews'
     | '/bottles/$bottleId/edit'
   id:
@@ -211,6 +223,7 @@ export interface FileRouteTypes {
     | '/_authenticated/reviews/$reviewId'
     | '/_authenticated/reviews/new'
     | '/_authenticated/bottles/'
+    | '/_authenticated/profile/'
     | '/_authenticated/reviews/'
     | '/_authenticated/bottles/$bottleId_/edit'
   fileRoutesById: FileRoutesById
@@ -309,6 +322,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBottlesNewRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/profile/': {
+      id: '/_authenticated/profile/'
+      path: '/profile'
+      fullPath: '/profile/'
+      preLoaderRoute: typeof AuthenticatedProfileIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/reviews/': {
       id: '/_authenticated/reviews/'
       path: '/reviews'
@@ -360,6 +380,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedReviewsReviewIdRoute: typeof AuthenticatedReviewsReviewIdRoute
   AuthenticatedReviewsNewRoute: typeof AuthenticatedReviewsNewRoute
   AuthenticatedBottlesIndexRoute: typeof AuthenticatedBottlesIndexRoute
+  AuthenticatedProfileIndexRoute: typeof AuthenticatedProfileIndexRoute
   AuthenticatedReviewsIndexRoute: typeof AuthenticatedReviewsIndexRoute
   AuthenticatedBottlesBottleIdEditRoute: typeof AuthenticatedBottlesBottleIdEditRoute
 }
@@ -373,6 +394,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedReviewsReviewIdRoute: AuthenticatedReviewsReviewIdRoute,
   AuthenticatedReviewsNewRoute: AuthenticatedReviewsNewRoute,
   AuthenticatedBottlesIndexRoute: AuthenticatedBottlesIndexRoute,
+  AuthenticatedProfileIndexRoute: AuthenticatedProfileIndexRoute,
   AuthenticatedReviewsIndexRoute: AuthenticatedReviewsIndexRoute,
   AuthenticatedBottlesBottleIdEditRoute: AuthenticatedBottlesBottleIdEditRoute,
 }

@@ -72,6 +72,14 @@ public class ReviewController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @GetMapping("/count")
+    public ResponseEntity<Long> countReviews(Authentication authentication) {
+        String userId = authentication.getName();
+        Long reviewCount = reviewService.countReviews(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(reviewCount);
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/new")
     public ResponseEntity<ReviewResponseModel> reviewCreate(@Valid @RequestBody CreateReviewRequest createReviewRequest,
                                                             Authentication authentication

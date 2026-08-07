@@ -47,6 +47,17 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    public String getCurrentUserUuid() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth == null || !auth.isAuthenticated() || auth instanceof AnonymousAuthenticationToken) {
+            return null;
+        }
+        String email = auth.getName();
+        UserEntity existingUser = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return existingUser.getUserId();
+    }
+
+    @Override
     public boolean verifyPassword(String email, String password) {
         UserEntity user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         return passwordEncoder.matches(password, user.getEncryptedPassword());

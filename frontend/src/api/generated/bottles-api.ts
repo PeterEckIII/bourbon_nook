@@ -907,3 +907,142 @@ export function useUserBottlesFilterSuspense<TData = Awaited<ReturnType<typeof u
 
   return withQueryKey(query, queryOptions.queryKey);
 }
+
+
+
+
+
+
+
+export const countBottles = (
+
+ signal?: AbortSignal
+) => {
+
+
+      return customBottlesInstance<number>(
+      {url: `/bottles/count`, method: 'GET', signal
+    },
+      );
+    }
+
+
+
+
+export const getCountBottlesQueryKey = () => {
+    return [
+    `/bottles/count`
+    ] as const;
+    }
+
+
+export const getCountBottlesQueryOptions = <TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getCountBottlesQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof countBottles>>> = ({ signal }) => countBottles(signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type CountBottlesQueryResult = NonNullable<Awaited<ReturnType<typeof countBottles>>>
+export type CountBottlesQueryError = unknown
+
+
+export function useCountBottles<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof countBottles>>,
+          TError,
+          Awaited<ReturnType<typeof countBottles>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCountBottles<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof countBottles>>,
+          TError,
+          Awaited<ReturnType<typeof countBottles>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCountBottles<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useCountBottles<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getCountBottlesQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getCountBottlesSuspenseQueryOptions = <TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>( options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getCountBottlesQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof countBottles>>> = ({ signal }) => countBottles(signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type CountBottlesSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof countBottles>>>
+export type CountBottlesSuspenseQueryError = unknown
+
+
+export function useCountBottlesSuspense<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
+  options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCountBottlesSuspense<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCountBottlesSuspense<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useCountBottlesSuspense<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getCountBottlesSuspenseQueryOptions(options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}

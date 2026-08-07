@@ -6,11 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface FollowService {
-    void follow(Long followerId, Long followeeId);
-    void unfollow(Long followerId, Long followeeId);
-    boolean isFollowing(Long followerId, Long followeeId);
-    boolean isMutual(Long userAId, Long userBId);
-    Page<UserSummaryDto> getFollowers(Long userId, Pageable pageable);
-    Page<UserSummaryDto> getFollowing(Long userId, Pageable pageable);
-    FollowCountsDto getCounts(Long userId);
+    void follow(String followerId, String followeeId);
+    void unfollow(String followerId, String followeeId);
+    boolean isFollowing(String followerId, String followeeId);
+    boolean isMutual(String userAId, String userBId);
+    Page<UserSummaryDto> getFollowers(String userId, Pageable pageable);
+    Page<UserSummaryDto> getFollowing(String userId, Pageable pageable);
+    FollowCountsDto getCounts(String userId);
 }

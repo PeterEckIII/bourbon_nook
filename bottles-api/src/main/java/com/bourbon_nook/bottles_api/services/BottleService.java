@@ -14,6 +14,7 @@ public interface BottleService {
     ImageDto uploadImage(String userId, String bottleId, MultipartFile file);
     BottleDto updateBottle(String userId, String id, BottleDto bottleDto);
     void deleteBottle(String userId, String id);
+    long countBottles(String userId);
     List<BottleDto> filterBottles(String userId,
                                   String name,
                                   String distillery,

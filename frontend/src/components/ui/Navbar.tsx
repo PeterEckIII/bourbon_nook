@@ -13,6 +13,7 @@ const navLinks = [
   { to: '/', label: 'Home' },
   { to: '/bottles', label: 'Bottles' },
   { to: '/reviews', label: 'Reviews' },
+  { to: '/profile', label: 'Profile' },
 ];
 
 export default function Navbar() {

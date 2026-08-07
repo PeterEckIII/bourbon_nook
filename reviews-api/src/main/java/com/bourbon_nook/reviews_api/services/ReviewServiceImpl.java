@@ -47,6 +47,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public long countReviews(String userId) {
+        return reviewRepository.countReviewsByUserId(userId);
+    }
+
+    @Override
     public ReviewDto createReview(String userId, ReviewDto reviewDto) {
         ReviewEntity review = reviewMapper.toEntity(reviewDto);
         review.setUserId(userId);
