@@ -43,31 +43,27 @@ export default function ActionButtons({
       className={showLabels ? 'flex flex-wrap gap-3' : 'flex justify-around'}
     >
       <div>
-        <button type="button">
-          <Link
-            to="/reviews/new"
-            title="Write Review"
-            aria-label="Add Review"
-            className={showLabels ? labeledButtonClasses : undefined}
-          >
-            <PlusIcon />
-            {showLabels && 'Write Review'}
-          </Link>
-        </button>
+        <Link
+          to="/reviews/new"
+          title="Write Review"
+          aria-label="Write Review"
+          className={showLabels ? labeledButtonClasses : undefined}
+        >
+          <PlusIcon />
+          {showLabels && 'Write Review'}
+        </Link>
       </div>
       <div>
-        <button type="button">
-          <Link
-            to="/bottles/$bottleId/edit"
-            params={{ bottleId }}
-            title="Edit Bottle"
-            aria-label="Edit Bottle"
-            className={showLabels ? labeledButtonClasses : undefined}
-          >
-            <EditIcon />
-            {showLabels && 'Edit Bottle'}
-          </Link>
-        </button>
+        <Link
+          to="/bottles/$bottleId/edit"
+          params={{ bottleId }}
+          title="Edit Bottle"
+          aria-label="Edit Bottle"
+          className={showLabels ? labeledButtonClasses : undefined}
+        >
+          <EditIcon />
+          {showLabels && 'Edit Bottle'}
+        </Link>
       </div>
       <div>
         <button

@@ -4,7 +4,7 @@ import {
   RouterProvider,
   createMemoryHistory,
 } from '@tanstack/react-router';
-import { QueryClient } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { vi } from 'vitest';
 
 import { routeTree } from '../routeTree.gen';
@@ -72,25 +72,29 @@ export function renderWithFileRoutes({
   ...renderOptions
 }: RenderWithFileRoutesOptions = {}) {
   const auth = routerContext.auth ?? createMockAuthState();
+  const queryClient = routerContext.queryClient ?? createTestQueryClient();
   const router = createRouter({
     routeTree,
     history: createMemoryHistory({
       initialEntries: [initialLocation],
     }),
     context: {
-      queryClient: createTestQueryClient(),
       ...routerContext,
+      queryClient,
       auth,
     },
   });
 
   return {
     ...render(
-      <AuthContext.Provider value={auth}>
-        <RouterProvider router={router} />
-      </AuthContext.Provider>,
+      <QueryClientProvider client={queryClient}>
+        <AuthContext.Provider value={auth}>
+          <RouterProvider router={router} />
+        </AuthContext.Provider>
+      </QueryClientProvider>,
       renderOptions,
     ),
+    router,
   };
 }
 

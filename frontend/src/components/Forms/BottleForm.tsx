@@ -55,7 +55,6 @@ export default function BottleForm({
                 label="Bottle Name"
                 type="text"
                 placeholder="Buffalo Trace"
-                required
               />
             )}
           />
@@ -67,7 +66,6 @@ export default function BottleForm({
                   label="Liquor Type"
                   type="text"
                   placeholder="Bourbon"
-                  required
                 />
               )}
             />
@@ -81,7 +79,6 @@ export default function BottleForm({
                     { value: 'OPENED', label: 'Opened' },
                     { value: 'FINISHED', label: 'Finished' },
                   ]}
-                  required
                 />
               )}
             />
@@ -100,7 +97,6 @@ export default function BottleForm({
                   label="Distillery"
                   type="text"
                   placeholder="Buffalo Trace, Heaven Hill"
-                  required
                 />
               )}
             />
@@ -111,7 +107,6 @@ export default function BottleForm({
                   label="Producer"
                   type="text"
                   placeholder="Sazerac, MGP"
-                  required
                 />
               )}
             />
@@ -122,7 +117,6 @@ export default function BottleForm({
                   label="Country of Origin"
                   type="text"
                   placeholder="USA, Japan, Scotland"
-                  required
                 />
               )}
             />
@@ -133,7 +127,6 @@ export default function BottleForm({
                   label="Region"
                   type="text"
                   placeholder="KY, Islay, Hokkaido"
-                  required
                 />
               )}
             />
@@ -147,7 +140,7 @@ export default function BottleForm({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <form.AppField
               name="price"
-              children={(field) => <field.NumberField label="Price" required />}
+              children={(field) => <field.NumberField label="Price" />}
             />
             <form.AppField
               name="age"
@@ -156,19 +149,16 @@ export default function BottleForm({
                   label="Age"
                   type="text"
                   placeholder="10yrs, 6yrs 7mos, NAS"
-                  required
                 />
               )}
             />
             <form.AppField
               name="proof"
-              children={(field) => <field.NumberField label="Proof" required />}
+              children={(field) => <field.NumberField label="Proof" />}
             />
             <form.AppField
               name="releaseYear"
-              children={(field) => (
-                <field.NumberField label="Release Year" required />
-              )}
+              children={(field) => <field.NumberField label="Release Year" />}
             />
           </div>
         </div>
@@ -185,7 +175,6 @@ export default function BottleForm({
                   label="Barrel Information"
                   type="text"
                   placeholder="Binny's Pick, Barrel A225G3"
-                  required
                 />
               )}
             />
@@ -196,7 +185,6 @@ export default function BottleForm({
                   label="Finishing Barrels"
                   type="text"
                   placeholder="Port, Sauternes, Tequila"
-                  required
                 />
               )}
             />
@@ -205,15 +193,8 @@ export default function BottleForm({
 
         <div className="space-y-4 border-t border-ink/10 pt-6">
           <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-            Extras
+            Timeline
           </h2>
-          {/* Will need to change */}
-          <form.AppField
-            name="imageUrl"
-            children={(field) => (
-              <field.TextField label="Image URL" type="text" />
-            )}
-          />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <form.AppField
               name="openDate"
@@ -225,7 +206,6 @@ export default function BottleForm({
             />
           </div>
         </div>
-
         <form.AppForm>
           <form.SubmitButton label="Save Bottle" fullWidth />
         </form.AppForm>

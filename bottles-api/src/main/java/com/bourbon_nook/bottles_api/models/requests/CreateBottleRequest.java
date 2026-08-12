@@ -16,37 +16,26 @@ public class CreateBottleRequest {
     @NotNull(message = "Status is required")
     private BottleStatus status;
 
-    @NotNull(message = "Distillery is required")
     private String distillery;
 
-    @NotNull(message = "Producer is required")
     private String producer;
 
-    @NotNull(message = "Country is required")
     private String country;
 
-    @NotNull(message = "Region is required")
     private String region;
 
-    @NotNull(message = "Price is required")
     private BigDecimal price;
 
-    @NotNull(message = "Age is required")
     private String age;
 
-    @NotNull(message = "Proof is required")
     private double proof;
 
-    @NotNull(message = "Release year is required")
     private int releaseYear;
 
-    @NotNull(message = "Barrel information is required. Type 'N/A' if no additional information is given")
     private String barrelInformation;
 
-    @NotNull(message = "Finishing is required. Type 'N/A' if no finishing barrels were used")
     private String finishing;
 
-    @NotNull(message = "Image URL is required")
     private String imageUrl;
 
     private LocalDate openDate;

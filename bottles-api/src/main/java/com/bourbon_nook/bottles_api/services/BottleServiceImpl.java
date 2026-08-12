@@ -4,6 +4,7 @@ import com.bourbon_nook.bottles_api.dtos.BottleDto;
 import com.bourbon_nook.bottles_api.dtos.ImageDto;
 import com.bourbon_nook.bottles_api.entities.BottleEntity;
 import com.bourbon_nook.bottles_api.exceptions.BottleNotFoundException;
+import com.bourbon_nook.bottles_api.exceptions.DatabaseErrorException;
 import com.bourbon_nook.bottles_api.exceptions.ImageUploadException;
 import com.bourbon_nook.bottles_api.mappers.BottleMapper;
 import com.bourbon_nook.bottles_api.repositories.BottleRepository;
@@ -66,10 +67,14 @@ public class BottleServiceImpl implements BottleService {
 
     @Override
     public BottleDto createBottle(String userId, BottleDto bottleDto) {
-        BottleEntity bottle = bottleMapper.toEntity(bottleDto);
-        bottle.setUserId(userId);
-        BottleEntity savedBottle = bottleRepository.save(bottle);
-        return bottleMapper.toDto(savedBottle);
+        try {
+            BottleEntity bottle = bottleMapper.toEntity(bottleDto);
+            bottle.setUserId(userId);
+            BottleEntity savedBottle = bottleRepository.save(bottle);
+            return bottleMapper.toDto(savedBottle);
+        } catch(DatabaseErrorException e) {
+            throw new DatabaseErrorException("Could not save bottle: " + e.getMessage());
+        }
     }
 
     @Override
