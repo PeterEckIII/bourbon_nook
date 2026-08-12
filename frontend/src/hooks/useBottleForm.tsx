@@ -10,8 +10,8 @@ import { useAppForm } from './form';
 import { getApiErrorMessage } from '../api/errors';
 
 const bottleSchema = z.object({
-  name: z.string('Name is required'),
-  type: z.string('Type is required'),
+  name: z.string().min(1, 'Name is required'),
+  type: z.string().min(1, 'Type is required'),
   status: z.enum(['OPENED', 'SEALED', 'FINISHED'], 'Status is required'),
   distillery: z.string().optional(),
   producer: z.string().optional(),
@@ -23,7 +23,6 @@ const bottleSchema = z.object({
   releaseYear: z.number().optional(),
   barrelInformation: z.string().optional(),
   finishing: z.string().optional(),
-  imageUrl: z.string().optional(),
   openDate: z.iso.date().or(z.literal('')).optional(),
   killDate: z.iso.date().or(z.literal('')).optional(),
   mode: z.enum(['create', 'edit']),
@@ -46,7 +45,6 @@ const defaultValues: Bottle = {
   releaseYear: 0,
   barrelInformation: '',
   finishing: '',
-  imageUrl: '',
   openDate: '',
   killDate: '',
   mode: 'create',
@@ -105,7 +103,7 @@ export default function useBottleForm({
             releaseYear: payload.releaseYear || 0,
             barrelInformation: payload.barrelInformation || '',
             finishing: payload.finishing || '',
-            imageUrl: payload.imageUrl || '',
+            imageUrl: '',
             openDate: payload.openDate,
             killDate: payload.killDate,
           });
@@ -119,6 +117,7 @@ export default function useBottleForm({
       } else if (value.mode === 'edit') {
         if (!bottleId) {
           setServerError("Error! You can't edit an unknown bottle");
+          return;
         }
         try {
           const payload = {
@@ -140,7 +139,7 @@ export default function useBottleForm({
             releaseYear: payload.releaseYear || 0,
             barrelInformation: payload.barrelInformation || '',
             finishing: payload.finishing || '',
-            imageUrl: payload.imageUrl || '',
+            imageUrl: '',
             openDate: payload.openDate,
             killDate: payload.killDate,
           });

@@ -8,6 +8,7 @@ import com.bourbon_nook.bottles_api.models.responses.BottleResponseModel;
 import com.bourbon_nook.bottles_api.models.responses.ImageResponseModel;
 import com.bourbon_nook.bottles_api.services.BottleService;
 
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +54,7 @@ public class BottleController {
         List<BottleResponseModel> returnValue = new ArrayList<>();
 
         if(bottles == null || bottles.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(returnValue);
+            return ResponseEntity.status(HttpStatus.OK).body(returnValue);
         }
 
         for (BottleDto bottle : bottles) {
@@ -111,7 +112,7 @@ public class BottleController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/new")
-    public ResponseEntity<BottleResponseModel> bottleCreate(@RequestBody CreateBottleRequest createBottleRequest,
+    public ResponseEntity<BottleResponseModel> bottleCreate(@Valid @RequestBody CreateBottleRequest createBottleRequest,
                                                             Authentication authentication
     ) {
         String userId = authentication.getName();
@@ -136,7 +137,7 @@ public class BottleController {
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/{bottleId}")
     public ResponseEntity<BottleResponseModel> bottleUpdate(@PathVariable String bottleId,
-                                                            @RequestBody CreateBottleRequest createBottleRequest,
+                                                            @Valid @RequestBody CreateBottleRequest createBottleRequest,
                                                             Authentication authentication
     ) {
         String userId = authentication.getName();

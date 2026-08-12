@@ -55,7 +55,9 @@ export default function ConfirmDialog({
           {title}
         </h2>
         {description && (
-          <p className="mt-2 text-sm text-ink/70">{description}</p>
+          <p className="mt-2 text-sm text-ink/70" role="alert">
+            {description}
+          </p>
         )}
         <div className="mt-6 flex justify-end gap-3">
           <button
