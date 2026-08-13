@@ -16,7 +16,7 @@ function AdminCard({
   title: string;
   description: string;
   actionLabel: string;
-  url: string,
+  url: string;
 }) {
   return (
     <div className="rounded-lg border border-amber-900/15 bg-amber-600/5 p-6">

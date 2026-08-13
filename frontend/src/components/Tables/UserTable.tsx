@@ -1,11 +1,11 @@
-import type { UserResponseModel } from "../../api/generated/users-api";
-import useUsersTable from "../../hooks/useUsersTable";
-import TBody from "./shared/TBody";
-import THead from "./shared/THead";
+import type { UserResponseModel } from '../../api/generated/users-api';
+import useUsersTable from '../../hooks/useUsersTable';
+import TBody from './shared/TBody';
+import THead from './shared/THead';
 
 export default function UserTable({
   data,
-  className = ''
+  className = '',
 }: {
   data: UserResponseModel[];
   className?: string;
@@ -27,5 +27,5 @@ export default function UserTable({
         <TBody table={table} />
       </table>
     </div>
-  )
+  );
 }

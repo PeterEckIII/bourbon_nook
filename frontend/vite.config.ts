@@ -12,7 +12,7 @@ export default defineConfig({
   fmt: {
     semi: true,
     singleQuote: true,
-    ignorePatterns: ['src/routeTree.gen.ts'],
+    ignorePatterns: ['src/routeTree.gen.ts', 'src/api/generated/**'],
   },
   lint: {
     plugins: ['oxc', 'typescript', 'unicorn', 'react'],
@@ -32,7 +32,7 @@ export default defineConfig({
     env: {
       builtin: true,
     },
-    ignorePatterns: ['dist', 'src/routeTree.gen.ts'],
+    ignorePatterns: ['dist', 'src/routeTree.gen.ts', 'src/api/generated/**'],
     rules: {
       '@tanstack/query/exhaustive-deps': 'error',
       '@tanstack/query/no-rest-destructuring': 'warn',
