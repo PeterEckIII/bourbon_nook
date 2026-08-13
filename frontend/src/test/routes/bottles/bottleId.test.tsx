@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vite-plus/test';
+import { describe, it, expect, vi, beforeEach, beforeAll } from 'vite-plus/test';
 import { screen, waitFor } from '@testing-library/react';
 import { createMockAuthState, renderWithFileRoutes } from '../../file-route-utils';
 import type { BottleResponseModel } from '../../../api/generated/bottles-api';
