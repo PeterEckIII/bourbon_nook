@@ -32,7 +32,7 @@ export default function useChangePasswordForm() {
           newPassword: value.newPassword,
           confirmPassword: value.confirmPassword,
         });
-        navigate({ to: '/profile' });
+        return navigate({ to: '/profile' });
       } catch (error) {
         setServerError(getApiErrorMessage(error));
       }

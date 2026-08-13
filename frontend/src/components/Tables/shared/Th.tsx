@@ -26,7 +26,9 @@ export default function Th({ table, header }: ThProps) {
             : undefined
         }
       >
-        <table.FlexRender header={header} />
+        {/* table and header are always derived from the same concrete table instance by the caller;
+            TS can't express that invariant across this union of table/header instantiations. */}
+        <table.FlexRender header={header as never} />
         {{
           asc: ' 🔼',
           desc: ' 🔽',

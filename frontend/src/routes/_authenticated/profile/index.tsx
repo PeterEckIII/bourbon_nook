@@ -15,14 +15,15 @@ import {
   getCountReviewsQueryOptions,
   useCountReviewsSuspense,
 } from '../../../api/generated/reviews-api';
+import ProfileDangerArea from '../../../components/ui/ProfileDangerArea';
 
 export const Route = createFileRoute('/_authenticated/profile/')({
-  loader: ({ context }) => {
-    context.queryClient.ensureQueryData(getMeQueryOptions());
-    context.queryClient.ensureQueryData(getCountBottlesQueryOptions());
-    context.queryClient.ensureQueryData(getCountReviewsQueryOptions());
+  loader: async ({ context }) => {
+    await context.queryClient.ensureQueryData(getMeQueryOptions());
+    await context.queryClient.ensureQueryData(getCountBottlesQueryOptions());
+    await context.queryClient.ensureQueryData(getCountReviewsQueryOptions());
     const userId = context.auth.user?.id || '';
-    context.queryClient.ensureQueryData(
+    await context.queryClient.ensureQueryData(
       getFollowersQueryOptions(userId, {
         pageable: {
           page: 1,
@@ -30,7 +31,7 @@ export const Route = createFileRoute('/_authenticated/profile/')({
         },
       }),
     );
-    context.queryClient.ensureQueryData(
+    await context.queryClient.ensureQueryData(
       getFollowingQueryOptions(userId, {
         pageable: {
           page: 1,
@@ -139,6 +140,7 @@ function RouteComponent() {
           <UserList users={following.content ?? []} emptyLabel="Not following anyone yet." />
         </section>
       </div>
+      <ProfileDangerArea />
     </div>
   );
 }

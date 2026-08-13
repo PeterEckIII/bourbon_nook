@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import useChangePasswordForm from '../../../hooks/useChangePasswordForm';
 
 export const Route = createFileRoute('/_authenticated/profile/change-password')({
@@ -9,11 +9,19 @@ function RouteComponent() {
   const { form, serverError } = useChangePasswordForm();
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+      <div className="max-w-md w-full">
+        <Link
+          to="/profile"
+          className="text-sm text-ink/60 transition-colors duration-150 hover:text-ink"
+        >
+          ← Back to Profile
+        </Link>
+      </div>
       <form
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          form.handleSubmit();
+          await form.handleSubmit();
         }}
         className="max-w-md w-full space-y-4 p-6 border border-ink/15 rounded-lg bg-cream"
       >
@@ -24,22 +32,19 @@ function RouteComponent() {
           </p>
         )}
         <div>
-          <form.AppField
-            name="oldPassword"
-            children={(field) => <field.TextField label="Current Password" type="password" />}
-          />
+          <form.AppField name="oldPassword">
+            {(field) => <field.TextField label="Current Password" type="password" />}
+          </form.AppField>
         </div>
         <div>
-          <form.AppField
-            name="newPassword"
-            children={(field) => <field.TextField label="New Password" type="password" />}
-          />
+          <form.AppField name="newPassword">
+            {(field) => <field.TextField label="New Password" type="password" />}
+          </form.AppField>
         </div>
         <div>
-          <form.AppField
-            name="confirmPassword"
-            children={(field) => <field.TextField label="Confirm Password" type="password" />}
-          />
+          <form.AppField name="confirmPassword">
+            {(field) => <field.TextField label="Confirm Password" type="password" />}
+          </form.AppField>
         </div>
         <form.AppForm>
           <form.SubmitButton label="Change password" fullWidth />
