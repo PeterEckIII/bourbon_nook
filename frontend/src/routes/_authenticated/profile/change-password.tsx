@@ -1,11 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
 import useChangePasswordForm from '../../../hooks/useChangePasswordForm';
 
-export const Route = createFileRoute('/_authenticated/profile/change-password')(
-  {
-    component: RouteComponent,
-  },
-);
+export const Route = createFileRoute('/_authenticated/profile/change-password')({
+  component: RouteComponent,
+});
 
 function RouteComponent() {
   const { form, serverError } = useChangePasswordForm();
@@ -28,25 +26,19 @@ function RouteComponent() {
         <div>
           <form.AppField
             name="oldPassword"
-            children={(field) => (
-              <field.TextField label="Current Password" type="password" />
-            )}
+            children={(field) => <field.TextField label="Current Password" type="password" />}
           />
         </div>
         <div>
           <form.AppField
             name="newPassword"
-            children={(field) => (
-              <field.TextField label="New Password" type="password" />
-            )}
+            children={(field) => <field.TextField label="New Password" type="password" />}
           />
         </div>
         <div>
           <form.AppField
             name="confirmPassword"
-            children={(field) => (
-              <field.TextField label="Confirm Password" type="password" />
-            )}
+            children={(field) => <field.TextField label="Confirm Password" type="password" />}
           />
         </div>
         <form.AppForm>

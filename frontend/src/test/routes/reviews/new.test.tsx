@@ -1,9 +1,6 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vite-plus/test';
 import { screen, waitFor, within } from '@testing-library/react';
-import {
-  createMockAuthState,
-  renderWithFileRoutes,
-} from '../../file-route-utils';
+import { createMockAuthState, renderWithFileRoutes } from '../../file-route-utils';
 import userEvent from '@testing-library/user-event';
 import type { ReviewResponseModel } from '../../../api/generated/reviews-api';
 import { customReviewsInstance } from '../../../api/axios-instance';
@@ -104,17 +101,12 @@ function returnBottleResponse(): BottleResponseModel {
 }
 
 vi.mock('../../../api/axios-instance', async (importOriginal) => {
-  const actual =
-    await importOriginal<typeof import('../../../api/axios-instance')>();
+  const actual = await importOriginal<typeof import('../../../api/axios-instance')>();
 
   return {
     ...actual,
-    customReviewsInstance: vi
-      .fn()
-      .mockResolvedValue({ id: '12345', ...returnReviewResponse() }),
-    customBottlesInstance: vi
-      .fn()
-      .mockResolvedValue([{ id: '12345', ...returnBottleResponse() }]),
+    customReviewsInstance: vi.fn().mockResolvedValue({ id: '12345', ...returnReviewResponse() }),
+    customBottlesInstance: vi.fn().mockResolvedValue([{ id: '12345', ...returnBottleResponse() }]),
   };
 });
 
@@ -143,9 +135,7 @@ describe('New review route', () => {
     const mockedCustomReviewInstance = vi.mocked(customReviewsInstance);
 
     await user.click(selectors.bottleCombobox);
-    await user.click(
-      await screen.findByRole('option', { name: /test bottle/i }),
-    );
+    await user.click(await screen.findByRole('option', { name: /test bottle/i }));
 
     await user.type(selectors.reviewSetting, 'Test setting');
     await user.type(selectors.reviewDate, '2026-08-10');
@@ -191,9 +181,7 @@ describe('New review route', () => {
     });
 
     await user.click(selectors.bottleCombobox);
-    await user.click(
-      await screen.findByRole('option', { name: /test bottle/i }),
-    );
+    await user.click(await screen.findByRole('option', { name: /test bottle/i }));
     await user.type(selectors.reviewSetting, 'Test setting');
     await user.type(selectors.restTime, '15');
     await user.type(selectors.glassware, 'Test glassware');
@@ -207,9 +195,7 @@ describe('New review route', () => {
     await waitFor(() => expect(selectors.submitButton).not.toBeDisabled());
     await user.click(selectors.submitButton);
 
-    expect(await screen.getByRole('alert')).toHaveTextContent(
-      /could not create review/i,
-    );
+    expect(await screen.getByRole('alert')).toHaveTextContent(/could not create review/i);
   });
   it('shows client-side validation', async () => {
     renderNewReviewRouteWithAuth();
@@ -217,28 +203,28 @@ describe('New review route', () => {
     const user = userEvent.setup();
 
     await user.click(selectors.submitButton);
-    expect(
-      within(selectors.reviewSetting.closest('div')!).getByRole('alert'),
-    ).toHaveTextContent(/setting is required/i);
+    expect(within(selectors.reviewSetting.closest('div')!).getByRole('alert')).toHaveTextContent(
+      /setting is required/i,
+    );
 
-    expect(
-      within(selectors.glassware.closest('div')!).getByRole('alert'),
-    ).toHaveTextContent(/glassware is required/i);
+    expect(within(selectors.glassware.closest('div')!).getByRole('alert')).toHaveTextContent(
+      /glassware is required/i,
+    );
 
-    expect(
-      within(selectors.nose.closest('div')!).getByRole('alert'),
-    ).toHaveTextContent(/please provide a value for nose/i);
+    expect(within(selectors.nose.closest('div')!).getByRole('alert')).toHaveTextContent(
+      /please provide a value for nose/i,
+    );
 
-    expect(
-      within(selectors.palate.closest('div')!).getByRole('alert'),
-    ).toHaveTextContent(/please provide a value for palate/i);
+    expect(within(selectors.palate.closest('div')!).getByRole('alert')).toHaveTextContent(
+      /please provide a value for palate/i,
+    );
 
-    expect(
-      within(selectors.finish.closest('div')!).getByRole('alert'),
-    ).toHaveTextContent(/please provide a value for finish/i);
+    expect(within(selectors.finish.closest('div')!).getByRole('alert')).toHaveTextContent(
+      /please provide a value for finish/i,
+    );
 
-    expect(
-      within(selectors.thoughts.closest('div')!).getByRole('alert'),
-    ).toHaveTextContent(/please provide a value for thoughts/i);
+    expect(within(selectors.thoughts.closest('div')!).getByRole('alert')).toHaveTextContent(
+      /please provide a value for thoughts/i,
+    );
   });
 });

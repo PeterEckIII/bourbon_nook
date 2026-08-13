@@ -1,9 +1,6 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vite-plus/test';
 import { screen } from '@testing-library/react';
-import {
-  createMockAuthState,
-  renderWithFileRoutes,
-} from '../../file-route-utils';
+import { createMockAuthState, renderWithFileRoutes } from '../../file-route-utils';
 import { customReviewsInstance } from '../../../api/axios-instance';
 import type { ReviewResponseModel } from '../../../api/generated/reviews-api';
 import type { BottleResponseModel } from '../../../api/generated/bottles-api';
@@ -111,17 +108,12 @@ async function getSelectors() {
 }
 
 vi.mock('../../../api/axios-instance', async (importOriginal) => {
-  const actual =
-    await importOriginal<typeof import('../../../api/axios-instance')>();
+  const actual = await importOriginal<typeof import('../../../api/axios-instance')>();
 
   return {
     ...actual,
-    customReviewsInstance: vi
-      .fn()
-      .mockResolvedValue({ id: '12345', ...returnReviewResponse() }),
-    customBottlesInstance: vi
-      .fn()
-      .mockResolvedValue({ id: '12345', ...returnBottleResponse() }),
+    customReviewsInstance: vi.fn().mockResolvedValue({ id: '12345', ...returnReviewResponse() }),
+    customBottlesInstance: vi.fn().mockResolvedValue({ id: '12345', ...returnBottleResponse() }),
   };
 });
 
@@ -150,9 +142,6 @@ describe('Review ID route', () => {
     renderReviewIdRouteWithAuth();
     const { image } = await getSelectors();
 
-    expect(image).toHaveAttribute(
-      'src',
-      '/src/assets/brand/png/bottle-cancel-1024.png',
-    );
+    expect(image).toHaveAttribute('src', '/src/assets/brand/png/bottle-cancel-1024.png');
   });
 });

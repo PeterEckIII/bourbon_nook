@@ -1,9 +1,6 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vite-plus/test';
 import { screen, waitFor, within } from '@testing-library/react';
-import {
-  createMockAuthState,
-  renderWithFileRoutes,
-} from '../../file-route-utils';
+import { createMockAuthState, renderWithFileRoutes } from '../../file-route-utils';
 import userEvent from '@testing-library/user-event';
 import type { BottleResponseModel } from '../../../api/generated/bottles-api';
 import { customBottlesInstance } from '../../../api/axios-instance';
@@ -106,15 +103,12 @@ function returnBottleResponse(): BottleResponseModel {
 }
 
 vi.mock('../../../api/axios-instance', async (importOriginal) => {
-  const actual =
-    await importOriginal<typeof import('../../../api/axios-instance')>();
+  const actual = await importOriginal<typeof import('../../../api/axios-instance')>();
   const bottleResponse = returnBottleResponse();
 
   return {
     ...actual,
-    customBottlesInstance: vi
-      .fn()
-      .mockResolvedValue({ id: '12345', ...bottleResponse }),
+    customBottlesInstance: vi.fn().mockResolvedValue({ id: '12345', ...bottleResponse }),
   };
 });
 
@@ -192,12 +186,8 @@ describe('New bottle route', () => {
       },
     });
 
-    expect(
-      await screen.findByText(/log in to bourbonnook/i),
-    ).toBeInTheDocument();
-    expect(
-      await screen.findByRole('textbox', { name: /email/i }),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(/log in to bourbonnook/i)).toBeInTheDocument();
+    expect(await screen.findByRole('textbox', { name: /email/i })).toBeInTheDocument();
   });
   it('shows the backend error message on a failed create', async () => {
     renderNewBottleRouteWithAuth();
@@ -227,12 +217,12 @@ describe('New bottle route', () => {
 
     await user.click(selectors.submitButton);
 
-    expect(
-      within(selectors.bottleNameInput.closest('div')!).getByRole('alert'),
-    ).toHaveTextContent(/name is required/i);
+    expect(within(selectors.bottleNameInput.closest('div')!).getByRole('alert')).toHaveTextContent(
+      /name is required/i,
+    );
 
-    expect(
-      within(selectors.typeInput.closest('div')!).getByRole('alert'),
-    ).toHaveTextContent(/type is required/i);
+    expect(within(selectors.typeInput.closest('div')!).getByRole('alert')).toHaveTextContent(
+      /type is required/i,
+    );
   });
 });

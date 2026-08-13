@@ -26,12 +26,9 @@ export default function ComboboxField({
   const id = useId();
   const listboxId = `${id}-listbox`;
   const errorId = `${id}-error`;
-  const hasError =
-    field.state.meta.isTouched && field.state.meta.errors.length > 0;
+  const hasError = field.state.meta.isTouched && field.state.meta.errors.length > 0;
 
-  const selectedOption = options.find(
-    (option) => option.value === field.state.value,
-  );
+  const selectedOption = options.find((option) => option.value === field.state.value);
 
   const [query, setQuery] = useState(selectedOption?.label ?? '');
   const [isOpen, setIsOpen] = useState(false);
@@ -47,9 +44,7 @@ export default function ComboboxField({
   const filteredOptions =
     !normalizedQuery || query === selectedOption?.label
       ? options
-      : options.filter((option) =>
-          option.label.toLowerCase().includes(normalizedQuery),
-        );
+      : options.filter((option) => option.label.toLowerCase().includes(normalizedQuery));
 
   function selectOption(option: ComboboxOption) {
     field.handleChange(option.value);
@@ -66,9 +61,7 @@ export default function ComboboxField({
         setActiveIndex(0);
         return;
       }
-      setActiveIndex((index) =>
-        Math.min(index + 1, filteredOptions.length - 1),
-      );
+      setActiveIndex((index) => Math.min(index + 1, filteredOptions.length - 1));
     } else if (event.key === 'ArrowUp') {
       event.preventDefault();
       if (isOpen) setActiveIndex((index) => Math.max(index - 1, 0));
@@ -93,10 +86,7 @@ export default function ComboboxField({
 
   return (
     <div className="relative flex w-full flex-col gap-1.5">
-      <label
-        htmlFor={id}
-        className="text-sm font-medium tracking-wide text-ink"
-      >
+      <label htmlFor={id} className="text-sm font-medium tracking-wide text-ink">
         {label}
         {required && (
           <span aria-hidden="true" className="ml-0.5 text-pour">
@@ -146,9 +136,7 @@ export default function ComboboxField({
           className="absolute inset-x-0 top-full z-50 mt-2 max-h-60 overflow-auto rounded-md border border-amber-900/40 bg-[#2a150d] py-1 shadow-lg"
         >
           {filteredOptions.length === 0 && (
-            <li className="px-3 py-2 text-sm text-amber-100/50">
-              {emptyMessage}
-            </li>
+            <li className="px-3 py-2 text-sm text-amber-100/50">{emptyMessage}</li>
           )}
           {filteredOptions.map((option, index) => (
             <li

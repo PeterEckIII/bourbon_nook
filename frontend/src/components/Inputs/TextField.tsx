@@ -22,17 +22,13 @@ export default function TextField({
   const field = useFieldContext<string>();
   const id = useId();
   const errorId = `${id}-error`;
-  const hasError =
-    field.state.meta.isTouched && field.state.meta.errors.length > 0;
+  const hasError = field.state.meta.isTouched && field.state.meta.errors.length > 0;
   const isValidating = field.state.meta.isValidating;
 
   return (
     <div className="flex w-full flex-col gap-1.5">
       {type !== 'hidden' && (
-        <label
-          htmlFor={id}
-          className="text-sm font-medium tracking-wide text-ink"
-        >
+        <label htmlFor={id} className="text-sm font-medium tracking-wide text-ink">
           {label}
           {required && (
             <span aria-hidden="true" className="ml-0.5 text-pour">
@@ -58,9 +54,7 @@ export default function TextField({
           hasError ? 'border-red-500/70' : 'border-amber-900/40'
         }`}
       />
-      {isValidating && !hasError && (
-        <p className="text-sm text-ink/60">Checking…</p>
-      )}
+      {isValidating && !hasError && <p className="text-sm text-ink/60">Checking…</p>}
       {hasError && (
         <p id={errorId} role="alert" className="text-sm text-red-700">
           {formatFieldErrors(field.state.meta.errors)}

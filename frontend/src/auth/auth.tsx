@@ -16,8 +16,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const hasRole = (role: string) => user?.roles.includes(role) ?? false;
-  const hasAnyRole = (roles: string[]) =>
-    roles.some((role) => user?.roles.includes(role)) ?? false;
+  const hasAnyRole = (roles: string[]) => roles.some((role) => user?.roles.includes(role)) ?? false;
 
   useEffect(() => {
     let ignore = false;

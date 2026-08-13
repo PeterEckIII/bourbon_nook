@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from 'vite-plus/test';
 import { createRouter } from '@tanstack/react-router';
 import { routeTree } from '../routeTree.gen';
 import { createMockAuthState, createTestQueryClient } from './file-route-utils';
@@ -21,9 +21,7 @@ describe('Generated Route Tree', () => {
 
   it('should include all expected routes', () => {
     const router = createTestRouter();
-    const routePaths = Object.values(router.routesById).map(
-      (route) => route.fullPath,
-    );
+    const routePaths = Object.values(router.routesById).map((route) => route.fullPath);
 
     expect(routePaths).toContain('/');
     expect(routePaths).toContain('/login');

@@ -4,7 +4,13 @@ import useBottleTable from '../../hooks/useBottleTable';
 import TBody from './shared/TBody';
 import THead from './shared/THead';
 
-export default function BottleTable({ data }: { data: BottleResponseModel[] }) {
+export default function BottleTable({
+  data,
+  className = '',
+}: {
+  data: BottleResponseModel[];
+  className?: string;
+}) {
   const { table } = useBottleTable({ data });
 
   if (data.length === 0) {
@@ -17,7 +23,7 @@ export default function BottleTable({ data }: { data: BottleResponseModel[] }) {
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-amber-900/15 bg-cream">
+    <div className={`overflow-x-auto rounded-lg border border-amber-900/15 bg-cream ${className}`}>
       <table className="w-full min-w-max border-collapse text-left">
         <THead table={table} />
         <TBody table={table} />

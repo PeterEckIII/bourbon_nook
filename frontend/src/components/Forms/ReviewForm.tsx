@@ -26,9 +26,7 @@ export default function ReviewForm({
           form.handleSubmit();
         }}
       >
-        <h1 className="font-caprasimo text-2xl text-center">
-          Review Information
-        </h1>
+        <h1 className="font-caprasimo text-2xl text-center">Review Information</h1>
         {serverError && (
           <p role="alert" className="text-sm text-red-700">
             {serverError}
@@ -36,9 +34,7 @@ export default function ReviewForm({
         )}
 
         <div className="space-y-4">
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-            Session
-          </h2>
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Session</h2>
           <form.AppField
             name="bottleId"
             children={(field) => (
@@ -67,18 +63,12 @@ export default function ReviewForm({
             />
             <form.AppField
               name="restTimeMin"
-              children={(field) => (
-                <field.NumberField label="Rest Time (minutes)" />
-              )}
+              children={(field) => <field.NumberField label="Rest Time (minutes)" />}
             />
             <form.AppField
               name="glassware"
               children={(field) => (
-                <field.TextField
-                  label="Glassware"
-                  type="text"
-                  placeholder="Glencairn, Copita"
-                />
+                <field.TextField label="Glassware" type="text" placeholder="Glencairn, Copita" />
               )}
             />
           </div>
@@ -91,10 +81,7 @@ export default function ReviewForm({
           <form.AppField
             name="nose"
             children={(field) => (
-              <field.TextareaField
-                label="Nose"
-                placeholder="Caramel, oak, dark cherry"
-              />
+              <field.TextareaField label="Nose" placeholder="Caramel, oak, dark cherry" />
             )}
           />
           <form.AppField
@@ -109,18 +96,13 @@ export default function ReviewForm({
           <form.AppField
             name="finish"
             children={(field) => (
-              <field.TextareaField
-                label="Finish"
-                placeholder="Long, warm, lingering spice"
-              />
+              <field.TextareaField label="Finish" placeholder="Long, warm, lingering spice" />
             )}
           />
         </div>
 
         <div className="space-y-4 border-t border-ink/10 pt-6">
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-            Overall
-          </h2>
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Overall</h2>
           <form.AppField
             name="thoughts"
             children={(field) => (
@@ -137,9 +119,7 @@ export default function ReviewForm({
             />
             <form.AppField
               name="overallRating"
-              children={(field) => (
-                <field.NumberField label="Overall Rating" required />
-              )}
+              children={(field) => <field.NumberField label="Overall Rating" required />}
             />
           </div>
         </div>

@@ -23,10 +23,7 @@ export const features = tableFeatures({
 
 export type BottleTableFeatures = typeof features;
 
-const columnHelper = createColumnHelper<
-  BottleTableFeatures,
-  BottleResponseModel
->();
+const columnHelper = createColumnHelper<BottleTableFeatures, BottleResponseModel>();
 
 const columns = columnHelper.columns([
   columnHelper.display({
@@ -40,12 +37,7 @@ const columns = columnHelper.columns([
     columns: columnHelper.columns([
       columnHelper.accessor('name', {
         header: 'Name',
-        cell: (info) => (
-          <BottleName
-            name={info.getValue()!}
-            bottleId={info.row.original.id!}
-          />
-        ),
+        cell: (info) => <BottleName name={info.getValue()!} bottleId={info.row.original.id!} />,
       }),
       columnHelper.accessor('type', {
         header: 'Type',
@@ -97,17 +89,11 @@ const columns = columnHelper.columns([
   columnHelper.display({
     id: 'actions',
     header: 'Actions',
-    cell: (props) => (
-      <ActionButtons bottleId={props.row.original.id as string} />
-    ),
+    cell: (props) => <ActionButtons bottleId={props.row.original.id as string} />,
   }),
 ]);
 
-export default function useBottleTable({
-  data,
-}: {
-  data: BottleResponseModel[];
-}) {
+export default function useBottleTable({ data }: { data: BottleResponseModel[] }) {
   const table = useTable({
     key: 'bottle-table',
     features,

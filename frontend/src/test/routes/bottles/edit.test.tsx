@@ -1,9 +1,6 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vite-plus/test';
 import { screen, waitFor } from '@testing-library/react';
-import {
-  createMockAuthState,
-  renderWithFileRoutes,
-} from '../../file-route-utils';
+import { createMockAuthState, renderWithFileRoutes } from '../../file-route-utils';
 import userEvent from '@testing-library/user-event';
 import type { BottleResponseModel } from '../../../api/generated/bottles-api';
 import { customBottlesInstance } from '../../../api/axios-instance';
@@ -106,15 +103,12 @@ function returnBottleResponse(): BottleResponseModel {
 }
 
 vi.mock('../../../api/axios-instance', async (importOriginal) => {
-  const actual =
-    await importOriginal<typeof import('../../../api/axios-instance')>();
+  const actual = await importOriginal<typeof import('../../../api/axios-instance')>();
   const bottleResponse = returnBottleResponse();
 
   return {
     ...actual,
-    customBottlesInstance: vi
-      .fn()
-      .mockResolvedValue({ id: '12345', ...bottleResponse }),
+    customBottlesInstance: vi.fn().mockResolvedValue({ id: '12345', ...bottleResponse }),
   };
 });
 
@@ -191,9 +185,7 @@ describe('Edit bottle route', () => {
     await waitFor(() => expect(submitButton).not.toBeDisabled());
     await user.click(submitButton);
 
-    expect(await screen.getByRole('alert')).toHaveTextContent(
-      /could not save your edits/i,
-    );
+    expect(await screen.getByRole('alert')).toHaveTextContent(/could not save your edits/i);
   });
   it('shows client-side validation', async () => {
     renderEditBottleRouteWithAuth();
@@ -202,14 +194,10 @@ describe('Edit bottle route', () => {
 
     await user.clear(selectors.bottleNameInput);
     await user.tab();
-    expect(await screen.getByRole('alert')).toHaveTextContent(
-      'Name is required',
-    );
+    expect(await screen.getByRole('alert')).toHaveTextContent('Name is required');
 
     await user.type(selectors.bottleNameInput, 'George Remus');
     await user.tab();
-    await waitFor(() =>
-      expect(screen.queryByRole('alert')).not.toBeInTheDocument(),
-    );
+    await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
   });
 });

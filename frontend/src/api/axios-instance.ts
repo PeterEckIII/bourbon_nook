@@ -1,8 +1,4 @@
-import axios, {
-  AxiosError,
-  type AxiosRequestConfig,
-  type InternalAxiosRequestConfig,
-} from 'axios';
+import axios, { AxiosError, type AxiosRequestConfig, type InternalAxiosRequestConfig } from 'axios';
 
 const GATEWAY_URL = 'http://localhost:8082';
 
@@ -33,11 +29,7 @@ function createServiceInstance(service: string) {
       // token — there's no session yet to refresh, so let it propagate as-is
       // rather than masking it with the refresh call's own (unrelated) error.
       const isLoginRequest = originalRequest.url === '/auth/login';
-      if (
-        error.response?.status !== 401 ||
-        originalRequest._retry ||
-        isLoginRequest
-      ) {
+      if (error.response?.status !== 401 || originalRequest._retry || isLoginRequest) {
         return Promise.reject(error);
       }
       originalRequest._retry = true;
@@ -63,14 +55,11 @@ export const usersApiInstance = createServiceInstance('users-api');
 
 // orval's generated functions call this for every request — the single place
 // to route through Axios (and its interceptors) instead of fetch.
-export const customBottlesInstance = <T>(
-  config: AxiosRequestConfig,
-): Promise<T> => bottlesApiInstance(config).then((r) => r.data);
+export const customBottlesInstance = <T>(config: AxiosRequestConfig): Promise<T> =>
+  bottlesApiInstance(config).then((r) => r.data);
 
-export const customReviewsInstance = <T>(
-  config: AxiosRequestConfig,
-): Promise<T> => reviewsApiInstance(config).then((r) => r.data);
+export const customReviewsInstance = <T>(config: AxiosRequestConfig): Promise<T> =>
+  reviewsApiInstance(config).then((r) => r.data);
 
-export const customUsersInstance = <T>(
-  config: AxiosRequestConfig,
-): Promise<T> => usersApiInstance(config).then((r) => r.data);
+export const customUsersInstance = <T>(config: AxiosRequestConfig): Promise<T> =>
+  usersApiInstance(config).then((r) => r.data);

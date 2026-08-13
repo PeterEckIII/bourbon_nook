@@ -1,16 +1,16 @@
-@import "tailwindcss";
-@import "react-day-picker/style.css";
+@import 'tailwindcss';
+@import 'react-day-picker/style.css';
 
 @font-face {
-  font-family: "Caprasimo";
-  src: url("./assets/fonts/Caprasimo-Regular.woff2") format("woff2");
+  font-family: 'Caprasimo';
+  src: url('./assets/fonts/Caprasimo-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @theme {
-  --font-caprasimo: "Caprasimo", cursive;
+  --font-caprasimo: 'Caprasimo', cursive;
   --color-ground: #f5ead8;
   --color-cream: #f9f4ed;
   --color-ink: #201e1d;

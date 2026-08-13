@@ -52,9 +52,7 @@ export default function LoginForm({ auth, redirect }: LoginFormProps) {
         }}
       >
         <img src={mark} alt="Bourbon Nook" className="h-16 w-16 mx-auto" />
-        <h1 className="font-caprasimo text-2xl text-center">
-          Log in to BourbonNook
-        </h1>
+        <h1 className="font-caprasimo text-2xl text-center">Log in to BourbonNook</h1>
         {serverError && (
           <p role="alert" className="text-sm text-red-700">
             {serverError}
@@ -64,12 +62,7 @@ export default function LoginForm({ auth, redirect }: LoginFormProps) {
           <form.AppField
             name="email"
             children={(field) => (
-              <field.TextField
-                label="Email"
-                type="email"
-                placeholder="john@hopkins.edu"
-                required
-              />
+              <field.TextField label="Email" type="email" placeholder="john@hopkins.edu" required />
             )}
           />
         </div>
@@ -77,12 +70,7 @@ export default function LoginForm({ auth, redirect }: LoginFormProps) {
           <form.AppField
             name="password"
             children={(field) => (
-              <field.TextField
-                label="Password"
-                type="password"
-                placeholder="*********"
-                required
-              />
+              <field.TextField label="Password" type="password" placeholder="*********" required />
             )}
           />
         </div>
@@ -91,11 +79,7 @@ export default function LoginForm({ auth, redirect }: LoginFormProps) {
         </form.AppForm>
         <div>
           Not a member?{' '}
-          <Link
-            to="/register"
-            search={{ redirect }}
-            className="text-blue-500 hover:underline"
-          >
+          <Link to="/register" search={{ redirect }} className="text-blue-500 hover:underline">
             Register today
           </Link>
         </div>

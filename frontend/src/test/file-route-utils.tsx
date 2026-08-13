@@ -1,11 +1,7 @@
 import { render, type RenderOptions } from '@testing-library/react';
-import {
-  createRouter,
-  RouterProvider,
-  createMemoryHistory,
-} from '@tanstack/react-router';
+import { createRouter, RouterProvider, createMemoryHistory } from '@tanstack/react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { vi } from 'vitest';
+import { vi } from 'vite-plus/test';
 
 import { routeTree } from '../routeTree.gen';
 import { AuthContext } from '../auth/context';
@@ -21,9 +17,7 @@ export function createTestQueryClient() {
   });
 }
 
-export function createMockAuthState(
-  overrides: Partial<AuthState> = {},
-): AuthState {
+export function createMockAuthState(overrides: Partial<AuthState> = {}): AuthState {
   return {
     isAuthenticated: false,
     isLoading: false,

@@ -1,11 +1,4 @@
-import {
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-  type DragEvent,
-} from 'react';
+import { useEffect, useId, useMemo, useRef, useState, type DragEvent } from 'react';
 import { useFieldContext } from '../../hooks/form-context';
 import { formatFieldErrors } from '../../utils/formFieldErrors';
 
@@ -33,13 +26,9 @@ export default function FileField({
   const errorId = `${id}-error`;
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const hasError =
-    field.state.meta.isTouched && field.state.meta.errors.length > 0;
+  const hasError = field.state.meta.isTouched && field.state.meta.errors.length > 0;
   const file = field.state.value;
-  const previewUrl = useMemo(
-    () => (file ? URL.createObjectURL(file) : null),
-    [file],
-  );
+  const previewUrl = useMemo(() => (file ? URL.createObjectURL(file) : null), [file]);
 
   useEffect(() => {
     return () => {
@@ -76,10 +65,7 @@ export default function FileField({
 
   return (
     <div className="flex w-full flex-col gap-1.5">
-      <label
-        htmlFor={id}
-        className="text-sm font-medium tracking-wide text-ink"
-      >
+      <label htmlFor={id} className="text-sm font-medium tracking-wide text-ink">
         {label}
         {required && (
           <span aria-hidden="true" className="ml-0.5 text-pour">
@@ -95,19 +81,11 @@ export default function FileField({
           }`}
         >
           <div className="h-16 w-16 shrink-0 overflow-hidden rounded-md border border-amber-900/40 bg-black/20">
-            {previewUrl && (
-              <img
-                src={previewUrl}
-                alt=""
-                className="h-full w-full object-cover"
-              />
-            )}
+            {previewUrl && <img src={previewUrl} alt="" className="h-full w-full object-cover" />}
           </div>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm text-amber-50">{file.name}</p>
-            <p className="text-xs text-amber-100/50">
-              {formatFileSize(file.size)}
-            </p>
+            <p className="text-xs text-amber-100/50">{formatFileSize(file.size)}</p>
           </div>
           <div className="flex shrink-0 gap-2">
             <button
@@ -159,14 +137,9 @@ export default function FileField({
             />
           </svg>
           <p className="text-sm text-amber-100/70">
-            <span className="font-medium text-amber-50">
-              Click to upload
-            </span>{' '}
-            or drag and drop
+            <span className="font-medium text-amber-50">Click to upload</span> or drag and drop
           </p>
-          {helperText && (
-            <p className="text-xs text-amber-100/40">{helperText}</p>
-          )}
+          {helperText && <p className="text-xs text-amber-100/40">{helperText}</p>}
         </label>
       )}
 

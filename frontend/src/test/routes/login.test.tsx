@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi } from 'vite-plus/test';
 import { screen } from '@testing-library/react';
 import { createMockAuthState, renderWithFileRoutes } from '../file-route-utils';
 import userEvent from '@testing-library/user-event';
@@ -8,21 +8,13 @@ describe('Login route', () => {
     renderWithFileRoutes({
       initialLocation: '/login',
     });
-    expect(
-      await screen.findByText(/Log in to BourbonNook/i),
-    ).toBeInTheDocument();
-    expect(
-      await screen.getByRole('textbox', { name: /email/i }),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(/Log in to BourbonNook/i)).toBeInTheDocument();
+    expect(await screen.getByRole('textbox', { name: /email/i })).toBeInTheDocument();
     expect(await screen.findByLabelText(/password/i)).toBeInTheDocument();
 
-    expect(
-      await screen.findByRole('button', { name: /Log in/i }),
-    ).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: /Log in/i })).toBeInTheDocument();
 
-    expect(
-      await screen.findByRole('link', { name: /register today/i }),
-    ).toBeInTheDocument();
+    expect(await screen.findByRole('link', { name: /register today/i })).toBeInTheDocument();
   });
   it('should test an unauthorized login attempt', async () => {
     const user = userEvent.setup();
@@ -45,9 +37,7 @@ describe('Login route', () => {
     await user.type(passwordInput, 'mysecretpassword123!');
     await user.click(await screen.findByRole('button', { name: /log in/i }));
 
-    expect(await screen.findByRole('alert')).toHaveTextContent(
-      /bad credentials/i,
-    );
+    expect(await screen.findByRole('alert')).toHaveTextContent(/bad credentials/i);
   });
   it('should test a valid login attempt', async () => {
     const user = userEvent.setup();
@@ -72,9 +62,7 @@ describe('Login route', () => {
     const emailInput = await screen.findByRole('textbox', { name: /email/i });
     await user.type(emailInput, 'notanemail');
 
-    expect(
-      await screen.findByRole('button', { name: /log in/i }),
-    ).toBeDisabled();
+    expect(await screen.findByRole('button', { name: /log in/i })).toBeDisabled();
   });
   it('should test submit button is enabled when valid input is entered', async () => {
     const user = userEvent.setup();
@@ -84,14 +72,8 @@ describe('Login route', () => {
 
     const button = await screen.findByRole('button', { name: /log in/i });
     expect(button).toBeInTheDocument();
-    await user.type(
-      await screen.findByRole('textbox', { name: /email/i }),
-      'myemail@gmail.com',
-    );
-    await user.type(
-      await screen.findByLabelText(/password/i),
-      'mysecretpassword123!',
-    );
+    await user.type(await screen.findByRole('textbox', { name: /email/i }), 'myemail@gmail.com');
+    await user.type(await screen.findByLabelText(/password/i), 'mysecretpassword123!');
     expect(button).not.toBeDisabled();
   });
   it('should test visiting login with isAuthenticated true redirects', async () => {
@@ -121,9 +103,7 @@ describe('Login route', () => {
     await user.type(passwordInput, 'somepassword');
     await user.click(await screen.findByRole('button', { name: /log in/i }));
 
-    expect(await screen.findByRole('alert')).toHaveTextContent(
-      /something went wrong/i,
-    );
+    expect(await screen.findByRole('alert')).toHaveTextContent(/something went wrong/i);
   });
   it('should replace a previous error when the user retries and fails again', async () => {
     const user = userEvent.setup();
@@ -152,14 +132,10 @@ describe('Login route', () => {
     await user.type(emailInput, 'peter@me.com');
     await user.type(passwordInput, 'wrongpassword');
     await user.click(button);
-    expect(await screen.findByRole('alert')).toHaveTextContent(
-      /bad credentials/i,
-    );
+    expect(await screen.findByRole('alert')).toHaveTextContent(/bad credentials/i);
 
     await user.click(button);
-    expect(await screen.findByRole('alert')).toHaveTextContent(
-      /account locked/i,
-    );
+    expect(await screen.findByRole('alert')).toHaveTextContent(/account locked/i);
     expect(screen.queryByText(/bad credentials/i)).not.toBeInTheDocument();
   });
 });

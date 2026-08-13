@@ -33,8 +33,7 @@ export default function DateField({ label, required }: DateFieldProps) {
   const errorId = `${id}-error`;
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const hasError =
-    field.state.meta.isTouched && field.state.meta.errors.length > 0;
+  const hasError = field.state.meta.isTouched && field.state.meta.errors.length > 0;
   const selectedDate = fromIsoDateString(field.state.value);
 
   useEffect(() => {
@@ -65,10 +64,7 @@ export default function DateField({ label, required }: DateFieldProps) {
 
   return (
     <div ref={containerRef} className="relative flex w-full flex-col gap-1.5">
-      <label
-        htmlFor={id}
-        className="text-sm font-medium tracking-wide text-ink"
-      >
+      <label htmlFor={id} className="text-sm font-medium tracking-wide text-ink">
         {label}
         {required && (
           <span aria-hidden="true" className="ml-0.5 text-pour">
