@@ -32,7 +32,7 @@ export default defineConfig({
     env: {
       builtin: true,
     },
-    ignorePatterns: ['dist'],
+    ignorePatterns: ['dist', 'src/routeTree.gen.ts'],
     rules: {
       '@tanstack/query/exhaustive-deps': 'error',
       '@tanstack/query/no-rest-destructuring': 'warn',
