@@ -12,6 +12,7 @@ export default defineConfig({
   fmt: {
     semi: true,
     singleQuote: true,
+    ignorePatterns: ['src/routeTree.gen.ts'],
   },
   lint: {
     plugins: ['oxc', 'typescript', 'unicorn', 'react'],
