@@ -22,6 +22,7 @@ import { Route as AuthenticatedBottlesIndexRouteImport } from './routes/_authent
 import { Route as AuthenticatedBottlesBottleIdRouteImport } from './routes/_authenticated/bottles/$bottleId'
 import { Route as AuthenticatedBottlesNewRouteImport } from './routes/_authenticated/bottles/new'
 import { Route as AuthenticatedProfileIndexRouteImport } from './routes/_authenticated/profile/index'
+import { Route as AuthenticatedProfileChangePasswordRouteImport } from './routes/_authenticated/profile/change-password'
 import { Route as AuthenticatedReviewsIndexRouteImport } from './routes/_authenticated/reviews/index'
 import { Route as AuthenticatedReviewsReviewIdRouteImport } from './routes/_authenticated/reviews/$reviewId'
 import { Route as AuthenticatedReviewsNewRouteImport } from './routes/_authenticated/reviews/new'
@@ -94,6 +95,12 @@ const AuthenticatedProfileIndexRoute =
     path: '/profile/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedProfileChangePasswordRoute =
+  AuthenticatedProfileChangePasswordRouteImport.update({
+    id: '/profile/change-password',
+    path: '/profile/change-password',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedReviewsIndexRoute =
   AuthenticatedReviewsIndexRouteImport.update({
     id: '/reviews/',
@@ -128,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/admin-dashboard': typeof AuthenticatedAdminAdminDashboardRoute
   '/bottles/$bottleId': typeof AuthenticatedBottlesBottleIdRoute
   '/bottles/new': typeof AuthenticatedBottlesNewRoute
+  '/profile/change-password': typeof AuthenticatedProfileChangePasswordRoute
   '/reviews/$reviewId': typeof AuthenticatedReviewsReviewIdRoute
   '/reviews/new': typeof AuthenticatedReviewsNewRoute
   '/bottles/': typeof AuthenticatedBottlesIndexRoute
@@ -145,6 +153,7 @@ export interface FileRoutesByTo {
   '/admin-dashboard': typeof AuthenticatedAdminAdminDashboardRoute
   '/bottles/$bottleId': typeof AuthenticatedBottlesBottleIdRoute
   '/bottles/new': typeof AuthenticatedBottlesNewRoute
+  '/profile/change-password': typeof AuthenticatedProfileChangePasswordRoute
   '/reviews/$reviewId': typeof AuthenticatedReviewsReviewIdRoute
   '/reviews/new': typeof AuthenticatedReviewsNewRoute
   '/bottles': typeof AuthenticatedBottlesIndexRoute
@@ -165,6 +174,7 @@ export interface FileRoutesById {
   '/_authenticated/_admin/admin-dashboard': typeof AuthenticatedAdminAdminDashboardRoute
   '/_authenticated/bottles/$bottleId': typeof AuthenticatedBottlesBottleIdRoute
   '/_authenticated/bottles/new': typeof AuthenticatedBottlesNewRoute
+  '/_authenticated/profile/change-password': typeof AuthenticatedProfileChangePasswordRoute
   '/_authenticated/reviews/$reviewId': typeof AuthenticatedReviewsReviewIdRoute
   '/_authenticated/reviews/new': typeof AuthenticatedReviewsNewRoute
   '/_authenticated/bottles/': typeof AuthenticatedBottlesIndexRoute
@@ -184,6 +194,7 @@ export interface FileRouteTypes {
     | '/admin-dashboard'
     | '/bottles/$bottleId'
     | '/bottles/new'
+    | '/profile/change-password'
     | '/reviews/$reviewId'
     | '/reviews/new'
     | '/bottles/'
@@ -201,6 +212,7 @@ export interface FileRouteTypes {
     | '/admin-dashboard'
     | '/bottles/$bottleId'
     | '/bottles/new'
+    | '/profile/change-password'
     | '/reviews/$reviewId'
     | '/reviews/new'
     | '/bottles'
@@ -220,6 +232,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_admin/admin-dashboard'
     | '/_authenticated/bottles/$bottleId'
     | '/_authenticated/bottles/new'
+    | '/_authenticated/profile/change-password'
     | '/_authenticated/reviews/$reviewId'
     | '/_authenticated/reviews/new'
     | '/_authenticated/bottles/'
@@ -329,6 +342,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProfileIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/profile/change-password': {
+      id: '/_authenticated/profile/change-password'
+      path: '/profile/change-password'
+      fullPath: '/profile/change-password'
+      preLoaderRoute: typeof AuthenticatedProfileChangePasswordRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/reviews/': {
       id: '/_authenticated/reviews/'
       path: '/reviews'
@@ -377,6 +397,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedBottlesBottleIdRoute: typeof AuthenticatedBottlesBottleIdRoute
   AuthenticatedBottlesNewRoute: typeof AuthenticatedBottlesNewRoute
+  AuthenticatedProfileChangePasswordRoute: typeof AuthenticatedProfileChangePasswordRoute
   AuthenticatedReviewsReviewIdRoute: typeof AuthenticatedReviewsReviewIdRoute
   AuthenticatedReviewsNewRoute: typeof AuthenticatedReviewsNewRoute
   AuthenticatedBottlesIndexRoute: typeof AuthenticatedBottlesIndexRoute
@@ -391,6 +412,8 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedBottlesBottleIdRoute: AuthenticatedBottlesBottleIdRoute,
   AuthenticatedBottlesNewRoute: AuthenticatedBottlesNewRoute,
+  AuthenticatedProfileChangePasswordRoute:
+    AuthenticatedProfileChangePasswordRoute,
   AuthenticatedReviewsReviewIdRoute: AuthenticatedReviewsReviewIdRoute,
   AuthenticatedReviewsNewRoute: AuthenticatedReviewsNewRoute,
   AuthenticatedBottlesIndexRoute: AuthenticatedBottlesIndexRoute,
