@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/unauthorized')({
   validateSearch: (search) => ({
-    redirect: (search.redirect as string) || '/dashboard',
+    redirect: (search.redirect as string) || '/',
     reason: (search.reason as string) || 'insufficient_role',
   }),
   component: UnauthorizedRoute,
@@ -51,7 +51,7 @@ function UnauthorizedRoute() {
 
         <div className="space-y-3">
           <Link
-            to="/dashboard"
+            to="/"
             className="block w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
           >
             Go to Dashboard

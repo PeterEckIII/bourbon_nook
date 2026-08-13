@@ -18,7 +18,7 @@ const navLinks = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, hasRole } = useAuth();
 
   return (
     <nav className="relative z-50 bg-linear-to-r from-[#3b1f14] via-[#4a2818] to-[#3b1f14] border-b border-amber-900/40 shadow-md">
@@ -39,6 +39,13 @@ export default function Navbar() {
               </Link>
             </li>
           ))}
+          {hasRole('ROLE_ADMIN') && (
+            <li>
+              <Link to="/admin/dashboard" className={navLinkClass}>
+                Admin
+              </Link>
+            </li>
+          )}
           {isAuthenticated && (
             <li>
               <button type="button" onClick={logout} className={logoutButtonClass}>

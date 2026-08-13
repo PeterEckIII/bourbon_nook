@@ -1,8 +1,8 @@
-import { createFileRoute, redirect } from '@tanstack/react-router';
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/_authenticated/_admin')({
+export const Route = createFileRoute('/_authenticated/admin')({
   beforeLoad: ({ context, location }) => {
-    if (!context.auth.hasRole('admin')) {
+    if (!context.auth.hasAnyRole(['ROLE_ADMIN'])) {
       throw redirect({
         to: '/unauthorized',
         search: {
@@ -18,9 +18,10 @@ export const Route = createFileRoute('/_authenticated/_admin')({
 function AdminLayout() {
   return (
     <div>
-      <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+      <div className="my-2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
         <strong>Admin Area</strong> You have administrative privileges
       </div>
+      <Outlet />
     </div>
   );
 }

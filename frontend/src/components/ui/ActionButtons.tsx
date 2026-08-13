@@ -28,8 +28,8 @@ export default function ActionButtons({
     error,
   } = useBottleDelete({
     mutation: {
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: getUserBottlesQueryKey() });
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: getUserBottlesQueryKey() });
         setIsConfirmOpen(false);
         onDeleted?.();
       },

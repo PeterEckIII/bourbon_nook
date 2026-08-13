@@ -9,6 +9,7 @@ import com.bourbon_nook.users_api.exceptions.UserEmailAlreadyExistsException;
 import com.bourbon_nook.users_api.exceptions.UserUsernameAlreadyExistsException;
 import com.bourbon_nook.users_api.models.events.UserDeletedEvent;
 import com.bourbon_nook.users_api.models.requests.UpdateUserRequest;
+import com.bourbon_nook.users_api.repositories.FollowRepository;
 import com.bourbon_nook.users_api.repositories.RoleRepository;
 import com.bourbon_nook.users_api.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -32,18 +33,21 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final FollowRepository followRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ModelMapper modelMapper;
     private final RabbitTemplate rabbitTemplate;
 
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
+                           FollowRepository followRepository,
                            BCryptPasswordEncoder bCryptPasswordEncoder,
                            ModelMapper modelMapper,
                            RabbitTemplate rabbitTemplate
     ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.followRepository = followRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.modelMapper = modelMapper;
         this.rabbitTemplate = rabbitTemplate;
@@ -102,10 +106,13 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(user, UserDto.class);
     }
 
+    @Transactional
     @Override
     public void deleteUser(String userId) {
         UserEntity user = userRepository.findByUserId(userId);
         if (user == null) throw new UsernameNotFoundException("User not found");
+        followRepository.deleteByFollower_Id(user.getId());
+        followRepository.deleteByFollowee_Id(user.getId());
         userRepository.delete(user);
         rabbitTemplate.convertAndSend(RabbitConfig.USER_DELETE_EXCHANGE, "", new UserDeletedEvent(userId));
     }

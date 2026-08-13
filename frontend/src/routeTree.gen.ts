@@ -15,9 +15,8 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
-import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/_admin'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedAdminAdminDashboardRouteImport } from './routes/_authenticated/_admin/admin-dashboard'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin/dashboard'
 import { Route as AuthenticatedBottlesIndexRouteImport } from './routes/_authenticated/bottles/index'
 import { Route as AuthenticatedBottlesBottleIdRouteImport } from './routes/_authenticated/bottles/$bottleId'
 import { Route as AuthenticatedBottlesNewRouteImport } from './routes/_authenticated/bottles/new'
@@ -26,7 +25,9 @@ import { Route as AuthenticatedProfileChangePasswordRouteImport } from './routes
 import { Route as AuthenticatedReviewsIndexRouteImport } from './routes/_authenticated/reviews/index'
 import { Route as AuthenticatedReviewsReviewIdRouteImport } from './routes/_authenticated/reviews/$reviewId'
 import { Route as AuthenticatedReviewsNewRouteImport } from './routes/_authenticated/reviews/new'
+import { Route as AuthenticatedAdminUsersIndexRouteImport } from './routes/_authenticated/admin/users/index'
 import { Route as AuthenticatedBottlesBottleIdEditRouteImport } from './routes/_authenticated/bottles/$bottleId_.edit'
+import { Route as AuthenticatedAdminUsersUserIdEditRouteImport } from './routes/_authenticated/admin/users/$userId_.edit'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
@@ -58,18 +59,14 @@ const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
-  id: '/_admin',
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedAdminAdminDashboardRoute =
-  AuthenticatedAdminAdminDashboardRouteImport.update({
-    id: '/admin-dashboard',
-    path: '/admin-dashboard',
+const AuthenticatedAdminDashboardRoute =
+  AuthenticatedAdminDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedBottlesIndexRoute =
@@ -118,11 +115,23 @@ const AuthenticatedReviewsNewRoute = AuthenticatedReviewsNewRouteImport.update({
   path: '/reviews/new',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedAdminUsersIndexRoute =
+  AuthenticatedAdminUsersIndexRouteImport.update({
+    id: '/users/',
+    path: '/users/',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedBottlesBottleIdEditRoute =
   AuthenticatedBottlesBottleIdEditRouteImport.update({
     id: '/bottles/$bottleId_/edit',
     path: '/bottles/$bottleId/edit',
     getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAdminUsersUserIdEditRoute =
+  AuthenticatedAdminUsersUserIdEditRouteImport.update({
+    id: '/users/$userId_/edit',
+    path: '/users/$userId/edit',
+    getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -131,8 +140,8 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/unauthorized': typeof UnauthorizedRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
-  '/admin-dashboard': typeof AuthenticatedAdminAdminDashboardRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/bottles/$bottleId': typeof AuthenticatedBottlesBottleIdRoute
   '/bottles/new': typeof AuthenticatedBottlesNewRoute
   '/profile/change-password': typeof AuthenticatedProfileChangePasswordRoute
@@ -142,15 +151,17 @@ export interface FileRoutesByFullPath {
   '/profile/': typeof AuthenticatedProfileIndexRoute
   '/reviews/': typeof AuthenticatedReviewsIndexRoute
   '/bottles/$bottleId/edit': typeof AuthenticatedBottlesBottleIdEditRoute
+  '/admin/users/': typeof AuthenticatedAdminUsersIndexRoute
+  '/admin/users/$userId/edit': typeof AuthenticatedAdminUsersUserIdEditRoute
 }
 export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/unauthorized': typeof UnauthorizedRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/': typeof AuthenticatedIndexRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
-  '/admin-dashboard': typeof AuthenticatedAdminAdminDashboardRoute
+  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/bottles/$bottleId': typeof AuthenticatedBottlesBottleIdRoute
   '/bottles/new': typeof AuthenticatedBottlesNewRoute
   '/profile/change-password': typeof AuthenticatedProfileChangePasswordRoute
@@ -160,6 +171,8 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileIndexRoute
   '/reviews': typeof AuthenticatedReviewsIndexRoute
   '/bottles/$bottleId/edit': typeof AuthenticatedBottlesBottleIdEditRoute
+  '/admin/users': typeof AuthenticatedAdminUsersIndexRoute
+  '/admin/users/$userId/edit': typeof AuthenticatedAdminUsersUserIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -168,10 +181,9 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/unauthorized': typeof UnauthorizedRoute
-  '/_authenticated/_admin': typeof AuthenticatedAdminRouteWithChildren
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/': typeof AuthenticatedIndexRoute
-  '/_authenticated/_admin/admin-dashboard': typeof AuthenticatedAdminAdminDashboardRoute
+  '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/bottles/$bottleId': typeof AuthenticatedBottlesBottleIdRoute
   '/_authenticated/bottles/new': typeof AuthenticatedBottlesNewRoute
   '/_authenticated/profile/change-password': typeof AuthenticatedProfileChangePasswordRoute
@@ -181,6 +193,8 @@ export interface FileRoutesById {
   '/_authenticated/profile/': typeof AuthenticatedProfileIndexRoute
   '/_authenticated/reviews/': typeof AuthenticatedReviewsIndexRoute
   '/_authenticated/bottles/$bottleId_/edit': typeof AuthenticatedBottlesBottleIdEditRoute
+  '/_authenticated/admin/users/': typeof AuthenticatedAdminUsersIndexRoute
+  '/_authenticated/admin/users/$userId_/edit': typeof AuthenticatedAdminUsersUserIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -190,8 +204,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/unauthorized'
-    | '/dashboard'
-    | '/admin-dashboard'
+    | '/admin'
+    | '/admin/dashboard'
     | '/bottles/$bottleId'
     | '/bottles/new'
     | '/profile/change-password'
@@ -201,15 +215,17 @@ export interface FileRouteTypes {
     | '/profile/'
     | '/reviews/'
     | '/bottles/$bottleId/edit'
+    | '/admin/users/'
+    | '/admin/users/$userId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/about'
     | '/login'
     | '/register'
     | '/unauthorized'
+    | '/admin'
     | '/'
-    | '/dashboard'
-    | '/admin-dashboard'
+    | '/admin/dashboard'
     | '/bottles/$bottleId'
     | '/bottles/new'
     | '/profile/change-password'
@@ -219,6 +235,8 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reviews'
     | '/bottles/$bottleId/edit'
+    | '/admin/users'
+    | '/admin/users/$userId/edit'
   id:
     | '__root__'
     | '/_authenticated'
@@ -226,10 +244,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/unauthorized'
-    | '/_authenticated/_admin'
-    | '/_authenticated/dashboard'
+    | '/_authenticated/admin'
     | '/_authenticated/'
-    | '/_authenticated/_admin/admin-dashboard'
+    | '/_authenticated/admin/dashboard'
     | '/_authenticated/bottles/$bottleId'
     | '/_authenticated/bottles/new'
     | '/_authenticated/profile/change-password'
@@ -239,6 +256,8 @@ export interface FileRouteTypes {
     | '/_authenticated/profile/'
     | '/_authenticated/reviews/'
     | '/_authenticated/bottles/$bottleId_/edit'
+    | '/_authenticated/admin/users/'
+    | '/_authenticated/admin/users/$userId_/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -293,25 +312,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/_admin': {
-      id: '/_authenticated/_admin'
-      path: ''
-      fullPath: '/'
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
+    '/_authenticated/admin/dashboard': {
+      id: '/_authenticated/admin/dashboard'
       path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/_admin/admin-dashboard': {
-      id: '/_authenticated/_admin/admin-dashboard'
-      path: '/admin-dashboard'
-      fullPath: '/admin-dashboard'
-      preLoaderRoute: typeof AuthenticatedAdminAdminDashboardRouteImport
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/bottles/': {
@@ -370,6 +382,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReviewsNewRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/admin/users/': {
+      id: '/_authenticated/admin/users/'
+      path: '/users'
+      fullPath: '/admin/users/'
+      preLoaderRoute: typeof AuthenticatedAdminUsersIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/bottles/$bottleId_/edit': {
       id: '/_authenticated/bottles/$bottleId_/edit'
       path: '/bottles/$bottleId/edit'
@@ -377,15 +396,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBottlesBottleIdEditRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/admin/users/$userId_/edit': {
+      id: '/_authenticated/admin/users/$userId_/edit'
+      path: '/users/$userId/edit'
+      fullPath: '/admin/users/$userId/edit'
+      preLoaderRoute: typeof AuthenticatedAdminUsersUserIdEditRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
 interface AuthenticatedAdminRouteChildren {
-  AuthenticatedAdminAdminDashboardRoute: typeof AuthenticatedAdminAdminDashboardRoute
+  AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
+  AuthenticatedAdminUsersIndexRoute: typeof AuthenticatedAdminUsersIndexRoute
+  AuthenticatedAdminUsersUserIdEditRoute: typeof AuthenticatedAdminUsersUserIdEditRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
-  AuthenticatedAdminAdminDashboardRoute: AuthenticatedAdminAdminDashboardRoute,
+  AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
+  AuthenticatedAdminUsersIndexRoute: AuthenticatedAdminUsersIndexRoute,
+  AuthenticatedAdminUsersUserIdEditRoute:
+    AuthenticatedAdminUsersUserIdEditRoute,
 }
 
 const AuthenticatedAdminRouteWithChildren =
@@ -393,7 +424,6 @@ const AuthenticatedAdminRouteWithChildren =
 
 interface AuthenticatedRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
-  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedBottlesBottleIdRoute: typeof AuthenticatedBottlesBottleIdRoute
   AuthenticatedBottlesNewRoute: typeof AuthenticatedBottlesNewRoute
@@ -408,7 +438,6 @@ interface AuthenticatedRouteChildren {
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
-  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedBottlesBottleIdRoute: AuthenticatedBottlesBottleIdRoute,
   AuthenticatedBottlesNewRoute: AuthenticatedBottlesNewRoute,

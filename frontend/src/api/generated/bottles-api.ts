@@ -4,7 +4,11 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import { useMutation, useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQuery,
+  useSuspenseQuery
+} from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -19,12 +23,12 @@ import type {
   UseQueryOptions,
   UseQueryResult,
   UseSuspenseQueryOptions,
-  UseSuspenseQueryResult,
+  UseSuspenseQueryResult
 } from '@tanstack/react-query';
 
 import { customBottlesInstance } from '../axios-instance';
-export type CreateBottleRequestStatus =
-  (typeof CreateBottleRequestStatus)[keyof typeof CreateBottleRequestStatus];
+export type CreateBottleRequestStatus = typeof CreateBottleRequestStatus[keyof typeof CreateBottleRequestStatus];
+
 
 export const CreateBottleRequestStatus = {
   OPENED: 'OPENED',
@@ -36,23 +40,23 @@ export interface CreateBottleRequest {
   name: string;
   type: string;
   status: CreateBottleRequestStatus;
-  distillery: string;
-  producer: string;
-  country: string;
-  region: string;
-  price: number;
-  age: string;
-  proof: number;
-  releaseYear: number;
-  barrelInformation: string;
-  finishing: string;
-  imageUrl: string;
+  distillery?: string;
+  producer?: string;
+  country?: string;
+  region?: string;
+  price?: number;
+  age?: string;
+  proof?: number;
+  releaseYear?: number;
+  barrelInformation?: string;
+  finishing?: string;
+  imageUrl?: string;
   openDate?: string;
   killDate?: string;
 }
 
-export type BottleResponseModelStatus =
-  (typeof BottleResponseModelStatus)[keyof typeof BottleResponseModelStatus];
+export type BottleResponseModelStatus = typeof BottleResponseModelStatus[keyof typeof BottleResponseModelStatus];
+
 
 export const BottleResponseModelStatus = {
   OPENED: 'OPENED',
@@ -91,11 +95,11 @@ export type ImageCreateBody = {
 };
 
 export type UserBottlesFilterParams = {
-  name?: string;
-  distillery?: string;
-  producer?: string;
-  minPrice?: number;
-  maxPrice?: number;
+name?: string;
+distillery?: string;
+producer?: string;
+minPrice?: number;
+maxPrice?: number;
 };
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
@@ -113,1114 +117,932 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   return result;
 };
 
-export const userBottle = (bottleId: string, signal?: AbortSignal) => {
-  return customBottlesInstance<BottleResponseModel>({
-    url: `/bottles/${bottleId}`,
-    method: 'GET',
-    signal,
-  });
-};
-
-export const getUserBottleQueryKey = (bottleId: string) => {
-  return [`/bottles/${bottleId}`] as const;
-};
-
-export const getUserBottleQueryOptions = <
-  TData = Awaited<ReturnType<typeof userBottle>>,
-  TError = unknown,
->(
-  bottleId: string,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>;
-  },
+export const userBottle = (
+    bottleId: string,
+ signal?: AbortSignal
 ) => {
-  const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getUserBottleQueryKey(bottleId);
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof userBottle>>> = ({ signal }) =>
-    userBottle(bottleId, signal);
+      return customBottlesInstance<BottleResponseModel>(
+      {url: `/bottles/${bottleId}`, method: 'GET', signal
+    },
+      );
+    }
 
-  return {
-    queryKey,
-    queryFn,
-    enabled: bottleId !== null && bottleId !== undefined,
-    ...queryOptions,
-  } as UseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData> & {
-    queryKey: DataTag<QueryKey, TData, TError>;
-  };
-};
 
-export type UserBottleQueryResult = NonNullable<Awaited<ReturnType<typeof userBottle>>>;
-export type UserBottleQueryError = unknown;
+
+
+export const getUserBottleQueryKey = (bottleId: string,) => {
+    return [
+    `/bottles/${bottleId}`
+    ] as const;
+    }
+
+
+export const getUserBottleQueryOptions = <TData = Awaited<ReturnType<typeof userBottle>>, TError = unknown>(bottleId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getUserBottleQueryKey(bottleId);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof userBottle>>> = ({ signal }) => userBottle(bottleId, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: bottleId !== null && bottleId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type UserBottleQueryResult = NonNullable<Awaited<ReturnType<typeof userBottle>>>
+export type UserBottleQueryError = unknown
+
 
 export function useUserBottle<TData = Awaited<ReturnType<typeof userBottle>>, TError = unknown>(
-  bottleId: string,
-  options: {
-    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>> &
-      Pick<
+ bottleId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof userBottle>>,
           TError,
           Awaited<ReturnType<typeof userBottle>>
-        >,
-        'initialData'
-      >;
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useUserBottle<TData = Awaited<ReturnType<typeof userBottle>>, TError = unknown>(
-  bottleId: string,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>> &
-      Pick<
+ bottleId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof userBottle>>,
           TError,
           Awaited<ReturnType<typeof userBottle>>
-        >,
-        'initialData'
-      >;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useUserBottle<TData = Awaited<ReturnType<typeof userBottle>>, TError = unknown>(
-  bottleId: string,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+ bottleId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
 export function useUserBottle<TData = Awaited<ReturnType<typeof userBottle>>, TError = unknown>(
-  bottleId: string,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getUserBottleQueryOptions(bottleId, options);
+ bottleId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
-    queryKey: DataTag<QueryKey, TData, TError>;
-  };
+  const queryOptions = getUserBottleQueryOptions(bottleId,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
 
-export const getUserBottleSuspenseQueryOptions = <
-  TData = Awaited<ReturnType<typeof userBottle>>,
-  TError = unknown,
->(
-  bottleId: string,
-  options?: {
-    query?: Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>;
-  },
+
+
+
+
+
+export const getUserBottleSuspenseQueryOptions = <TData = Awaited<ReturnType<typeof userBottle>>, TError = unknown>(bottleId: string, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>, }
 ) => {
-  const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getUserBottleQueryKey(bottleId);
+const {query: queryOptions} = options ?? {};
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof userBottle>>> = ({ signal }) =>
-    userBottle(bottleId, signal);
+  const queryKey =  queryOptions?.queryKey ?? getUserBottleQueryKey(bottleId);
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof userBottle>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
 
-export type UserBottleSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof userBottle>>>;
-export type UserBottleSuspenseQueryError = unknown;
 
-export function useUserBottleSuspense<
-  TData = Awaited<ReturnType<typeof userBottle>>,
-  TError = unknown,
->(
-  bottleId: string,
-  options: {
-    query: Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useUserBottleSuspense<
-  TData = Awaited<ReturnType<typeof userBottle>>,
-  TError = unknown,
->(
-  bottleId: string,
-  options?: {
-    query?: Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useUserBottleSuspense<
-  TData = Awaited<ReturnType<typeof userBottle>>,
-  TError = unknown,
->(
-  bottleId: string,
-  options?: {
-    query?: Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof userBottle>>> = ({ signal }) => userBottle(bottleId, signal);
 
-export function useUserBottleSuspense<
-  TData = Awaited<ReturnType<typeof userBottle>>,
-  TError = unknown,
->(
-  bottleId: string,
-  options?: {
-    query?: Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getUserBottleSuspenseQueryOptions(bottleId, options);
 
-  const query = useSuspenseQuery(queryOptions, queryClient) as UseSuspenseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type UserBottleSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof userBottle>>>
+export type UserBottleSuspenseQueryError = unknown
+
+
+export function useUserBottleSuspense<TData = Awaited<ReturnType<typeof userBottle>>, TError = unknown>(
+ bottleId: string, options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useUserBottleSuspense<TData = Awaited<ReturnType<typeof userBottle>>, TError = unknown>(
+ bottleId: string, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useUserBottleSuspense<TData = Awaited<ReturnType<typeof userBottle>>, TError = unknown>(
+ bottleId: string, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useUserBottleSuspense<TData = Awaited<ReturnType<typeof userBottle>>, TError = unknown>(
+ bottleId: string, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottle>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getUserBottleSuspenseQueryOptions(bottleId,options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
+
+
+
+
+
+
 
 export const bottleUpdate = (
-  bottleId: string,
-  createBottleRequest: CreateBottleRequest,
-  signal?: AbortSignal,
+    bottleId: string,
+    createBottleRequest: CreateBottleRequest,
+ signal?: AbortSignal
 ) => {
-  return customBottlesInstance<BottleResponseModel>({
-    url: `/bottles/${bottleId}`,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    data: createBottleRequest,
-    signal,
-  });
-};
 
-export const getBottleUpdateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof bottleUpdate>>,
-    TError,
-    { bottleId: string; data: CreateBottleRequest },
-    TContext
-  >;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof bottleUpdate>>,
-  TError,
-  { bottleId: string; data: CreateBottleRequest },
-  TContext
-> => {
-  const mutationKey = ['bottleUpdate'];
-  const { mutation: mutationOptions } = options
-    ? options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey } };
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof bottleUpdate>>,
-    { bottleId: string; data: CreateBottleRequest }
-  > = (props) => {
-    const { bottleId, data } = props ?? {};
+      return customBottlesInstance<BottleResponseModel>(
+      {url: `/bottles/${bottleId}`, method: 'PUT',
+      headers: {'Content-Type': 'application/json', },
+      data: createBottleRequest, signal
+    },
+      );
+    }
 
-    return bottleUpdate(bottleId, data);
-  };
 
-  return { mutationFn, ...mutationOptions };
-};
 
-export type BottleUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof bottleUpdate>>>;
-export type BottleUpdateMutationBody = CreateBottleRequest;
-export type BottleUpdateMutationError = unknown;
 
-export const useBottleUpdate = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof bottleUpdate>>,
-      TError,
-      { bottleId: string; data: CreateBottleRequest },
-      TContext
-    >;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof bottleUpdate>>,
-  TError,
-  { bottleId: string; data: CreateBottleRequest },
-  TContext
-> => {
-  return useMutation(getBottleUpdateMutationOptions(options), queryClient);
-};
+export const getBottleUpdateMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bottleUpdate>>, TError,{bottleId: string;data: CreateBottleRequest}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof bottleUpdate>>, TError,{bottleId: string;data: CreateBottleRequest}, TContext> => {
 
-export const bottleDelete = (bottleId: string, signal?: AbortSignal) => {
-  return customBottlesInstance<void>({ url: `/bottles/${bottleId}`, method: 'DELETE', signal });
-};
+const mutationKey = ['bottleUpdate'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
 
-export const getBottleDeleteMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof bottleDelete>>,
-    TError,
-    { bottleId: string },
-    TContext
-  >;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof bottleDelete>>,
-  TError,
-  { bottleId: string },
-  TContext
-> => {
-  const mutationKey = ['bottleDelete'];
-  const { mutation: mutationOptions } = options
-    ? options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey } };
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof bottleDelete>>,
-    { bottleId: string }
-  > = (props) => {
-    const { bottleId } = props ?? {};
 
-    return bottleDelete(bottleId);
-  };
 
-  return { mutationFn, ...mutationOptions };
-};
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof bottleUpdate>>, {bottleId: string;data: CreateBottleRequest}> = (props) => {
+          const {bottleId,data} = props ?? {};
 
-export type BottleDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof bottleDelete>>>;
+          return  bottleUpdate(bottleId,data,)
+        }
 
-export type BottleDeleteMutationError = unknown;
 
-export const useBottleDelete = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof bottleDelete>>,
-      TError,
-      { bottleId: string },
-      TContext
-    >;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof bottleDelete>>,
-  TError,
-  { bottleId: string },
-  TContext
-> => {
-  return useMutation(getBottleDeleteMutationOptions(options), queryClient);
-};
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type BottleUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof bottleUpdate>>>
+    export type BottleUpdateMutationBody = CreateBottleRequest
+    export type BottleUpdateMutationError = unknown
+
+    export const useBottleUpdate = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bottleUpdate>>, TError,{bottleId: string;data: CreateBottleRequest}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof bottleUpdate>>,
+        TError,
+        {bottleId: string;data: CreateBottleRequest},
+        TContext
+      > => {
+      return useMutation(getBottleUpdateMutationOptions(options), queryClient);
+    }
+
+export const bottleDelete = (
+    bottleId: string,
+ signal?: AbortSignal
+) => {
+
+
+      return customBottlesInstance<void>(
+      {url: `/bottles/${bottleId}`, method: 'DELETE', signal
+    },
+      );
+    }
+
+
+
+
+export const getBottleDeleteMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bottleDelete>>, TError,{bottleId: string}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof bottleDelete>>, TError,{bottleId: string}, TContext> => {
+
+const mutationKey = ['bottleDelete'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof bottleDelete>>, {bottleId: string}> = (props) => {
+          const {bottleId} = props ?? {};
+
+          return  bottleDelete(bottleId,)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type BottleDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof bottleDelete>>>
+
+    export type BottleDeleteMutationError = unknown
+
+    export const useBottleDelete = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bottleDelete>>, TError,{bottleId: string}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof bottleDelete>>,
+        TError,
+        {bottleId: string},
+        TContext
+      > => {
+      return useMutation(getBottleDeleteMutationOptions(options), queryClient);
+    }
 
 export const imageCreate = (
-  bottleId: string,
-  imageCreateBody?: ImageCreateBody,
-  signal?: AbortSignal,
+    bottleId: string,
+    imageCreateBody?: ImageCreateBody,
+ signal?: AbortSignal
 ) => {
-  const formData = new FormData();
-  if (imageCreateBody?.file !== undefined) {
-    formData.append(`file`, imageCreateBody.file);
-  }
 
-  return customBottlesInstance<ImageResponseModel>({
-    url: `/bottles/${bottleId}/image`,
-    method: 'POST',
-    headers: { 'Content-Type': 'multipart/form-data' },
-    data: formData,
-    signal,
-  });
-};
+      const formData = new FormData();
+if(imageCreateBody?.file !== undefined) {
+ formData.append(`file`, imageCreateBody.file);
+ }
 
-export const getImageCreateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof imageCreate>>,
-    TError,
-    { bottleId: string; data?: ImageCreateBody },
-    TContext
-  >;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof imageCreate>>,
-  TError,
-  { bottleId: string; data?: ImageCreateBody },
-  TContext
-> => {
-  const mutationKey = ['imageCreate'];
-  const { mutation: mutationOptions } = options
-    ? options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey } };
+      return customBottlesInstance<ImageResponseModel>(
+      {url: `/bottles/${bottleId}/image`, method: 'POST',
+      headers: {'Content-Type': 'multipart/form-data', },
+       data: formData, signal
+    },
+      );
+    }
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof imageCreate>>,
-    { bottleId: string; data?: ImageCreateBody }
-  > = (props) => {
-    const { bottleId, data } = props ?? {};
 
-    return imageCreate(bottleId, data);
-  };
 
-  return { mutationFn, ...mutationOptions };
-};
 
-export type ImageCreateMutationResult = NonNullable<Awaited<ReturnType<typeof imageCreate>>>;
-export type ImageCreateMutationBody = ImageCreateBody | undefined;
-export type ImageCreateMutationError = unknown;
+export const getImageCreateMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof imageCreate>>, TError,{bottleId: string;data?: ImageCreateBody}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof imageCreate>>, TError,{bottleId: string;data?: ImageCreateBody}, TContext> => {
 
-export const useImageCreate = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof imageCreate>>,
-      TError,
-      { bottleId: string; data?: ImageCreateBody },
-      TContext
-    >;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof imageCreate>>,
-  TError,
-  { bottleId: string; data?: ImageCreateBody },
-  TContext
-> => {
-  return useMutation(getImageCreateMutationOptions(options), queryClient);
-};
+const mutationKey = ['imageCreate'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
 
-export const bottleCreate = (createBottleRequest: CreateBottleRequest, signal?: AbortSignal) => {
-  return customBottlesInstance<BottleResponseModel>({
-    url: `/bottles/new`,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    data: createBottleRequest,
-    signal,
-  });
-};
 
-export const getBottleCreateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof bottleCreate>>,
-    TError,
-    { data: CreateBottleRequest },
-    TContext
-  >;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof bottleCreate>>,
-  TError,
-  { data: CreateBottleRequest },
-  TContext
-> => {
-  const mutationKey = ['bottleCreate'];
-  const { mutation: mutationOptions } = options
-    ? options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey } };
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof bottleCreate>>,
-    { data: CreateBottleRequest }
-  > = (props) => {
-    const { data } = props ?? {};
 
-    return bottleCreate(data);
-  };
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof imageCreate>>, {bottleId: string;data?: ImageCreateBody}> = (props) => {
+          const {bottleId,data} = props ?? {};
 
-  return { mutationFn, ...mutationOptions };
-};
+          return  imageCreate(bottleId,data,)
+        }
 
-export type BottleCreateMutationResult = NonNullable<Awaited<ReturnType<typeof bottleCreate>>>;
-export type BottleCreateMutationBody = CreateBottleRequest;
-export type BottleCreateMutationError = unknown;
 
-export const useBottleCreate = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof bottleCreate>>,
-      TError,
-      { data: CreateBottleRequest },
-      TContext
-    >;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof bottleCreate>>,
-  TError,
-  { data: CreateBottleRequest },
-  TContext
-> => {
-  return useMutation(getBottleCreateMutationOptions(options), queryClient);
-};
 
-export const userBottles = (signal?: AbortSignal) => {
-  return customBottlesInstance<BottleResponseModel[]>({ url: `/bottles`, method: 'GET', signal });
-};
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ImageCreateMutationResult = NonNullable<Awaited<ReturnType<typeof imageCreate>>>
+    export type ImageCreateMutationBody = ImageCreateBody | undefined
+    export type ImageCreateMutationError = unknown
+
+    export const useImageCreate = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof imageCreate>>, TError,{bottleId: string;data?: ImageCreateBody}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof imageCreate>>,
+        TError,
+        {bottleId: string;data?: ImageCreateBody},
+        TContext
+      > => {
+      return useMutation(getImageCreateMutationOptions(options), queryClient);
+    }
+
+export const bottleCreate = (
+    createBottleRequest: CreateBottleRequest,
+ signal?: AbortSignal
+) => {
+
+
+      return customBottlesInstance<BottleResponseModel>(
+      {url: `/bottles/new`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createBottleRequest, signal
+    },
+      );
+    }
+
+
+
+
+export const getBottleCreateMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bottleCreate>>, TError,{data: CreateBottleRequest}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof bottleCreate>>, TError,{data: CreateBottleRequest}, TContext> => {
+
+const mutationKey = ['bottleCreate'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof bottleCreate>>, {data: CreateBottleRequest}> = (props) => {
+          const {data} = props ?? {};
+
+          return  bottleCreate(data,)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type BottleCreateMutationResult = NonNullable<Awaited<ReturnType<typeof bottleCreate>>>
+    export type BottleCreateMutationBody = CreateBottleRequest
+    export type BottleCreateMutationError = unknown
+
+    export const useBottleCreate = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bottleCreate>>, TError,{data: CreateBottleRequest}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof bottleCreate>>,
+        TError,
+        {data: CreateBottleRequest},
+        TContext
+      > => {
+      return useMutation(getBottleCreateMutationOptions(options), queryClient);
+    }
+
+export const userBottles = (
+
+ signal?: AbortSignal
+) => {
+
+
+      return customBottlesInstance<BottleResponseModel[]>(
+      {url: `/bottles`, method: 'GET', signal
+    },
+      );
+    }
+
+
+
 
 export const getUserBottlesQueryKey = () => {
-  return [`/bottles`] as const;
-};
+    return [
+    `/bottles`
+    ] as const;
+    }
 
-export const getUserBottlesQueryOptions = <
-  TData = Awaited<ReturnType<typeof userBottles>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>>;
-}) => {
-  const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getUserBottlesQueryKey();
+export const getUserBottlesQueryOptions = <TData = Awaited<ReturnType<typeof userBottles>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>>, }
+) => {
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof userBottles>>> = ({ signal }) =>
-    userBottles(signal);
+const {query: queryOptions} = options ?? {};
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof userBottles>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
+  const queryKey =  queryOptions?.queryKey ?? getUserBottlesQueryKey();
 
-export type UserBottlesQueryResult = NonNullable<Awaited<ReturnType<typeof userBottles>>>;
-export type UserBottlesQueryError = unknown;
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof userBottles>>> = ({ signal }) => userBottles(signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type UserBottlesQueryResult = NonNullable<Awaited<ReturnType<typeof userBottles>>>
+export type UserBottlesQueryError = unknown
+
 
 export function useUserBottles<TData = Awaited<ReturnType<typeof userBottles>>, TError = unknown>(
-  options: {
-    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>> &
-      Pick<
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof userBottles>>,
           TError,
           Awaited<ReturnType<typeof userBottles>>
-        >,
-        'initialData'
-      >;
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useUserBottles<TData = Awaited<ReturnType<typeof userBottles>>, TError = unknown>(
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>> &
-      Pick<
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof userBottles>>,
           TError,
           Awaited<ReturnType<typeof userBottles>>
-        >,
-        'initialData'
-      >;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useUserBottles<TData = Awaited<ReturnType<typeof userBottles>>, TError = unknown>(
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
 export function useUserBottles<TData = Awaited<ReturnType<typeof userBottles>>, TError = unknown>(
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getUserBottlesQueryOptions(options);
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
-    queryKey: DataTag<QueryKey, TData, TError>;
-  };
+  const queryOptions = getUserBottlesQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
 
-export const getUserBottlesSuspenseQueryOptions = <
-  TData = Awaited<ReturnType<typeof userBottles>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>>;
-}) => {
-  const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getUserBottlesQueryKey();
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof userBottles>>> = ({ signal }) =>
-    userBottles(signal);
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof userBottles>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
 
-export type UserBottlesSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof userBottles>>>;
-export type UserBottlesSuspenseQueryError = unknown;
 
-export function useUserBottlesSuspense<
-  TData = Awaited<ReturnType<typeof userBottles>>,
-  TError = unknown,
->(
-  options: {
-    query: Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useUserBottlesSuspense<
-  TData = Awaited<ReturnType<typeof userBottles>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>
-    >;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useUserBottlesSuspense<
-  TData = Awaited<ReturnType<typeof userBottles>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>
-    >;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export const getUserBottlesSuspenseQueryOptions = <TData = Awaited<ReturnType<typeof userBottles>>, TError = unknown>( options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>>, }
+) => {
 
-export function useUserBottlesSuspense<
-  TData = Awaited<ReturnType<typeof userBottles>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>
-    >;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getUserBottlesSuspenseQueryOptions(options);
+const {query: queryOptions} = options ?? {};
 
-  const query = useSuspenseQuery(queryOptions, queryClient) as UseSuspenseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
+  const queryKey =  queryOptions?.queryKey ?? getUserBottlesQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof userBottles>>> = ({ signal }) => userBottles(signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type UserBottlesSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof userBottles>>>
+export type UserBottlesSuspenseQueryError = unknown
+
+
+export function useUserBottlesSuspense<TData = Awaited<ReturnType<typeof userBottles>>, TError = unknown>(
+  options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useUserBottlesSuspense<TData = Awaited<ReturnType<typeof userBottles>>, TError = unknown>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useUserBottlesSuspense<TData = Awaited<ReturnType<typeof userBottles>>, TError = unknown>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useUserBottlesSuspense<TData = Awaited<ReturnType<typeof userBottles>>, TError = unknown>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getUserBottlesSuspenseQueryOptions(options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
 
-export const healthcheck = (signal?: AbortSignal) => {
-  return customBottlesInstance<string>({
-    url: `/bottles/status/healthcheck`,
-    method: 'GET',
-    signal,
-  });
-};
+
+
+
+
+
+
+export const healthcheck = (
+
+ signal?: AbortSignal
+) => {
+
+
+      return customBottlesInstance<string>(
+      {url: `/bottles/status/healthcheck`, method: 'GET', signal
+    },
+      );
+    }
+
+
+
 
 export const getHealthcheckQueryKey = () => {
-  return [`/bottles/status/healthcheck`] as const;
-};
+    return [
+    `/bottles/status/healthcheck`
+    ] as const;
+    }
 
-export const getHealthcheckQueryOptions = <
-  TData = Awaited<ReturnType<typeof healthcheck>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>>;
-}) => {
-  const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getHealthcheckQueryKey();
+export const getHealthcheckQueryOptions = <TData = Awaited<ReturnType<typeof healthcheck>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>>, }
+) => {
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof healthcheck>>> = ({ signal }) =>
-    healthcheck(signal);
+const {query: queryOptions} = options ?? {};
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof healthcheck>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
+  const queryKey =  queryOptions?.queryKey ?? getHealthcheckQueryKey();
 
-export type HealthcheckQueryResult = NonNullable<Awaited<ReturnType<typeof healthcheck>>>;
-export type HealthcheckQueryError = unknown;
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof healthcheck>>> = ({ signal }) => healthcheck(signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type HealthcheckQueryResult = NonNullable<Awaited<ReturnType<typeof healthcheck>>>
+export type HealthcheckQueryError = unknown
+
 
 export function useHealthcheck<TData = Awaited<ReturnType<typeof healthcheck>>, TError = unknown>(
-  options: {
-    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>> &
-      Pick<
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof healthcheck>>,
           TError,
           Awaited<ReturnType<typeof healthcheck>>
-        >,
-        'initialData'
-      >;
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useHealthcheck<TData = Awaited<ReturnType<typeof healthcheck>>, TError = unknown>(
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>> &
-      Pick<
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof healthcheck>>,
           TError,
           Awaited<ReturnType<typeof healthcheck>>
-        >,
-        'initialData'
-      >;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useHealthcheck<TData = Awaited<ReturnType<typeof healthcheck>>, TError = unknown>(
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
 export function useHealthcheck<TData = Awaited<ReturnType<typeof healthcheck>>, TError = unknown>(
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getHealthcheckQueryOptions(options);
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
-    queryKey: DataTag<QueryKey, TData, TError>;
-  };
+  const queryOptions = getHealthcheckQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
 
-export const getHealthcheckSuspenseQueryOptions = <
-  TData = Awaited<ReturnType<typeof healthcheck>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>>;
-}) => {
-  const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getHealthcheckQueryKey();
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof healthcheck>>> = ({ signal }) =>
-    healthcheck(signal);
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof healthcheck>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
 
-export type HealthcheckSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof healthcheck>>>;
-export type HealthcheckSuspenseQueryError = unknown;
 
-export function useHealthcheckSuspense<
-  TData = Awaited<ReturnType<typeof healthcheck>>,
-  TError = unknown,
->(
-  options: {
-    query: Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useHealthcheckSuspense<
-  TData = Awaited<ReturnType<typeof healthcheck>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>
-    >;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useHealthcheckSuspense<
-  TData = Awaited<ReturnType<typeof healthcheck>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>
-    >;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-export function useHealthcheckSuspense<
-  TData = Awaited<ReturnType<typeof healthcheck>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>
-    >;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getHealthcheckSuspenseQueryOptions(options);
-
-  const query = useSuspenseQuery(queryOptions, queryClient) as UseSuspenseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-export const userBottlesFilter = (params?: UserBottlesFilterParams, signal?: AbortSignal) => {
-  return customBottlesInstance<BottleResponseModel[]>({
-    url: `/bottles/filter`,
-    method: 'GET',
-    params,
-    signal,
-  });
-};
-
-export const getUserBottlesFilterQueryKey = (params?: UserBottlesFilterParams) => {
-  return [`/bottles/filter`, ...(params ? [params] : [])] as const;
-};
-
-export const getUserBottlesFilterQueryOptions = <
-  TData = Awaited<ReturnType<typeof userBottlesFilter>>,
-  TError = unknown,
->(
-  params?: UserBottlesFilterParams,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>>;
-  },
+export const getHealthcheckSuspenseQueryOptions = <TData = Awaited<ReturnType<typeof healthcheck>>, TError = unknown>( options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>>, }
 ) => {
-  const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getUserBottlesFilterQueryKey(params);
+const {query: queryOptions} = options ?? {};
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof userBottlesFilter>>> = ({ signal }) =>
-    userBottlesFilter(params, signal);
+  const queryKey =  queryOptions?.queryKey ?? getHealthcheckQueryKey();
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof userBottlesFilter>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
 
-export type UserBottlesFilterQueryResult = NonNullable<
-  Awaited<ReturnType<typeof userBottlesFilter>>
->;
-export type UserBottlesFilterQueryError = unknown;
 
-export function useUserBottlesFilter<
-  TData = Awaited<ReturnType<typeof userBottlesFilter>>,
-  TError = unknown,
->(
-  params: undefined | UserBottlesFilterParams,
-  options: {
-    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>> &
-      Pick<
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof healthcheck>>> = ({ signal }) => healthcheck(signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type HealthcheckSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof healthcheck>>>
+export type HealthcheckSuspenseQueryError = unknown
+
+
+export function useHealthcheckSuspense<TData = Awaited<ReturnType<typeof healthcheck>>, TError = unknown>(
+  options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useHealthcheckSuspense<TData = Awaited<ReturnType<typeof healthcheck>>, TError = unknown>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useHealthcheckSuspense<TData = Awaited<ReturnType<typeof healthcheck>>, TError = unknown>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useHealthcheckSuspense<TData = Awaited<ReturnType<typeof healthcheck>>, TError = unknown>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof healthcheck>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getHealthcheckSuspenseQueryOptions(options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const userBottlesFilter = (
+    params?: UserBottlesFilterParams,
+ signal?: AbortSignal
+) => {
+
+
+      return customBottlesInstance<BottleResponseModel[]>(
+      {url: `/bottles/filter`, method: 'GET',
+        params, signal
+    },
+      );
+    }
+
+
+
+
+export const getUserBottlesFilterQueryKey = (params?: UserBottlesFilterParams,) => {
+    return [
+    `/bottles/filter`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getUserBottlesFilterQueryOptions = <TData = Awaited<ReturnType<typeof userBottlesFilter>>, TError = unknown>(params?: UserBottlesFilterParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getUserBottlesFilterQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof userBottlesFilter>>> = ({ signal }) => userBottlesFilter(params, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type UserBottlesFilterQueryResult = NonNullable<Awaited<ReturnType<typeof userBottlesFilter>>>
+export type UserBottlesFilterQueryError = unknown
+
+
+export function useUserBottlesFilter<TData = Awaited<ReturnType<typeof userBottlesFilter>>, TError = unknown>(
+ params: undefined |  UserBottlesFilterParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof userBottlesFilter>>,
           TError,
           Awaited<ReturnType<typeof userBottlesFilter>>
-        >,
-        'initialData'
-      >;
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useUserBottlesFilter<
-  TData = Awaited<ReturnType<typeof userBottlesFilter>>,
-  TError = unknown,
->(
-  params?: UserBottlesFilterParams,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>> &
-      Pick<
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useUserBottlesFilter<TData = Awaited<ReturnType<typeof userBottlesFilter>>, TError = unknown>(
+ params?: UserBottlesFilterParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof userBottlesFilter>>,
           TError,
           Awaited<ReturnType<typeof userBottlesFilter>>
-        >,
-        'initialData'
-      >;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useUserBottlesFilter<
-  TData = Awaited<ReturnType<typeof userBottlesFilter>>,
-  TError = unknown,
->(
-  params?: UserBottlesFilterParams,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useUserBottlesFilter<TData = Awaited<ReturnType<typeof userBottlesFilter>>, TError = unknown>(
+ params?: UserBottlesFilterParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-export function useUserBottlesFilter<
-  TData = Awaited<ReturnType<typeof userBottlesFilter>>,
-  TError = unknown,
->(
-  params?: UserBottlesFilterParams,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getUserBottlesFilterQueryOptions(params, options);
+export function useUserBottlesFilter<TData = Awaited<ReturnType<typeof userBottlesFilter>>, TError = unknown>(
+ params?: UserBottlesFilterParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
-    queryKey: DataTag<QueryKey, TData, TError>;
-  };
+  const queryOptions = getUserBottlesFilterQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
 
-export const getUserBottlesFilterSuspenseQueryOptions = <
-  TData = Awaited<ReturnType<typeof userBottlesFilter>>,
-  TError = unknown,
->(
-  params?: UserBottlesFilterParams,
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>
-    >;
-  },
+
+
+
+
+
+export const getUserBottlesFilterSuspenseQueryOptions = <TData = Awaited<ReturnType<typeof userBottlesFilter>>, TError = unknown>(params?: UserBottlesFilterParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>>, }
 ) => {
-  const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getUserBottlesFilterQueryKey(params);
+const {query: queryOptions} = options ?? {};
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof userBottlesFilter>>> = ({ signal }) =>
-    userBottlesFilter(params, signal);
+  const queryKey =  queryOptions?.queryKey ?? getUserBottlesFilterQueryKey(params);
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof userBottlesFilter>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
 
-export type UserBottlesFilterSuspenseQueryResult = NonNullable<
-  Awaited<ReturnType<typeof userBottlesFilter>>
->;
-export type UserBottlesFilterSuspenseQueryError = unknown;
 
-export function useUserBottlesFilterSuspense<
-  TData = Awaited<ReturnType<typeof userBottlesFilter>>,
-  TError = unknown,
->(
-  params: undefined | UserBottlesFilterParams,
-  options: {
-    query: Partial<
-      UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>
-    >;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useUserBottlesFilterSuspense<
-  TData = Awaited<ReturnType<typeof userBottlesFilter>>,
-  TError = unknown,
->(
-  params?: UserBottlesFilterParams,
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>
-    >;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useUserBottlesFilterSuspense<
-  TData = Awaited<ReturnType<typeof userBottlesFilter>>,
-  TError = unknown,
->(
-  params?: UserBottlesFilterParams,
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>
-    >;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof userBottlesFilter>>> = ({ signal }) => userBottlesFilter(params, signal);
 
-export function useUserBottlesFilterSuspense<
-  TData = Awaited<ReturnType<typeof userBottlesFilter>>,
-  TError = unknown,
->(
-  params?: UserBottlesFilterParams,
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>
-    >;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getUserBottlesFilterSuspenseQueryOptions(params, options);
 
-  const query = useSuspenseQuery(queryOptions, queryClient) as UseSuspenseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type UserBottlesFilterSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof userBottlesFilter>>>
+export type UserBottlesFilterSuspenseQueryError = unknown
+
+
+export function useUserBottlesFilterSuspense<TData = Awaited<ReturnType<typeof userBottlesFilter>>, TError = unknown>(
+ params: undefined |  UserBottlesFilterParams, options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useUserBottlesFilterSuspense<TData = Awaited<ReturnType<typeof userBottlesFilter>>, TError = unknown>(
+ params?: UserBottlesFilterParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useUserBottlesFilterSuspense<TData = Awaited<ReturnType<typeof userBottlesFilter>>, TError = unknown>(
+ params?: UserBottlesFilterParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useUserBottlesFilterSuspense<TData = Awaited<ReturnType<typeof userBottlesFilter>>, TError = unknown>(
+ params?: UserBottlesFilterParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof userBottlesFilter>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getUserBottlesFilterSuspenseQueryOptions(params,options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
 
-export const countBottles = (signal?: AbortSignal) => {
-  return customBottlesInstance<number>({ url: `/bottles/count`, method: 'GET', signal });
-};
+
+
+
+
+
+
+export const countBottles = (
+
+ signal?: AbortSignal
+) => {
+
+
+      return customBottlesInstance<number>(
+      {url: `/bottles/count`, method: 'GET', signal
+    },
+      );
+    }
+
+
+
 
 export const getCountBottlesQueryKey = () => {
-  return [`/bottles/count`] as const;
-};
+    return [
+    `/bottles/count`
+    ] as const;
+    }
 
-export const getCountBottlesQueryOptions = <
-  TData = Awaited<ReturnType<typeof countBottles>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>;
-}) => {
-  const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getCountBottlesQueryKey();
+export const getCountBottlesQueryOptions = <TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+) => {
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof countBottles>>> = ({ signal }) =>
-    countBottles(signal);
+const {query: queryOptions} = options ?? {};
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof countBottles>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
+  const queryKey =  queryOptions?.queryKey ?? getCountBottlesQueryKey();
 
-export type CountBottlesQueryResult = NonNullable<Awaited<ReturnType<typeof countBottles>>>;
-export type CountBottlesQueryError = unknown;
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof countBottles>>> = ({ signal }) => countBottles(signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type CountBottlesQueryResult = NonNullable<Awaited<ReturnType<typeof countBottles>>>
+export type CountBottlesQueryError = unknown
+
 
 export function useCountBottles<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
-  options: {
-    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>> &
-      Pick<
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof countBottles>>,
           TError,
           Awaited<ReturnType<typeof countBottles>>
-        >,
-        'initialData'
-      >;
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useCountBottles<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>> &
-      Pick<
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof countBottles>>,
           TError,
           Awaited<ReturnType<typeof countBottles>>
-        >,
-        'initialData'
-      >;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useCountBottles<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
 export function useCountBottles<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getCountBottlesQueryOptions(options);
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
-    queryKey: DataTag<QueryKey, TData, TError>;
-  };
+  const queryOptions = getCountBottlesQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
 
-export const getCountBottlesSuspenseQueryOptions = <
-  TData = Awaited<ReturnType<typeof countBottles>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>;
-}) => {
-  const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getCountBottlesQueryKey();
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof countBottles>>> = ({ signal }) =>
-    countBottles(signal);
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof countBottles>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
 
-export type CountBottlesSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof countBottles>>>;
-export type CountBottlesSuspenseQueryError = unknown;
 
-export function useCountBottlesSuspense<
-  TData = Awaited<ReturnType<typeof countBottles>>,
-  TError = unknown,
->(
-  options: {
-    query: Partial<
-      UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>
-    >;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useCountBottlesSuspense<
-  TData = Awaited<ReturnType<typeof countBottles>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>
-    >;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useCountBottlesSuspense<
-  TData = Awaited<ReturnType<typeof countBottles>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>
-    >;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export const getCountBottlesSuspenseQueryOptions = <TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>( options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+) => {
 
-export function useCountBottlesSuspense<
-  TData = Awaited<ReturnType<typeof countBottles>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>
-    >;
-  },
-  queryClient?: QueryClient,
-): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getCountBottlesSuspenseQueryOptions(options);
+const {query: queryOptions} = options ?? {};
 
-  const query = useSuspenseQuery(queryOptions, queryClient) as UseSuspenseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
+  const queryKey =  queryOptions?.queryKey ?? getCountBottlesQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof countBottles>>> = ({ signal }) => countBottles(signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type CountBottlesSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof countBottles>>>
+export type CountBottlesSuspenseQueryError = unknown
+
+
+export function useCountBottlesSuspense<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
+  options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCountBottlesSuspense<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCountBottlesSuspense<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useCountBottlesSuspense<TData = Awaited<ReturnType<typeof countBottles>>, TError = unknown>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof countBottles>>, TError, TData>>, }
+ , queryClient?: QueryClient
+ ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getCountBottlesSuspenseQueryOptions(options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
