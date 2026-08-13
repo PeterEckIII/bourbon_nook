@@ -47,7 +47,6 @@ export default function ReviewForm({
                 options={bottleOptions}
                 placeholder="Search your bottles"
                 emptyMessage="No bottles match"
-                required
               />
             )}
           />
@@ -58,21 +57,18 @@ export default function ReviewForm({
                 label="Review Setting"
                 type="text"
                 placeholder="Winding down after work"
-                required
               />
             )}
           />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <form.AppField
               name="reviewDate"
-              children={(field) => (
-                <field.DateField label="Review Date" required />
-              )}
+              children={(field) => <field.DateField label="Review Date" />}
             />
             <form.AppField
               name="restTimeMin"
               children={(field) => (
-                <field.NumberField label="Rest Time (minutes)" required />
+                <field.NumberField label="Rest Time (minutes)" />
               )}
             />
             <form.AppField
@@ -82,7 +78,6 @@ export default function ReviewForm({
                   label="Glassware"
                   type="text"
                   placeholder="Glencairn, Copita"
-                  required
                 />
               )}
             />
@@ -99,7 +94,6 @@ export default function ReviewForm({
               <field.TextareaField
                 label="Nose"
                 placeholder="Caramel, oak, dark cherry"
-                required
               />
             )}
           />
@@ -109,7 +103,6 @@ export default function ReviewForm({
               <field.TextareaField
                 label="Palate"
                 placeholder="Baking spice, vanilla, toasted oak"
-                required
               />
             )}
           />
@@ -119,7 +112,6 @@ export default function ReviewForm({
               <field.TextareaField
                 label="Finish"
                 placeholder="Long, warm, lingering spice"
-                required
               />
             )}
           />
@@ -135,16 +127,13 @@ export default function ReviewForm({
               <field.TextareaField
                 label="Thoughts"
                 placeholder="Overall impressions of this pour"
-                required
               />
             )}
           />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <form.AppField
               name="valueScore"
-              children={(field) => (
-                <field.NumberField label="Value Rating" required />
-              )}
+              children={(field) => <field.NumberField label="Value Rating" />}
             />
             <form.AppField
               name="overallRating"
