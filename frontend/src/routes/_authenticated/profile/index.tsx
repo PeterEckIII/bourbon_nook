@@ -115,18 +115,19 @@ function RouteComponent() {
           <p className="text-xs font-semibold uppercase tracking-wide text-ink/50">
             Profile
           </p>
-          <h1 className="font-caprasimo text-3xl text-ink">
-            {user.username}
-          </h1>
+          <h1 className="font-caprasimo text-3xl text-ink">{user.username}</h1>
           <p className="mt-1 text-sm text-ink/60">{user.email}</p>
         </div>
         <div className="flex gap-3">
           <button type="button" className={secondaryButtonClasses}>
             Change username
           </button>
-          <button type="button" className={secondaryButtonClasses}>
+          <Link
+            to="/profile/change-password"
+            className={secondaryButtonClasses}
+          >
             Change password
-          </button>
+          </Link>
         </div>
       </div>
 
