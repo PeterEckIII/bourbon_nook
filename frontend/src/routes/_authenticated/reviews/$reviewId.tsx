@@ -1,8 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import {
-  getReviewQueryOptions,
-  useReviewSuspense,
-} from '../../../api/generated/reviews-api';
+import { getReviewQueryOptions, useReviewSuspense } from '../../../api/generated/reviews-api';
 import {
   getUserBottleQueryOptions,
   useUserBottleSuspense,
@@ -14,9 +11,7 @@ export const Route = createFileRoute('/_authenticated/reviews/$reviewId')({
     const review = await context.queryClient.ensureQueryData(
       getReviewQueryOptions(params.reviewId),
     );
-    await context.queryClient.ensureQueryData(
-      getUserBottleQueryOptions(review.bottleId!),
-    );
+    await context.queryClient.ensureQueryData(getUserBottleQueryOptions(review.bottleId!));
   },
   component: RouteComponent,
 });
@@ -29,17 +24,13 @@ function formatDate(value: string | undefined): string | undefined {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value ?? '');
   if (!match) return undefined;
   const [, year, month, day] = match;
-  return dateFormatter.format(
-    new Date(Number(year), Number(month) - 1, Number(day)),
-  );
+  return dateFormatter.format(new Date(Number(year), Number(month) - 1, Number(day)));
 }
 
 function Detail({ label, value }: { label: string; value?: string | number }) {
   return (
     <div>
-      <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-        {label}
-      </dt>
+      <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">{label}</dt>
       <dd className="mt-1 text-sm leading-relaxed text-ink">{value ?? '—'}</dd>
     </div>
   );
@@ -48,12 +39,8 @@ function Detail({ label, value }: { label: string; value?: string | number }) {
 function Stat({ label, value }: { label: string; value?: number }) {
   return (
     <div className="rounded-lg border border-terracotta/25 bg-terracotta/10 px-4 py-4">
-      <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-        {label}
-      </dt>
-      <dd className="mt-1 text-2xl font-semibold text-pour">
-        {value ?? '—'}
-      </dd>
+      <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">{label}</dt>
+      <dd className="mt-1 text-2xl font-semibold text-pour">{value ?? '—'}</dd>
     </div>
   );
 }
@@ -92,12 +79,8 @@ function RouteComponent() {
 
         <div className="space-y-6">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-              Review
-            </p>
-            <h1 className="font-caprasimo text-3xl text-ink">
-              {bottle.name}
-            </h1>
+            <p className="text-xs font-semibold uppercase tracking-wide text-ink/50">Review</p>
+            <h1 className="font-caprasimo text-3xl text-ink">{bottle.name}</h1>
             <p className="mt-1 text-sm text-ink/60">
               {[bottle.distillery, bottle.producer].filter(Boolean).join(' · ')}
             </p>
@@ -129,9 +112,7 @@ function RouteComponent() {
           </div>
 
           <div className="border-t border-ink/10 pt-6">
-            <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-              Details
-            </h2>
+            <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Details</h2>
             <dl className="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-4">
               <Detail label="Review Date" value={formatDate(review.reviewDate)} />
               <Detail label="Setting" value={review.setting} />
@@ -142,9 +123,7 @@ function RouteComponent() {
 
           {review.reviewNotes && review.reviewNotes.length > 0 && (
             <div className="border-t border-ink/10 pt-6">
-              <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-                Notes
-              </h2>
+              <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Notes</h2>
               <ul className="mt-3 divide-y divide-amber-900/10 rounded-lg border border-amber-900/15 bg-amber-600/5">
                 {review.reviewNotes.map((note) => (
                   <li
@@ -157,9 +136,7 @@ function RouteComponent() {
                         : note.noteName}
                     </span>
                     {note.score !== undefined && (
-                      <span className="font-semibold text-pour">
-                        {note.score}
-                      </span>
+                      <span className="font-semibold text-pour">{note.score}</span>
                     )}
                   </li>
                 ))}

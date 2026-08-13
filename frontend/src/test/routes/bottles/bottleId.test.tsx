@@ -1,9 +1,6 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi } from 'vite-plus/test';
 import { screen, waitFor } from '@testing-library/react';
-import {
-  createMockAuthState,
-  renderWithFileRoutes,
-} from '../../file-route-utils';
+import { createMockAuthState, renderWithFileRoutes } from '../../file-route-utils';
 import type { BottleResponseModel } from '../../../api/generated/bottles-api';
 import userEvent from '@testing-library/user-event';
 import { customBottlesInstance } from '../../../api/axios-instance';
@@ -75,8 +72,7 @@ async function getSelectors() {
 }
 
 vi.mock('../../../api/axios-instance', async (importOriginal) => {
-  const actual =
-    await importOriginal<typeof import('../../../api/axios-instance')>();
+  const actual = await importOriginal<typeof import('../../../api/axios-instance')>();
 
   const bottleResponse = returnBottleResponse();
 
@@ -88,14 +84,10 @@ vi.mock('../../../api/axios-instance', async (importOriginal) => {
 
 describe('Bottle ID route', () => {
   beforeAll(() => {
-    HTMLDialogElement.prototype.showModal = vi.defineHelper(function (
-      this: HTMLDialogElement,
-    ) {
+    HTMLDialogElement.prototype.showModal = vi.defineHelper(function (this: HTMLDialogElement) {
       this.open = true;
     });
-    HTMLDialogElement.prototype.close = vi.fn(function (
-      this: HTMLDialogElement,
-    ) {
+    HTMLDialogElement.prototype.close = vi.fn(function (this: HTMLDialogElement) {
       this.open = false;
     });
   });
@@ -107,10 +99,7 @@ describe('Bottle ID route', () => {
     expect(selectors.status).toBeInTheDocument();
     expect(selectors.price).toBeInTheDocument();
     expect(selectors.writeReviewLink).toHaveAttribute('href', '/reviews/new');
-    expect(selectors.editBottleLink).toHaveAttribute(
-      'href',
-      '/bottles/12345/edit',
-    );
+    expect(selectors.editBottleLink).toHaveAttribute('href', '/bottles/12345/edit');
     expect(selectors.deleteBottleButton).toBeInTheDocument();
     expect(selectors.bottleImage).toHaveAttribute(
       'src',
@@ -124,9 +113,7 @@ describe('Bottle ID route', () => {
     const mockedBottleInstance = vi.mocked(customBottlesInstance);
 
     await user.click(deleteBottleButton);
-    expect(
-      await screen.findByText(/delete this bottle\?/i),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(/delete this bottle\?/i)).toBeInTheDocument();
     const confirmButton = await screen.findByRole('button', {
       name: /^delete$/i,
     });
@@ -138,9 +125,7 @@ describe('Bottle ID route', () => {
         url: '/bottles/12345',
       }),
     );
-    await waitFor(() =>
-      expect(router.state.location.pathname).toBe('/bottles'),
-    );
+    await waitFor(() => expect(router.state.location.pathname).toBe('/bottles'));
   });
   it('cancels the delete flow when pressing cancel', async () => {
     const { router } = renderBottleIdRouteWithAuth();
@@ -149,9 +134,7 @@ describe('Bottle ID route', () => {
     const mockedBottleInstance = vi.mocked(customBottlesInstance);
 
     await user.click(deleteBottleButton);
-    expect(
-      await screen.findByText(/delete this bottle\?/i),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(/delete this bottle\?/i)).toBeInTheDocument();
     const cancelButton = await screen.findByRole('button', {
       name: /^cancel$/i,
     });
@@ -160,9 +143,7 @@ describe('Bottle ID route', () => {
     expect(mockedBottleInstance).not.toHaveBeenCalledWith(
       expect.objectContaining({ method: 'DELETE' }),
     );
-    await waitFor(() =>
-      expect(router.state.location.pathname).toBe('/bottles/12345'),
-    );
+    await waitFor(() => expect(router.state.location.pathname).toBe('/bottles/12345'));
   });
   it('shows an error when delete fails', async () => {
     renderBottleIdRouteWithAuth();
@@ -193,10 +174,7 @@ describe('Bottle ID route', () => {
     renderBottleIdRouteWithAuth();
     const { bottleImage } = await getSelectors();
 
-    expect(bottleImage).toHaveAttribute(
-      'src',
-      '/src/assets/brand/png/bottle-cancel-1024.png',
-    );
+    expect(bottleImage).toHaveAttribute('src', '/src/assets/brand/png/bottle-cancel-1024.png');
   });
   it('shows detail component fallback when data is undefined', async () => {
     const mockedBottleInstance = vi.mocked(customBottlesInstance);

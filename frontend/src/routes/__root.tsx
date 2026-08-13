@@ -35,8 +35,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 function RootComponent() {
   const showNavbar = useMatches({
-    select: (matches) =>
-      !matches.some((m) => m.staticData?.showNavbar === false),
+    select: (matches) => !matches.some((m) => m.staticData?.showNavbar === false),
   });
   return (
     <>

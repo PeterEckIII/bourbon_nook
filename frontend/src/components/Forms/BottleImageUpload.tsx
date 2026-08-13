@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import {
-  useImageCreate,
-  getUserBottleQueryKey,
-} from '../../api/generated/bottles-api';
+import { useImageCreate, getUserBottleQueryKey } from '../../api/generated/bottles-api';
 import { useAppForm } from '../../hooks/form';
 import { getApiErrorMessage } from '../../api/errors';
 

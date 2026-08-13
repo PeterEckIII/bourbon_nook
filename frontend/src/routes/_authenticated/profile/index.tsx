@@ -49,9 +49,7 @@ const secondaryButtonClasses =
 function Stat({ label, value }: { label: string; value: number }) {
   return (
     <div className="rounded-lg border border-terracotta/25 bg-terracotta/10 px-4 py-4">
-      <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-        {label}
-      </dt>
+      <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">{label}</dt>
       <dd className="mt-1 text-2xl font-semibold text-pour">{value}</dd>
     </div>
   );
@@ -103,18 +101,13 @@ function RouteComponent() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
-      <Link
-        to="/"
-        className="text-sm text-ink/60 transition-colors duration-150 hover:text-ink"
-      >
+      <Link to="/" className="text-sm text-ink/60 transition-colors duration-150 hover:text-ink">
         ← Back to Home
       </Link>
 
       <div className="mt-6 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-            Profile
-          </p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-ink/50">Profile</p>
           <h1 className="font-caprasimo text-3xl text-ink">{user.username}</h1>
           <p className="mt-1 text-sm text-ink/60">{user.email}</p>
         </div>
@@ -122,10 +115,7 @@ function RouteComponent() {
           <button type="button" className={secondaryButtonClasses}>
             Change username
           </button>
-          <Link
-            to="/profile/change-password"
-            className={secondaryButtonClasses}
-          >
+          <Link to="/profile/change-password" className={secondaryButtonClasses}>
             Change password
           </Link>
         </div>
@@ -140,23 +130,13 @@ function RouteComponent() {
 
       <div className="mt-10 grid grid-cols-1 gap-8 border-t border-ink/10 pt-8 sm:grid-cols-2">
         <section>
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-            Followers
-          </h2>
-          <UserList
-            users={followers.content ?? []}
-            emptyLabel="No followers yet."
-          />
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Followers</h2>
+          <UserList users={followers.content ?? []} emptyLabel="No followers yet." />
         </section>
 
         <section>
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-            Following
-          </h2>
-          <UserList
-            users={following.content ?? []}
-            emptyLabel="Not following anyone yet."
-          />
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Following</h2>
+          <UserList users={following.content ?? []} emptyLabel="Not following anyone yet." />
         </section>
       </div>
     </div>

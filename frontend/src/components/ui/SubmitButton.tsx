@@ -14,9 +14,7 @@ export default function SubmitButton({
   const form = useFormContext();
 
   return (
-    <form.Subscribe
-      selector={(state) => [state.canSubmit, state.isSubmitting] as const}
-    >
+    <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting] as const}>
       {([canSubmit, isSubmitting]) => (
         <button
           type="submit"

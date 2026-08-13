@@ -6,8 +6,7 @@ import {
 import ReviewTable from '../../../components/Tables/ReviewTable';
 
 export const Route = createFileRoute('/_authenticated/reviews/')({
-  loader: ({ context }) =>
-    context.queryClient.ensureQueryData(getUserReviewsQueryOptions()),
+  loader: ({ context }) => context.queryClient.ensureQueryData(getUserReviewsQueryOptions()),
   component: RouteComponent,
 });
 

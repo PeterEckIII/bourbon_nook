@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, lazyPlugins } from 'vite-plus';
 import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import babel from '@rolldown/plugin-babel';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
@@ -6,7 +6,165 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
+  test: {
+    include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
+  },
+  fmt: {
+    semi: true,
+    singleQuote: true,
+  },
+  lint: {
+    plugins: ['oxc', 'typescript', 'unicorn', 'react'],
+    jsPlugins: [
+      {
+        name: 'vite-plus',
+        specifier: 'vite-plus/oxlint-plugin',
+      },
+      {
+        name: '@tanstack/query',
+        specifier: '@tanstack/eslint-plugin-query',
+      },
+    ],
+    categories: {
+      correctness: 'warn',
+    },
+    env: {
+      builtin: true,
+    },
+    ignorePatterns: ['dist'],
+    rules: {
+      '@tanstack/query/exhaustive-deps': 'error',
+      '@tanstack/query/no-rest-destructuring': 'warn',
+      '@tanstack/query/stable-query-client': 'error',
+      '@tanstack/query/no-unstable-deps': 'error',
+      '@tanstack/query/infinite-query-property-order': 'error',
+      '@tanstack/query/no-void-query-fn': 'error',
+      '@tanstack/query/mutation-property-order': 'error',
+      '@tanstack/query/prefer-query-options': 'error',
+      'vite-plus/prefer-vite-plus-imports': 'error',
+    },
+    overrides: [
+      {
+        files: ['**/*.{ts,tsx}'],
+        rules: {
+          'constructor-super': 'error',
+          'for-direction': 'error',
+          'getter-return': 'error',
+          'no-async-promise-executor': 'error',
+          'no-case-declarations': 'error',
+          'no-class-assign': 'error',
+          'no-compare-neg-zero': 'error',
+          'no-cond-assign': 'error',
+          'no-const-assign': 'error',
+          'no-constant-binary-expression': 'error',
+          'no-constant-condition': 'error',
+          'no-control-regex': 'error',
+          'no-debugger': 'error',
+          'no-delete-var': 'error',
+          'no-dupe-class-members': 'error',
+          'no-dupe-else-if': 'error',
+          'no-dupe-keys': 'error',
+          'no-duplicate-case': 'error',
+          'no-empty': 'error',
+          'no-empty-character-class': 'error',
+          'no-empty-pattern': 'error',
+          'no-empty-static-block': 'error',
+          'no-ex-assign': 'error',
+          'no-extra-boolean-cast': 'error',
+          'no-fallthrough': 'error',
+          'no-func-assign': 'error',
+          'no-global-assign': 'error',
+          'no-import-assign': 'error',
+          'no-invalid-regexp': 'error',
+          'no-irregular-whitespace': 'error',
+          'no-loss-of-precision': 'error',
+          'no-misleading-character-class': 'error',
+          'no-new-native-nonconstructor': 'error',
+          'no-nonoctal-decimal-escape': 'error',
+          'no-obj-calls': 'error',
+          'no-prototype-builtins': 'error',
+          'no-redeclare': 'error',
+          'no-regex-spaces': 'error',
+          'no-self-assign': 'error',
+          'no-setter-return': 'error',
+          'no-shadow-restricted-names': 'error',
+          'no-sparse-arrays': 'error',
+          'no-this-before-super': 'error',
+          'no-unassigned-vars': 'error',
+          'no-undef': 'error',
+          'no-unexpected-multiline': 'error',
+          'no-unreachable': 'error',
+          'no-unsafe-finally': 'error',
+          'no-unsafe-negation': 'error',
+          'no-unsafe-optional-chaining': 'error',
+          'no-unused-labels': 'error',
+          'no-unused-private-class-members': 'error',
+          'no-unused-vars': 'error',
+          'no-useless-assignment': 'error',
+          'no-useless-backreference': 'error',
+          'no-useless-catch': 'error',
+          'no-useless-escape': 'error',
+          'no-with': 'error',
+          'preserve-caught-error': 'error',
+          'require-yield': 'error',
+          'use-isnan': 'error',
+          'valid-typeof': 'error',
+          'no-array-constructor': 'error',
+          'no-unused-expressions': 'error',
+          'typescript/ban-ts-comment': 'error',
+          'typescript/no-duplicate-enum-values': 'error',
+          'typescript/no-empty-object-type': 'error',
+          'typescript/no-explicit-any': 'error',
+          'typescript/no-extra-non-null-assertion': 'error',
+          'typescript/no-misused-new': 'error',
+          'typescript/no-namespace': 'error',
+          'typescript/no-non-null-asserted-optional-chain': 'error',
+          'typescript/no-require-imports': 'error',
+          'typescript/no-this-alias': 'error',
+          'typescript/no-unnecessary-type-constraint': 'error',
+          'typescript/no-unsafe-declaration-merging': 'error',
+          'typescript/no-unsafe-function-type': 'error',
+          'typescript/no-wrapper-object-types': 'error',
+          'typescript/prefer-as-const': 'error',
+          'typescript/prefer-namespace-keyword': 'error',
+          'typescript/triple-slash-reference': 'error',
+          'react/rules-of-hooks': 'error',
+          'react/exhaustive-deps': 'warn',
+          'react/only-export-components': [
+            'error',
+            {
+              allowConstantExport: true,
+            },
+          ],
+        },
+        env: {
+          browser: true,
+        },
+      },
+      {
+        files: ['src/routes/**/*.tsx'],
+        rules: {
+          'react/only-export-components': 'off',
+        },
+      },
+      {
+        files: ['src/auth/auth.tsx'],
+        rules: {
+          'react/only-export-components': [
+            'error',
+            {
+              allowExportNames: ['useAuth'],
+            },
+          ],
+        },
+      },
+    ],
+    options: {
+      typeAware: true,
+      typeCheck: true,
+    },
+  },
+  plugins: lazyPlugins(() => [
     tanstackRouter({
       target: 'react',
       autoCodeSplitting: true,
@@ -14,5 +172,5 @@ export default defineConfig({
     react(),
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
-  ],
+  ]),
 });

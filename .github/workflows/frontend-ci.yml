@@ -22,21 +22,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Vite+
+        uses: voidzero-dev/setup-vp@v1.17.0
         with:
-          node-version: 22
-          cache: yarn
-          cache-dependency-path: frontend/yarn.lock
+          working-directory: frontend
+          node-version: '22'
+          cache: true
+          run-install: false
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: vp install --frozen-lockfile
 
-      - name: Lint
-        run: yarn lint
+      - name: Check (format, lint, type-check)
+        run: vp check
 
-      - name: Type-check and build
-        run: yarn build
+      - name: Build
+        run: vp build
   test:
     runs-on: ubuntu-latest
     defaults:
@@ -46,15 +47,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Vite+
+        uses: voidzero-dev/setup-vp@v1.17.0
         with:
-          node-version: 22
-          cache: yarn
-          cache-dependency-path: frontend/yarn.lock
+          working-directory: frontend
+          node-version: '22'
+          cache: true
+          run-install: false
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: vp install --frozen-lockfile
 
       - name: Run tests
-        run: yarn test
+        run: vp test run

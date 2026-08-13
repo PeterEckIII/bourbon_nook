@@ -10,9 +10,7 @@ import noBottleImage from '../../../assets/brand/png/bottle-cancel-1024.png';
 
 export const Route = createFileRoute('/_authenticated/bottles/$bottleId')({
   loader: ({ context, params }) =>
-    context.queryClient.ensureQueryData(
-      getUserBottleQueryOptions(params.bottleId),
-    ),
+    context.queryClient.ensureQueryData(getUserBottleQueryOptions(params.bottleId)),
   component: RouteComponent,
 });
 
@@ -24,9 +22,7 @@ function formatDate(value: string | undefined): string | undefined {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value ?? '');
   if (!match) return undefined;
   const [, year, month, day] = match;
-  return dateFormatter.format(
-    new Date(Number(year), Number(month) - 1, Number(day)),
-  );
+  return dateFormatter.format(new Date(Number(year), Number(month) - 1, Number(day)));
 }
 
 function formatPrice(value: number | undefined): string | undefined {
@@ -36,9 +32,7 @@ function formatPrice(value: number | undefined): string | undefined {
 function Detail({ label, value }: { label: string; value?: string | number }) {
   return (
     <div>
-      <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-        {label}
-      </dt>
+      <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">{label}</dt>
       <dd className="mt-1 text-sm text-ink">{value ?? '—'}</dd>
     </div>
   );
@@ -88,22 +82,16 @@ function RouteComponent() {
                   {bottle.type}
                 </p>
               )}
-              <h1 className="font-caprasimo text-3xl text-ink">
-                {bottle.name}
-              </h1>
+              <h1 className="font-caprasimo text-3xl text-ink">{bottle.name}</h1>
               <p className="mt-1 text-sm text-ink/60">
-                {[bottle.distillery, bottle.producer]
-                  .filter(Boolean)
-                  .join(' · ')}
+                {[bottle.distillery, bottle.producer].filter(Boolean).join(' · ')}
               </p>
             </div>
             {bottle.status && <StatusPill value={bottle.status} />}
           </div>
 
           {bottle.price !== undefined && (
-            <p className="text-2xl font-semibold text-ink">
-              {formatPrice(bottle.price)}
-            </p>
+            <p className="text-2xl font-semibold text-ink">{formatPrice(bottle.price)}</p>
           )}
 
           <ActionButtons
@@ -114,9 +102,7 @@ function RouteComponent() {
 
           <div className="space-y-6 border-t border-ink/10 pt-6">
             <div>
-              <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-                Origin
-              </h2>
+              <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Origin</h2>
               <dl className="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-4">
                 <Detail label="Distillery" value={bottle.distillery} />
                 <Detail label="Producer" value={bottle.producer} />
@@ -141,10 +127,7 @@ function RouteComponent() {
                 Barrel & Finish
               </h2>
               <dl className="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-4">
-                <Detail
-                  label="Barrel Information"
-                  value={bottle.barrelInformation}
-                />
+                <Detail label="Barrel Information" value={bottle.barrelInformation} />
                 <Detail label="Finishing" value={bottle.finishing} />
               </dl>
             </div>

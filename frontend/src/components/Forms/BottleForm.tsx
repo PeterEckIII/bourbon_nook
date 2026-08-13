@@ -19,9 +19,7 @@ export default function BottleForm({
           form.handleSubmit();
         }}
       >
-        <h1 className="font-caprasimo text-2xl text-center">
-          Bottle Information
-        </h1>
+        <h1 className="font-caprasimo text-2xl text-center">Bottle Information</h1>
         {serverError && (
           <p role="alert" className="text-sm text-red-700">
             {serverError}
@@ -29,44 +27,30 @@ export default function BottleForm({
         )}
 
         <div className="space-y-4">
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-            Basics
-          </h2>
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Basics</h2>
           {bottleId && (
             <>
               <form.AppField
                 name="bottleId"
-                children={(field) => (
-                  <field.TextField type="hidden" label="BottleId" />
-                )}
+                children={(field) => <field.TextField type="hidden" label="BottleId" />}
               />
               <form.AppField
                 name="mode"
-                children={(field) => (
-                  <field.TextField type="hidden" label="Mode" />
-                )}
+                children={(field) => <field.TextField type="hidden" label="Mode" />}
               />
             </>
           )}
           <form.AppField
             name="name"
             children={(field) => (
-              <field.TextField
-                label="Bottle Name"
-                type="text"
-                placeholder="Buffalo Trace"
-              />
+              <field.TextField label="Bottle Name" type="text" placeholder="Buffalo Trace" />
             )}
           />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <form.AppField
               name="type"
               children={(field) => (
-                <field.TextField
-                  label="Liquor Type"
-                  type="text"
-                  placeholder="Bourbon"
-                />
+                <field.TextField label="Liquor Type" type="text" placeholder="Bourbon" />
               )}
             />
             <form.AppField
@@ -86,9 +70,7 @@ export default function BottleForm({
         </div>
 
         <div className="space-y-4 border-t border-ink/10 pt-6">
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-            Origin
-          </h2>
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Origin</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <form.AppField
               name="distillery"
@@ -103,11 +85,7 @@ export default function BottleForm({
             <form.AppField
               name="producer"
               children={(field) => (
-                <field.TextField
-                  label="Producer"
-                  type="text"
-                  placeholder="Sazerac, MGP"
-                />
+                <field.TextField label="Producer" type="text" placeholder="Sazerac, MGP" />
               )}
             />
             <form.AppField
@@ -123,11 +101,7 @@ export default function BottleForm({
             <form.AppField
               name="region"
               children={(field) => (
-                <field.TextField
-                  label="Region"
-                  type="text"
-                  placeholder="KY, Islay, Hokkaido"
-                />
+                <field.TextField label="Region" type="text" placeholder="KY, Islay, Hokkaido" />
               )}
             />
           </div>
@@ -138,24 +112,14 @@ export default function BottleForm({
             Specifications
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <form.AppField
-              name="price"
-              children={(field) => <field.NumberField label="Price" />}
-            />
+            <form.AppField name="price" children={(field) => <field.NumberField label="Price" />} />
             <form.AppField
               name="age"
               children={(field) => (
-                <field.TextField
-                  label="Age"
-                  type="text"
-                  placeholder="10yrs, 6yrs 7mos, NAS"
-                />
+                <field.TextField label="Age" type="text" placeholder="10yrs, 6yrs 7mos, NAS" />
               )}
             />
-            <form.AppField
-              name="proof"
-              children={(field) => <field.NumberField label="Proof" />}
-            />
+            <form.AppField name="proof" children={(field) => <field.NumberField label="Proof" />} />
             <form.AppField
               name="releaseYear"
               children={(field) => <field.NumberField label="Release Year" />}
@@ -192,9 +156,7 @@ export default function BottleForm({
         </div>
 
         <div className="space-y-4 border-t border-ink/10 pt-6">
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-            Timeline
-          </h2>
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Timeline</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <form.AppField
               name="openDate"

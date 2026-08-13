@@ -3,10 +3,7 @@ import { z } from 'zod';
 import { useAppForm } from '../../hooks/form';
 import type { AuthState } from '../../auth/types';
 import { Link, useNavigate } from '@tanstack/react-router';
-import {
-  checkEmailAvailability,
-  checkUsernameAvailability,
-} from '../../api/generated/users-api';
+import { checkEmailAvailability, checkUsernameAvailability } from '../../api/generated/users-api';
 import { getApiErrorMessage } from '../../api/errors';
 import mark from '../../assets/brand/svg/mark-color.svg';
 
@@ -64,9 +61,7 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
         }}
       >
         <img src={mark} alt="Bourbon Nook" className="h-16 w-16 mx-auto" />
-        <h1 className="font-caprasimo text-2xl text-center">
-          Join BourbonNook
-        </h1>
+        <h1 className="font-caprasimo text-2xl text-center">Join BourbonNook</h1>
         {serverError && (
           <p role="alert" className="text-sm text-red-700">
             {serverError}
@@ -81,18 +76,11 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
                 const isAvailable = await checkEmailAvailability({
                   email: value,
                 });
-                return isAvailable
-                  ? undefined
-                  : 'Email is already registered at BourbonNook';
+                return isAvailable ? undefined : 'Email is already registered at BourbonNook';
               },
             }}
             children={(field) => (
-              <field.TextField
-                label="Email"
-                type="email"
-                placeholder="john@whiskey.org"
-                required
-              />
+              <field.TextField label="Email" type="email" placeholder="john@whiskey.org" required />
             )}
           />
         </div>
@@ -123,12 +111,7 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
           <form.AppField
             name="password"
             children={(field) => (
-              <field.TextField
-                label="Password"
-                type="password"
-                placeholder="*********"
-                required
-              />
+              <field.TextField label="Password" type="password" placeholder="*********" required />
             )}
           />
         </div>
@@ -159,11 +142,7 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
         </form.AppForm>
         <div>
           Already have an account?{' '}
-          <Link
-            to="/login"
-            search={{ redirect }}
-            className="text-blue-500 hover:underline"
-          >
+          <Link to="/login" search={{ redirect }} className="text-blue-500 hover:underline">
             Log in
           </Link>
         </div>

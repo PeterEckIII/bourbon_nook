@@ -1,8 +1,4 @@
-import {
-  createFileRoute,
-  Link,
-  type RouteComponent,
-} from '@tanstack/react-router';
+import { createFileRoute, Link, type RouteComponent } from '@tanstack/react-router';
 import {
   getUserBottlesQueryOptions,
   useUserBottlesSuspense,
@@ -10,8 +6,7 @@ import {
 import BottleTable from '../../../components/Tables/BottleTable';
 
 export const Route = createFileRoute('/_authenticated/bottles/')({
-  loader: ({ context }) =>
-    context.queryClient.ensureQueryData(getUserBottlesQueryOptions()),
+  loader: ({ context }) => context.queryClient.ensureQueryData(getUserBottlesQueryOptions()),
   component: RouteComponent,
 });
 

@@ -17,9 +17,7 @@ function UnauthorizedRoute() {
     default: 'You are not authorized to access this page.',
   };
 
-  const message =
-    reasonMessages[reason as keyof typeof reasonMessages] ||
-    reasonMessages.default;
+  const message = reasonMessages[reason as keyof typeof reasonMessages] || reasonMessages.default;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">

@@ -1,11 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import z from 'zod';
-import {
-  bottleCreate,
-  bottleUpdate,
-  type BottleResponseModel,
-} from '../api/generated/bottles-api';
+import { bottleCreate, bottleUpdate, type BottleResponseModel } from '../api/generated/bottles-api';
 import { useAppForm } from './form';
 import { getApiErrorMessage } from '../api/errors';
 

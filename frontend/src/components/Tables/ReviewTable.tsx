@@ -4,7 +4,13 @@ import useReviewTable from '../../hooks/useReviewTable';
 import TBody from './shared/TBody';
 import THead from './shared/THead';
 
-export default function ReviewTable({ data }: { data: ReviewResponseModel[] }) {
+export default function ReviewTable({
+  data,
+  className = '',
+}: {
+  data: ReviewResponseModel[];
+  className?: string;
+}) {
   const { table } = useReviewTable({ data });
 
   if (data.length === 0) {
@@ -17,7 +23,7 @@ export default function ReviewTable({ data }: { data: ReviewResponseModel[] }) {
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-amber-900/15 bg-cream">
+    <div className={`overflow-x-auto rounded-lg border border-amber-900/15 bg-cream ${className}`}>
       <table className="w-full min-w-max border-collapse text-left">
         <THead table={table} />
         <TBody table={table} />

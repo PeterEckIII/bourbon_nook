@@ -20,15 +20,11 @@ export default function TextareaField({
   const field = useFieldContext<string>();
   const id = useId();
   const errorId = `${id}-error`;
-  const hasError =
-    field.state.meta.isTouched && field.state.meta.errors.length > 0;
+  const hasError = field.state.meta.isTouched && field.state.meta.errors.length > 0;
 
   return (
     <div className="flex w-full flex-col gap-1.5">
-      <label
-        htmlFor={id}
-        className="text-sm font-medium tracking-wide text-ink"
-      >
+      <label htmlFor={id} className="text-sm font-medium tracking-wide text-ink">
         {label}
         {required && (
           <span aria-hidden="true" className="ml-0.5 text-pour">

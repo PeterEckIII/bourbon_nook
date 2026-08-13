@@ -1,13 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import LinkIcon from '../../Icons/LinkIcon';
 
-export default function BottleName({
-  name,
-  bottleId,
-}: {
-  name: string;
-  bottleId: string;
-}) {
+export default function BottleName({ name, bottleId }: { name: string; bottleId: string }) {
   return (
     <div className="flex justify-between">
       <div>{name} </div>

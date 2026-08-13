@@ -5,10 +5,7 @@ import PlusIcon from '../Icons/PlusIcon';
 import EditIcon from '../Icons/EditIcon';
 import DeleteIcon from '../Icons/DeleteIcon';
 import ConfirmDialog from './ConfirmDialog';
-import {
-  useBottleDelete,
-  getUserBottlesQueryKey,
-} from '../../api/generated/bottles-api';
+import { useBottleDelete, getUserBottlesQueryKey } from '../../api/generated/bottles-api';
 import { getApiErrorMessage } from '../../api/errors';
 
 const labeledButtonClasses =
@@ -39,9 +36,7 @@ export default function ActionButtons({
     },
   });
   return (
-    <div
-      className={showLabels ? 'flex flex-wrap gap-3' : 'flex justify-around'}
-    >
+    <div className={showLabels ? 'flex flex-wrap gap-3' : 'flex justify-around'}>
       <div>
         <Link
           to="/reviews/new"
@@ -79,9 +74,7 @@ export default function ActionButtons({
         <ConfirmDialog
           open={isConfirmOpen}
           title="Delete this bottle?"
-          description={
-            error ? getApiErrorMessage(error) : 'This action cannot be undone.'
-          }
+          description={error ? getApiErrorMessage(error) : 'This action cannot be undone.'}
           confirmLabel="Delete"
           isConfirming={isPending}
           onConfirm={() => deleteBottle({ bottleId })}

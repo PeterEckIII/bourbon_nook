@@ -20,10 +20,7 @@ export const features = tableFeatures({
 
 export type ReviewTableFeatures = typeof features;
 
-const columnHelper = createColumnHelper<
-  ReviewTableFeatures,
-  ReviewResponseModel
->();
+const columnHelper = createColumnHelper<ReviewTableFeatures, ReviewResponseModel>();
 
 const columns = columnHelper.columns([
   columnHelper.display({
@@ -33,11 +30,7 @@ const columns = columnHelper.columns([
   }),
 ]);
 
-export default function useReviewTable({
-  data,
-}: {
-  data: ReviewResponseModel[];
-}) {
+export default function useReviewTable({ data }: { data: ReviewResponseModel[] }) {
   const table = useTable({
     key: 'review-table',
     features,

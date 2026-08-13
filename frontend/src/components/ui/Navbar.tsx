@@ -28,9 +28,7 @@ export default function Navbar() {
           className="flex items-center gap-2 text-amber-200 hover:text-amber-100 transition-colors"
         >
           <img src={appIcon} alt="" className="h-11 w-11 rounded-lg" />
-          <span className="font-caprasimo text-xl text-amber-100">
-            Bourbon Nook
-          </span>
+          <span className="font-caprasimo text-xl text-amber-100">Bourbon Nook</span>
         </Link>
 
         <ul className="hidden md:flex items-center gap-6">
@@ -43,11 +41,7 @@ export default function Navbar() {
           ))}
           {isAuthenticated && (
             <li>
-              <button
-                type="button"
-                onClick={logout}
-                className={logoutButtonClass}
-              >
+              <button type="button" onClick={logout} className={logoutButtonClass}>
                 Log Out
               </button>
             </li>
@@ -81,15 +75,10 @@ export default function Navbar() {
 
       <div
         className={`fixed inset-0 top-16 z-40 md:hidden transition-opacity duration-300 ${
-          isOpen
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
+          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
-        <div
-          className="absolute inset-0 bg-black/50"
-          onClick={() => setIsOpen(false)}
-        />
+        <div className="absolute inset-0 bg-black/50" onClick={() => setIsOpen(false)} />
         <ul
           className={`absolute top-0 right-0 flex h-full w-64 flex-col gap-1 bg-[#3b1f14] px-6 py-6 shadow-xl transition-transform duration-300 ${
             isOpen ? 'translate-x-0' : 'translate-x-full'

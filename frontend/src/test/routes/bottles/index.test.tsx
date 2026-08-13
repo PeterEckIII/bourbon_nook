@@ -1,9 +1,6 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi } from 'vite-plus/test';
 import { screen } from '@testing-library/react';
-import {
-  createMockAuthState,
-  renderWithFileRoutes,
-} from '../../file-route-utils';
+import { createMockAuthState, renderWithFileRoutes } from '../../file-route-utils';
 import {
   useUserBottlesSuspense,
   type BottleResponseModel,
@@ -31,8 +28,7 @@ const mockBottles: BottleResponseModel[] = [
 ];
 
 vi.mock('../../../api/generated/bottles-api', async (importOriginal) => {
-  const actual =
-    await importOriginal<typeof import('../../../api/generated/bottles-api')>();
+  const actual = await importOriginal<typeof import('../../../api/generated/bottles-api')>();
   return {
     ...actual,
     getUserBottlesQueryOptions: () => ({
@@ -70,9 +66,7 @@ describe('Bottle index route', () => {
 
     expect(await screen.findByText(/your collection/i)).toBeInTheDocument();
     expect(await screen.findByText(/no bottles yet\./i)).toBeInTheDocument();
-    expect(
-      await screen.findByRole('link', { name: /add one/i }),
-    ).toBeInTheDocument();
+    expect(await screen.findByRole('link', { name: /add one/i })).toBeInTheDocument();
   });
 
   it('shows bottles when the collection has data', async () => {
@@ -84,9 +78,7 @@ describe('Bottle index route', () => {
 
     expect(await screen.findByText(/your collection/i)).toBeInTheDocument();
     expect(await screen.findByText('Mock Bottle')).toBeInTheDocument();
-    expect(
-      await screen.findByRole('link', { name: /edit bottle/i }),
-    ).toBeInTheDocument();
+    expect(await screen.findByRole('link', { name: /edit bottle/i })).toBeInTheDocument();
     expect(screen.queryByText(/no bottles yet\./i)).not.toBeInTheDocument();
   });
 });

@@ -1,9 +1,6 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi } from 'vite-plus/test';
 import { screen } from '@testing-library/react';
-import {
-  createMockAuthState,
-  renderWithFileRoutes,
-} from '../../file-route-utils';
+import { createMockAuthState, renderWithFileRoutes } from '../../file-route-utils';
 import {
   useUserReviewsSuspense,
   type ReviewResponseModel,
@@ -52,8 +49,7 @@ function renderReviewsRouteWithAuth() {
 }
 
 vi.mock('../../../api/generated/reviews-api', async (importOriginal) => {
-  const actual =
-    await importOriginal<typeof import('../../../api/generated/reviews-api')>();
+  const actual = await importOriginal<typeof import('../../../api/generated/reviews-api')>();
 
   return {
     ...actual,
@@ -76,9 +72,7 @@ describe('Review index route', () => {
     expect(await screen.findByText(/your reviews/i)).toBeInTheDocument();
     expect(await screen.findByText(/no reviews yet/i)).toBeInTheDocument();
 
-    expect(
-      await screen.findByRole('link', { name: /add one/i }),
-    ).toBeInTheDocument();
+    expect(await screen.findByRole('link', { name: /add one/i })).toBeInTheDocument();
   });
   it('shows reviews when the collection has data', async () => {
     vi.mocked(useUserReviewsSuspense).mockReturnValue({
