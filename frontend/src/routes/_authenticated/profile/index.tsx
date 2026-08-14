@@ -59,9 +59,11 @@ function Stat({ label, value }: { label: string; value: number }) {
 function UserList({
   users,
   emptyLabel,
+  label,
 }: {
   users: { userId?: string; username?: string }[];
   emptyLabel: string;
+  label: string;
 }) {
   if (users.length === 0) {
     return (
@@ -72,9 +74,13 @@ function UserList({
   }
 
   return (
-    <ul className="mt-3 divide-y divide-amber-900/10 rounded-lg border border-amber-900/15 bg-amber-600/5">
+    <ul
+      className="mt-3 divide-y divide-amber-900/10 rounded-lg border border-amber-900/15 bg-amber-600/5"
+      role="list"
+      aria-labelledby={label}
+    >
       {users.map((user) => (
-        <li key={user.userId} className="px-4 py-3 text-sm text-ink">
+        <li key={user.userId} className="px-4 py-3 text-sm text-ink" role="listitem">
           {user.username}
         </li>
       ))}
@@ -131,13 +137,31 @@ function RouteComponent() {
 
       <div className="mt-10 grid grid-cols-1 gap-8 border-t border-ink/10 pt-8 sm:grid-cols-2">
         <section>
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Followers</h2>
-          <UserList users={followers.content ?? []} emptyLabel="No followers yet." />
+          <h2
+            className="text-xs font-semibold uppercase tracking-wide text-ink/50"
+            id="followers-heading"
+          >
+            Followers
+          </h2>
+          <UserList
+            label="followers-heading"
+            users={followers.content ?? []}
+            emptyLabel="No followers yet."
+          />
         </section>
 
         <section>
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Following</h2>
-          <UserList users={following.content ?? []} emptyLabel="Not following anyone yet." />
+          <h2
+            className="text-xs font-semibold uppercase tracking-wide text-ink/50"
+            id="following-heading"
+          >
+            Following
+          </h2>
+          <UserList
+            label="following-heading"
+            users={following.content ?? []}
+            emptyLabel="Not following anyone yet."
+          />
         </section>
       </div>
       <ProfileDangerArea />
