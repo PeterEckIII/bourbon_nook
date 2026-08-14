@@ -4,10 +4,12 @@ import com.bourbon_nook.bottles_api.enums.BottleStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class BottleResponseModel {
     private String id;
     private String userId;
+    private LocalDateTime createdAt;
     private String name;
     private String type;
     private BottleStatus status;
@@ -39,6 +41,14 @@ public class BottleResponseModel {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getName() {

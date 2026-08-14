@@ -4,10 +4,12 @@ import com.bourbon_nook.bottles_api.enums.BottleStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record BottleDto(
      String id,
      String userId,
+     LocalDateTime createdAt,
      String name,
      String type,
      BottleStatus status,
