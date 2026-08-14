@@ -27,6 +27,7 @@ public class BottleMapper {
         return new BottleDto(
                 null,
                 null,
+                null,
                 request.getName(),
                 request.getType(),
                 request.getStatus(),
@@ -52,6 +53,7 @@ public class BottleMapper {
         return new BottleDto(
                 entity.getId(),
                 entity.getUserId(),
+                entity.getCreatedAt(),
                 entity.getName(),
                 entity.getType(),
                 entity.getStatus(),

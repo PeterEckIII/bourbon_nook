@@ -67,6 +67,7 @@ export const BottleResponseModelStatus = {
 export interface BottleResponseModel {
   id?: string;
   userId?: string;
+  createdAt?: string;
   name?: string;
   type?: string;
   status?: BottleResponseModelStatus;
