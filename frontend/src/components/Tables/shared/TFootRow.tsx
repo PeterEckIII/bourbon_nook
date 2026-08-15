@@ -11,7 +11,7 @@ export default function TFootRow({ table, headerGroup }: TFootRowProps) {
     <tr key={headerGroup.id}>
       {headerGroup.headers.map((header) =>
         header.rowSpan === 0 || header.colSpan === 0 ? null : (
-          <TFootCell table={table} header={header} />
+          <TFootCell key={header.id} table={table} header={header} />
         ),
       )}
     </tr>

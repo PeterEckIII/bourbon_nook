@@ -30,8 +30,13 @@ export default function UserActions({ userId, onDeleted }: UserActionProps) {
   });
   return (
     <div className="flex justify-evenly mx-4">
-      <div title="Edit User">
-        <Link to="/admin/users/$userId/edit" params={{ userId }}>
+      <div>
+        <Link
+          to="/admin/users/$userId/edit"
+          params={{ userId }}
+          title="Edit User"
+          aria-label="Edit User"
+        >
           <EditIcon />
         </Link>
       </div>
