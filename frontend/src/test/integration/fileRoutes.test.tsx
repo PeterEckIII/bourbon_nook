@@ -5,8 +5,8 @@ import { createMockAuthState, renderWithFileRoutes } from './file-route-utils';
 // The authenticated home route's loader fetches bottles/reviews via
 // ensureQueryData — mock both so rendering '/' doesn't fire real network
 // requests.
-vi.mock('../api/generated/bottles-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../api/generated/bottles-api')>();
+vi.mock('../../api/generated/bottles-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../api/generated/bottles-api')>();
   return {
     ...actual,
     getUserBottlesQueryOptions: () => ({
@@ -17,8 +17,8 @@ vi.mock('../api/generated/bottles-api', async (importOriginal) => {
   };
 });
 
-vi.mock('../api/generated/reviews-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../api/generated/reviews-api')>();
+vi.mock('../../api/generated/reviews-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../api/generated/reviews-api')>();
   return {
     ...actual,
     getUserReviewsQueryOptions: () => ({

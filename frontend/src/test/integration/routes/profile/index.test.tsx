@@ -9,10 +9,10 @@ import {
   useFollowingSuspense,
   useMeSuspense,
   type PageUserSummaryDto,
-} from '../../../api/generated/users-api';
-import type { User } from '../../../auth/types';
-import { useCountBottlesSuspense } from '../../../api/generated/bottles-api';
-import { useCountReviewsSuspense } from '../../../api/generated/reviews-api';
+} from '../../../../api/generated/users-api';
+import type { User } from '../../../../auth/types';
+import { useCountBottlesSuspense } from '../../../../api/generated/bottles-api';
+import { useCountReviewsSuspense } from '../../../../api/generated/reviews-api';
 import userEvent from '@testing-library/user-event';
 
 const mockUser: User = {
@@ -80,8 +80,8 @@ const mockEmptyFollowingResponse: PageUserSummaryDto = {
   content: [],
 };
 
-vi.mock('../../../api/generated/users-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../../api/generated/users-api')>();
+vi.mock('../../../../api/generated/users-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/generated/users-api')>();
 
   return {
     ...actual,
@@ -104,8 +104,8 @@ vi.mock('../../../api/generated/users-api', async (importOriginal) => {
   };
 });
 
-vi.mock('../../../api/generated/bottles-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../../api/generated/bottles-api')>();
+vi.mock('../../../../api/generated/bottles-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/generated/bottles-api')>();
   return {
     ...actual,
     getCountBottlesQueryOptions: () => ({
@@ -116,8 +116,8 @@ vi.mock('../../../api/generated/bottles-api', async (importOriginal) => {
   };
 });
 
-vi.mock('../../../api/generated/reviews-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../../api/generated/reviews-api')>();
+vi.mock('../../../../api/generated/reviews-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/generated/reviews-api')>();
   return {
     ...actual,
     getCountReviewsQueryOptions: () => ({

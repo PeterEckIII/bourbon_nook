@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vite-plus/test';
 import { screen, waitFor } from '@testing-library/react';
 import { createMockAuthState, renderWithFileRoutes } from '../../file-route-utils';
 import userEvent from '@testing-library/user-event';
-import { changePassword } from '../../../api/generated/users-api';
+import { changePassword } from '../../../../api/generated/users-api';
 
 function renderChangePasswordRouteWithAuth() {
   return renderWithFileRoutes({
@@ -40,8 +40,8 @@ async function getSelectors() {
   };
 }
 
-vi.mock('../../../api/generated/users-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../../api/generated/users-api')>();
+vi.mock('../../../../api/generated/users-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/generated/users-api')>();
 
   return {
     ...actual,

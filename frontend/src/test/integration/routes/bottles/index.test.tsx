@@ -4,7 +4,7 @@ import { createMockAuthState, renderWithFileRoutes } from '../../file-route-util
 import {
   useUserBottlesSuspense,
   type BottleResponseModel,
-} from '../../../api/generated/bottles-api';
+} from '../../../../api/generated/bottles-api';
 
 const mockBottles: BottleResponseModel[] = [
   {
@@ -27,8 +27,8 @@ const mockBottles: BottleResponseModel[] = [
   },
 ];
 
-vi.mock('../../../api/generated/bottles-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../../api/generated/bottles-api')>();
+vi.mock('../../../../api/generated/bottles-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/generated/bottles-api')>();
   return {
     ...actual,
     getUserBottlesQueryOptions: () => ({

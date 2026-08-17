@@ -13,7 +13,8 @@ export default defineConfig({
   ],
   test: {
     environment: 'jsdom',
-    setupFiles: './src/test/setup.ts',
+    include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
+    setupFiles: './src/test/integration/setup.ts',
     typecheck: { enabled: true },
     watch: false,
     globals: true,

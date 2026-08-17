@@ -3,10 +3,10 @@ import { createRouter, RouterProvider, createMemoryHistory } from '@tanstack/rea
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { vi } from 'vite-plus/test';
 
-import { routeTree } from '../routeTree.gen';
-import { AuthContext } from '../auth/context';
+import { routeTree } from '../../routeTree.gen';
+import { AuthContext } from '../../auth/context';
 import type { ComponentType } from 'react';
-import type { AuthState } from '../auth/types';
+import type { AuthState } from '../../auth/types';
 
 export function createTestQueryClient() {
   return new QueryClient({

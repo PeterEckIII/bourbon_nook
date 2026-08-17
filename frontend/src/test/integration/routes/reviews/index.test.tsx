@@ -4,7 +4,7 @@ import { createMockAuthState, renderWithFileRoutes } from '../../file-route-util
 import {
   useUserReviewsSuspense,
   type ReviewResponseModel,
-} from '../../../api/generated/reviews-api';
+} from '../../../../api/generated/reviews-api';
 
 const mockReviews: ReviewResponseModel[] = [
   {
@@ -48,8 +48,8 @@ function renderReviewsRouteWithAuth() {
   });
 }
 
-vi.mock('../../../api/generated/reviews-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../../api/generated/reviews-api')>();
+vi.mock('../../../../api/generated/reviews-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/generated/reviews-api')>();
 
   return {
     ...actual,

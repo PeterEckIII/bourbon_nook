@@ -6,7 +6,7 @@ import {
   useDeleteUser,
   useGetUsersSuspense,
   type UserResponseModel,
-} from '../../../api/generated/users-api';
+} from '../../../../api/generated/users-api';
 import userEvent from '@testing-library/user-event';
 
 const mockUsers: UserResponseModel[] = [
@@ -42,8 +42,8 @@ function renderAdminUsersPageWithAuth() {
   });
 }
 
-vi.mock('../../../api/generated/users-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../../api/generated/users-api')>();
+vi.mock('../../../../api/generated/users-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/generated/users-api')>();
 
   return {
     ...actual,
@@ -161,7 +161,7 @@ describe('Admin users route', () => {
     const cancelButton = await screen.findByRole('button', { name: /cancel/i });
     expect(cancelButton).toBeInTheDocument();
     await user.click(cancelButton);
-    expect(await screen.queryByRole('button', { name: /cancel/i })).toBeNull();
+    expect(screen.queryByRole('button', { name: /cancel/i })).toBeNull();
     expect(mockDeleteMutate).not.toHaveBeenCalled();
 
     await user.click(deleteButton);

@@ -6,7 +6,7 @@ import {
   updateUser,
   useGetUserSuspense,
   type UserResponseModel,
-} from '../../../api/generated/users-api';
+} from '../../../../api/generated/users-api';
 import userEvent from '@testing-library/user-event';
 
 const mockUser: UserResponseModel = {
@@ -34,8 +34,8 @@ function renderAdminUsersPageWithAuth() {
   });
 }
 
-vi.mock('../../../api/generated/users-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../../api/generated/users-api')>();
+vi.mock('../../../../api/generated/users-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/generated/users-api')>();
 
   return {
     ...actual,

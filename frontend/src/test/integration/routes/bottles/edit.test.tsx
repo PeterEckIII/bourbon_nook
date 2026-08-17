@@ -2,8 +2,8 @@ import { describe, it, expect, vi, beforeEach } from 'vite-plus/test';
 import { screen, waitFor } from '@testing-library/react';
 import { createMockAuthState, renderWithFileRoutes } from '../../file-route-utils';
 import userEvent from '@testing-library/user-event';
-import type { BottleResponseModel } from '../../../api/generated/bottles-api';
-import { customBottlesInstance } from '../../../api/axios-instance';
+import type { BottleResponseModel } from '../../../../api/generated/bottles-api';
+import { customBottlesInstance } from '../../../../api/axios-instance';
 
 function renderEditBottleRouteWithAuth() {
   return renderWithFileRoutes({
@@ -102,8 +102,8 @@ function returnBottleResponse(): BottleResponseModel {
   };
 }
 
-vi.mock('../../../api/axios-instance', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../../api/axios-instance')>();
+vi.mock('../../../../api/axios-instance', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/axios-instance')>();
   const bottleResponse = returnBottleResponse();
 
   return {
@@ -185,7 +185,7 @@ describe('Edit bottle route', () => {
     await waitFor(() => expect(submitButton).not.toBeDisabled());
     await user.click(submitButton);
 
-    expect(await screen.getByRole('alert')).toHaveTextContent(/could not save your edits/i);
+    expect(await screen.findByRole('alert')).toHaveTextContent(/could not save your edits/i);
   });
   it('shows client-side validation', async () => {
     renderEditBottleRouteWithAuth();
@@ -194,7 +194,7 @@ describe('Edit bottle route', () => {
 
     await user.clear(selectors.bottleNameInput);
     await user.tab();
-    expect(await screen.getByRole('alert')).toHaveTextContent('Name is required');
+    expect(await screen.findByRole('alert')).toHaveTextContent('Name is required');
 
     await user.type(selectors.bottleNameInput, 'George Remus');
     await user.tab();
