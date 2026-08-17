@@ -5,8 +5,9 @@ import {
   getGetUserQueryKey,
   updateUser,
   useGetUserSuspense,
+  useGetUsersSuspense,
   type UserResponseModel,
-} from '../../../api/generated/users-api';
+} from '../../../../api/generated/users-api';
 import userEvent from '@testing-library/user-event';
 
 const mockUser: UserResponseModel = {
@@ -34,8 +35,8 @@ function renderAdminUsersPageWithAuth() {
   });
 }
 
-vi.mock('../../../api/generated/users-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../../api/generated/users-api')>();
+vi.mock('../../../../api/generated/users-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/generated/users-api')>();
 
   return {
     ...actual,
@@ -45,6 +46,13 @@ vi.mock('../../../api/generated/users-api', async (importOriginal) => {
     }),
     useGetUserSuspense: vi.fn(),
     updateUser: vi.fn(),
+    // Successful submission navigates to /admin/users, whose loader would
+    // otherwise fire a real request for this route's own list query.
+    getGetUsersQueryOptions: () => ({
+      queryKey: actual.getGetUsersQueryKey(),
+      queryFn: () => Promise.resolve([mockUser]),
+    }),
+    useGetUsersSuspense: vi.fn(),
   };
 });
 
@@ -54,6 +62,9 @@ describe('Edit user route', () => {
     vi.mocked(useGetUserSuspense).mockReturnValue({
       data: mockUser,
     } as ReturnType<typeof useGetUserSuspense>);
+    vi.mocked(useGetUsersSuspense).mockReturnValue({
+      data: [mockUser],
+    } as ReturnType<typeof useGetUsersSuspense>);
   });
   it('renders the form components correctly', async () => {
     renderAdminUsersPageWithAuth();

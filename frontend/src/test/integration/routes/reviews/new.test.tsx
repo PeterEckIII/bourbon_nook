@@ -2,9 +2,9 @@ import { describe, it, expect, vi, beforeEach } from 'vite-plus/test';
 import { screen, waitFor, within } from '@testing-library/react';
 import { createMockAuthState, renderWithFileRoutes } from '../../file-route-utils';
 import userEvent from '@testing-library/user-event';
-import type { ReviewResponseModel } from '../../../api/generated/reviews-api';
-import { customReviewsInstance } from '../../../api/axios-instance';
-import type { BottleResponseModel } from '../../../api/generated/bottles-api';
+import type { ReviewResponseModel } from '../../../../api/generated/reviews-api';
+import { customReviewsInstance } from '../../../../api/axios-instance';
+import type { BottleResponseModel } from '../../../../api/generated/bottles-api';
 
 function renderNewReviewRouteWithAuth() {
   return renderWithFileRoutes({
@@ -100,8 +100,8 @@ function returnBottleResponse(): BottleResponseModel {
   };
 }
 
-vi.mock('../../../api/axios-instance', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../../api/axios-instance')>();
+vi.mock('../../../../api/axios-instance', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/axios-instance')>();
 
   return {
     ...actual,
@@ -195,7 +195,7 @@ describe('New review route', () => {
     await waitFor(() => expect(selectors.submitButton).not.toBeDisabled());
     await user.click(selectors.submitButton);
 
-    expect(await screen.getByRole('alert')).toHaveTextContent(/could not create review/i);
+    expect(await screen.findByRole('alert')).toHaveTextContent(/could not create review/i);
   });
   it('shows client-side validation', async () => {
     renderNewReviewRouteWithAuth();

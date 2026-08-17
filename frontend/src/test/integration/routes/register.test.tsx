@@ -6,8 +6,8 @@ import userEvent from '@testing-library/user-event';
 // checkEmailAvailability/checkUsernameAvailability hit the real backend via
 // customUsersInstance — mock them so typing a valid-looking email/username
 // doesn't fire a real network request after the 500ms debounce.
-vi.mock('../../api/generated/users-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../api/generated/users-api')>();
+vi.mock('../../../api/generated/users-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../api/generated/users-api')>();
   return {
     ...actual,
     checkEmailAvailability: vi.fn().mockResolvedValue(true),
@@ -18,8 +18,8 @@ vi.mock('../../api/generated/users-api', async (importOriginal) => {
 // Redirecting an already-authenticated user lands on the authenticated home
 // route, whose loader fetches bottles/reviews via ensureQueryData — mock
 // both so that redirect doesn't fire real network requests.
-vi.mock('../../api/generated/bottles-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../api/generated/bottles-api')>();
+vi.mock('../../../api/generated/bottles-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../api/generated/bottles-api')>();
   return {
     ...actual,
     getUserBottlesQueryOptions: () => ({
@@ -30,8 +30,8 @@ vi.mock('../../api/generated/bottles-api', async (importOriginal) => {
   };
 });
 
-vi.mock('../../api/generated/reviews-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../api/generated/reviews-api')>();
+vi.mock('../../../api/generated/reviews-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../api/generated/reviews-api')>();
   return {
     ...actual,
     getUserReviewsQueryOptions: () => ({

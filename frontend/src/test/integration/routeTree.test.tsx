@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vite-plus/test';
 import { createRouter } from '@tanstack/react-router';
-import { routeTree } from '../routeTree.gen';
+import { routeTree } from '../../routeTree.gen';
 import { createMockAuthState, createTestQueryClient } from './file-route-utils';
 
 function createTestRouter() {

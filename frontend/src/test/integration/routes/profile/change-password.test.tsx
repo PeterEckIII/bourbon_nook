@@ -2,7 +2,14 @@ import { describe, it, expect, vi, beforeEach } from 'vite-plus/test';
 import { screen, waitFor } from '@testing-library/react';
 import { createMockAuthState, renderWithFileRoutes } from '../../file-route-utils';
 import userEvent from '@testing-library/user-event';
-import { changePassword } from '../../../api/generated/users-api';
+import {
+  changePassword,
+  useFollowersSuspense,
+  useFollowingSuspense,
+  useMeSuspense,
+} from '../../../../api/generated/users-api';
+import { useCountBottlesSuspense } from '../../../../api/generated/bottles-api';
+import { useCountReviewsSuspense } from '../../../../api/generated/reviews-api';
 
 function renderChangePasswordRouteWithAuth() {
   return renderWithFileRoutes({
@@ -40,18 +47,77 @@ async function getSelectors() {
   };
 }
 
-vi.mock('../../../api/generated/users-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../../api/generated/users-api')>();
+vi.mock('../../../../api/generated/users-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/generated/users-api')>();
 
   return {
     ...actual,
     changePassword: vi.fn(),
+    // A successful submission navigates to /profile, whose loader would
+    // otherwise fire real requests for that route's own queries.
+    getMeQueryOptions: () => ({
+      queryKey: actual.getMeQueryKey(),
+      queryFn: () =>
+        Promise.resolve({ id: '123abc', email: 'test@email.com', username: 'testuser' }),
+    }),
+    getFollowersQueryOptions: (userId: string) => ({
+      queryKey: actual.getFollowersQueryKey(userId),
+      queryFn: () => Promise.resolve({ content: [], totalElements: 0 }),
+    }),
+    getFollowingQueryOptions: (userId: string) => ({
+      queryKey: actual.getFollowingQueryKey(userId),
+      queryFn: () => Promise.resolve({ content: [], totalElements: 0 }),
+    }),
+    useMeSuspense: vi.fn(),
+    useFollowersSuspense: vi.fn(),
+    useFollowingSuspense: vi.fn(),
+  };
+});
+
+vi.mock('../../../../api/generated/bottles-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/generated/bottles-api')>();
+
+  return {
+    ...actual,
+    getCountBottlesQueryOptions: () => ({
+      queryKey: actual.getCountBottlesQueryKey(),
+      queryFn: () => Promise.resolve(0),
+    }),
+    useCountBottlesSuspense: vi.fn(),
+  };
+});
+
+vi.mock('../../../../api/generated/reviews-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/generated/reviews-api')>();
+
+  return {
+    ...actual,
+    getCountReviewsQueryOptions: () => ({
+      queryKey: actual.getCountReviewsQueryKey(),
+      queryFn: () => Promise.resolve(0),
+    }),
+    useCountReviewsSuspense: vi.fn(),
   };
 });
 
 describe('Change password route', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(useMeSuspense).mockReturnValue({
+      data: { id: '123abc', email: 'test@email.com', username: 'testuser' },
+    } as ReturnType<typeof useMeSuspense>);
+    vi.mocked(useFollowersSuspense).mockReturnValue({
+      data: { content: [], totalElements: 0 },
+    } as ReturnType<typeof useFollowersSuspense>);
+    vi.mocked(useFollowingSuspense).mockReturnValue({
+      data: { content: [], totalElements: 0 },
+    } as ReturnType<typeof useFollowingSuspense>);
+    vi.mocked(useCountBottlesSuspense).mockReturnValue({
+      data: 0,
+    } as ReturnType<typeof useCountBottlesSuspense>);
+    vi.mocked(useCountReviewsSuspense).mockReturnValue({
+      data: 0,
+    } as ReturnType<typeof useCountReviewsSuspense>);
   });
   it('renders the form elements correctly', async () => {
     renderChangePasswordRouteWithAuth();

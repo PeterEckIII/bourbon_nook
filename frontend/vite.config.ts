@@ -159,6 +159,12 @@ export default defineConfig({
           ],
         },
       },
+      {
+        files: ['playwright.config.ts', 'src/test/e2e/**/*.ts'],
+        env: {
+          node: true,
+        },
+      },
     ],
     options: {
       typeAware: true,

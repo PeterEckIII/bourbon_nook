@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vite-plus/test';
 import { screen } from '@testing-library/react';
 import { createMockAuthState, renderWithFileRoutes } from '../../file-route-utils';
-import { customReviewsInstance } from '../../../api/axios-instance';
-import type { ReviewResponseModel } from '../../../api/generated/reviews-api';
-import type { BottleResponseModel } from '../../../api/generated/bottles-api';
+import { customReviewsInstance } from '../../../../api/axios-instance';
+import type { ReviewResponseModel } from '../../../../api/generated/reviews-api';
+import type { BottleResponseModel } from '../../../../api/generated/bottles-api';
 
 function returnReviewResponse(): ReviewResponseModel {
   return {
@@ -107,8 +107,8 @@ async function getSelectors() {
   };
 }
 
-vi.mock('../../../api/axios-instance', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../../api/axios-instance')>();
+vi.mock('../../../../api/axios-instance', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/axios-instance')>();
 
   return {
     ...actual,
