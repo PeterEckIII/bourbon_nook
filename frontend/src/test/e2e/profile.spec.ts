@@ -8,8 +8,8 @@ test('profile page shows follower/following counts', async ({ page }) => {
 });
 
 test('unauthenticated user is redirected to /login', async ({ browser }) => {
-  const context = await browser.newContext();
+  const context = await browser.newContext({ storageState: { cookies: [], origins: [] } });
   const page = await context.newPage();
   await page.goto('/profile');
-  await expect(page).toHaveURL(/\/login\?redirect=%sFprofile/);
+  await expect(page).toHaveURL(/\/login\?redirect=%2Fprofile/);
 });

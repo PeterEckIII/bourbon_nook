@@ -40,26 +40,36 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'setup',
+      name: 'auth',
       testMatch: /auth\.setup\.ts/,
     },
     {
+      name: 'seed',
+      testMatch: /seed\.setup\.ts/,
+    },
+    {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'], storageState: 'src/test/e2e/.auth/user.json' },
-      dependencies: ['setup'],
+      use: { ...devices['Desktop Chrome'], storageState: 'src/test/e2e/.auth/testuser.json' },
+      dependencies: ['auth', 'seed'],
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'], storageState: 'src/test/e2e/.auth/user.json' },
-      dependencies: ['setup'],
+      use: { ...devices['Desktop Firefox'], storageState: 'src/test/e2e/.auth/testuser.json' },
+      dependencies: ['auth', 'seed'],
     },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'], storageState: 'src/test/e2e/.auth/user.json' },
-      dependencies: ['setup'],
-    },
+    // NOTE: Dropped webkit due to known limitation with secure cookies over HTTP
+    // {
+    //   name: 'webkit',
+    //   use: {
+    //     ...devices['Desktop Safari'],
+    //     baseURL: 'https://localhost:5173',
+    //     ignoreHTTPSErrors: true,
+    //     storageState: 'src/test/e2e/.auth/testuser.json',
+    //   },
+    //   dependencies: ['auth', 'seed'],
+    // },
 
     /* Test against mobile viewports. */
     // {

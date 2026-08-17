@@ -1,6 +1,6 @@
 import { test as setup, expect } from '@playwright/test';
 
-const authFile = 'src/test/e2e/.auth/user.json';
+const authFile = 'src/test/e2e/.auth/testuser.json';
 
 const userEmail = process.env.PLAYWRIGHT_USER_EMAIL;
 const userPassword = process.env.PLAYWRIGHT_USER_PASSWORD;
