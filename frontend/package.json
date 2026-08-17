@@ -12,6 +12,9 @@
     "test": "vp test run",
     "test:watch": "vp test",
     "test:coverage": "vp test run --coverage",
+    "test:e2e": "vp exec playwright test",
+    "test:e2e:ui": "vp exec playwright test --ui",
+    "test:e2e:report": "vp exec playwright show-report",
     "generate:api": "orval --config orval.config.ts",
     "generate:bottles-api": "orval --config orval.config.ts --project bottlesApi",
     "generate:users-api": "orval --config orval.config.ts --project usersApi",
@@ -33,6 +36,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",
+    "@playwright/test": "^1.62.1",
     "@rolldown/plugin-babel": "^0.2.3",
     "@tanstack/eslint-plugin-query": "^5.101.4",
     "@tanstack/react-devtools": "^0.10.9",
