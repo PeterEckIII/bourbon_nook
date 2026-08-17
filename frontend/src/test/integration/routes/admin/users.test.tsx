@@ -4,6 +4,7 @@ import { createMockAuthState, renderWithFileRoutes } from '../../file-route-util
 import {
   getGetUsersQueryKey,
   useDeleteUser,
+  useGetUserSuspense,
   useGetUsersSuspense,
   type UserResponseModel,
 } from '../../../../api/generated/users-api';
@@ -53,6 +54,13 @@ vi.mock('../../../../api/generated/users-api', async (importOriginal) => {
     }),
     useGetUsersSuspense: vi.fn(),
     useDeleteUser: vi.fn(),
+    // The edit-flow test navigates to /admin/users/:id/edit, whose loader
+    // would otherwise fire a real request for that route's own query.
+    getGetUserQueryOptions: (userId: string) => ({
+      queryKey: actual.getGetUserQueryKey(userId),
+      queryFn: () => Promise.resolve(mockUsers[0]),
+    }),
+    useGetUserSuspense: vi.fn(),
   };
 });
 
@@ -67,6 +75,9 @@ describe('Admin users route', () => {
       isPending: false,
       error: null,
     } as unknown as ReturnType<typeof useDeleteUser>);
+    vi.mocked(useGetUserSuspense).mockReturnValue({
+      data: mockUsers[0],
+    } as ReturnType<typeof useGetUserSuspense>);
   });
   it('renders the users route with table, headings, and links', async () => {
     renderAdminUsersPageWithAuth();
