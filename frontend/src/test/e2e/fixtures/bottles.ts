@@ -42,11 +42,8 @@ export const test = base.extend<MyFixtures>({
       '2026-09-01',
     );
     const [bottleId] = newBottlePage.createdBottleIds;
-    // Wait for the post-create detail page (and its loader fetch) to settle
-    // before navigating away — Firefox aborts a goto() fired mid-navigation.
-    await page.waitForLoadState('networkidle');
     const editBottlePage = new EditBottlePage(page, bottleId);
-    await editBottlePage.goto();
+    await editBottlePage.gotoFromDetailPage();
 
     await use(editBottlePage);
   },

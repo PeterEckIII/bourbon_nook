@@ -13,6 +13,12 @@ export class EditBottlePage extends BottleFormPage {
     await this.page.goto(`http://localhost:5173/bottles/${this.bottleId}/edit`);
   }
 
+  // Client-side link click avoids the hard-navigation race with goto() that intermittently aborts in Firefox.
+  async gotoFromDetailPage() {
+    await this.page.getByRole('link', { name: 'Edit Bottle' }).click();
+    await this.page.waitForURL(`http://localhost:5173/bottles/${this.bottleId}/edit`);
+  }
+
   async editBottle(
     name: string,
     type: string,
