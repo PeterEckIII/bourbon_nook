@@ -1,9 +1,16 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import z from 'zod';
-import { bottleCreate, bottleUpdate, type BottleResponseModel } from '../api/generated/bottles-api';
+import {
+  useBottleUpdate,
+  getUserBottleQueryKey,
+  getUserBottlesQueryKey,
+  type BottleResponseModel,
+  useBottleCreate,
+} from '../api/generated/bottles-api';
 import { useAppForm } from './form';
 import { getApiErrorMessage } from '../api/errors';
+import { useQueryClient } from '@tanstack/react-query';
 
 const bottleSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -72,6 +79,25 @@ export default function useBottleForm({
     [bottleId, valuesToEdit],
   );
 
+  const queryClient = useQueryClient();
+  const bottleUpdateMutation = useBottleUpdate({
+    mutation: {
+      onSuccess: async (_data, variables) => {
+        await queryClient.invalidateQueries({
+          queryKey: getUserBottleQueryKey(variables.bottleId),
+        });
+        await queryClient.invalidateQueries({ queryKey: getUserBottlesQueryKey() });
+      },
+    },
+  });
+  const bottleCreateMutation = useBottleCreate({
+    mutation: {
+      onSuccess: async (_data, _variables) => {
+        await queryClient.invalidateQueries({ queryKey: getUserBottlesQueryKey() });
+      },
+    },
+  });
+
   const form = useAppForm({
     defaultValues: initialValues,
     validators: {
@@ -85,25 +111,27 @@ export default function useBottleForm({
             openDate: value.openDate || undefined,
             killDate: value.killDate || undefined,
           };
-          const bottle = await bottleCreate({
-            name: payload.name,
-            type: payload.type,
-            status: payload.status,
-            distillery: payload.distillery || '',
-            producer: payload.producer || '',
-            country: payload.country || '',
-            region: payload.region || '',
-            price: payload.price || 0,
-            age: payload.age || '',
-            proof: payload.proof || 0,
-            releaseYear: payload.releaseYear || 0,
-            barrelInformation: payload.barrelInformation || '',
-            finishing: payload.finishing || '',
-            imageUrl: '',
-            openDate: payload.openDate,
-            killDate: payload.killDate,
+          const bottle = await bottleCreateMutation.mutateAsync({
+            data: {
+              name: payload.name,
+              type: payload.type,
+              status: payload.status,
+              distillery: payload.distillery || '',
+              producer: payload.producer || '',
+              country: payload.country || '',
+              region: payload.region || '',
+              price: payload.price || 0,
+              age: payload.age || '',
+              proof: payload.proof || 0,
+              releaseYear: payload.releaseYear || 0,
+              barrelInformation: payload.barrelInformation || '',
+              finishing: payload.finishing || '',
+              imageUrl: '',
+              openDate: payload.openDate,
+              killDate: payload.killDate,
+            },
           });
-          navigate({
+          await navigate({
             to: '/bottles/$bottleId',
             params: { bottleId: bottle.id as string },
           });
@@ -121,25 +149,28 @@ export default function useBottleForm({
             openDate: value.openDate || undefined,
             killDate: value.killDate || undefined,
           };
-          await bottleUpdate(payload.bottleId!, {
-            name: payload.name,
-            type: payload.type,
-            status: payload.status,
-            distillery: payload.distillery || '',
-            producer: payload.producer || '',
-            country: payload.country || '',
-            region: payload.region || '',
-            price: payload.price || 0,
-            age: payload.age || '',
-            proof: payload.proof || 0,
-            releaseYear: payload.releaseYear || 0,
-            barrelInformation: payload.barrelInformation || '',
-            finishing: payload.finishing || '',
-            imageUrl: '',
-            openDate: payload.openDate,
-            killDate: payload.killDate,
+          await bottleUpdateMutation.mutateAsync({
+            bottleId: payload.bottleId!,
+            data: {
+              name: payload.name,
+              type: payload.type,
+              status: payload.status,
+              distillery: payload.distillery || '',
+              producer: payload.producer || '',
+              country: payload.country || '',
+              region: payload.region || '',
+              price: payload.price || 0,
+              age: payload.age || '',
+              proof: payload.proof || 0,
+              releaseYear: payload.releaseYear || 0,
+              barrelInformation: payload.barrelInformation || '',
+              finishing: payload.finishing || '',
+              imageUrl: '',
+              openDate: payload.openDate,
+              killDate: payload.killDate,
+            },
           });
-          navigate({
+          await navigate({
             to: '/bottles/$bottleId',
             params: { bottleId: payload.bottleId! },
           });

@@ -1,6 +1,6 @@
 import { test as setup, expect } from '@playwright/test';
 
-const seedFile = 'src/test/e2e/.auth/follower.json';
+const seedFile = 'src/test/e2e/data/.auth/follower.json';
 
 const followerEmail = process.env.PLAYWRIGHT_FOLLOWER_EMAIL;
 const followerPassword = process.env.PLAYWRIGHT_FOLLOWER_PASSWORD;

@@ -1,9 +1,16 @@
 import { z } from 'zod';
 import { useAppForm } from './form';
-import { reviewCreate, reviewUpdate, type ReviewResponseModel } from '../api/generated/reviews-api';
+import {
+  getUserReviewsQueryKey,
+  getReviewQueryKey,
+  useReviewCreate,
+  useReviewUpdate,
+  type ReviewResponseModel,
+} from '../api/generated/reviews-api';
 import { useMemo, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { getApiErrorMessage } from '../api/errors';
+import { useQueryClient } from '@tanstack/react-query';
 
 const reviewSchema = z.object({
   bottleId: z.string(),
@@ -61,6 +68,27 @@ export default function useReviewForm({
     [reviewId, valuesToEdit],
   );
 
+  const queryClient = useQueryClient();
+
+  const reviewCreateMutation = useReviewCreate({
+    mutation: {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: getUserReviewsQueryKey() });
+      },
+    },
+  });
+
+  const reviewUpdateMutation = useReviewUpdate({
+    mutation: {
+      onSuccess: async (_data, variables) => {
+        await queryClient.invalidateQueries({ queryKey: getUserReviewsQueryKey() });
+        await queryClient.invalidateQueries({
+          queryKey: getReviewQueryKey(variables.reviewId),
+        });
+      },
+    },
+  });
+
   const form = useAppForm({
     defaultValues: initialValues,
     validators: {
@@ -73,20 +101,22 @@ export default function useReviewForm({
             ...value,
             reviewDate: value.reviewDate || '',
           };
-          const review = await reviewCreate({
-            bottleId: payload.bottleId,
-            setting: payload.setting,
-            reviewDate: payload.reviewDate,
-            restTimeMin: payload.restTimeMin,
-            glassware: payload.glassware,
-            nose: payload.nose,
-            palate: payload.palate,
-            finish: payload.finish,
-            thoughts: payload.thoughts,
-            valueScore: payload.valueScore,
-            overallRating: payload.overallRating,
+          const review = await reviewCreateMutation.mutateAsync({
+            data: {
+              bottleId: payload.bottleId,
+              setting: payload.setting,
+              reviewDate: payload.reviewDate,
+              restTimeMin: payload.restTimeMin,
+              glassware: payload.glassware,
+              nose: payload.nose,
+              palate: payload.palate,
+              finish: payload.finish,
+              thoughts: payload.thoughts,
+              valueScore: payload.valueScore,
+              overallRating: payload.overallRating,
+            },
           });
-          navigate({
+          await navigate({
             to: '/reviews/$reviewId',
             params: { reviewId: review.id as string },
           });
@@ -102,20 +132,23 @@ export default function useReviewForm({
             ...value,
             reviewDate: value.reviewDate || '',
           };
-          await reviewUpdate(reviewId!, {
-            bottleId: payload.bottleId,
-            setting: payload.setting,
-            reviewDate: payload.reviewDate,
-            restTimeMin: payload.restTimeMin,
-            glassware: payload.glassware,
-            nose: payload.nose,
-            palate: payload.palate,
-            finish: payload.finish,
-            thoughts: payload.thoughts,
-            valueScore: payload.valueScore,
-            overallRating: payload.overallRating,
+          await reviewUpdateMutation.mutateAsync({
+            reviewId: reviewId!,
+            data: {
+              bottleId: payload.bottleId,
+              setting: payload.setting,
+              reviewDate: payload.reviewDate,
+              restTimeMin: payload.restTimeMin,
+              glassware: payload.glassware,
+              nose: payload.nose,
+              palate: payload.palate,
+              finish: payload.finish,
+              thoughts: payload.thoughts,
+              valueScore: payload.valueScore,
+              overallRating: payload.overallRating,
+            },
           });
-          navigate({
+          await navigate({
             to: '/reviews/$reviewId',
             params: { reviewId: reviewId as string },
           });

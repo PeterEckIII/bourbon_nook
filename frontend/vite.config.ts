@@ -164,6 +164,9 @@ export default defineConfig({
         env: {
           node: true,
         },
+        rules: {
+          'react/rules-of-hooks': 'off',
+        },
       },
     ],
     options: {
