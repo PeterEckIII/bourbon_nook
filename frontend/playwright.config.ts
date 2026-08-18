@@ -49,13 +49,13 @@ export default defineConfig({
     },
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'], storageState: 'src/test/e2e/.auth/testuser.json' },
+      use: { ...devices['Desktop Chrome'], storageState: 'src/test/e2e/data/.auth/testuser.json' },
       dependencies: ['auth', 'seed'],
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'], storageState: 'src/test/e2e/.auth/testuser.json' },
+      use: { ...devices['Desktop Firefox'], storageState: 'src/test/e2e/data/.auth/testuser.json' },
       dependencies: ['auth', 'seed'],
     },
 
