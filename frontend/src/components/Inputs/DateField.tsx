@@ -116,9 +116,10 @@ export default function DateField({ label, required }: DateFieldProps) {
             <DayPicker
               autoFocus
               mode="single"
+              required
               selected={selectedDate}
               onSelect={(date) => {
-                field.handleChange(date ? toIsoDateString(date) : '');
+                field.handleChange(toIsoDateString(date));
                 field.handleBlur();
                 setIsOpen(false);
                 triggerRef.current?.focus();
