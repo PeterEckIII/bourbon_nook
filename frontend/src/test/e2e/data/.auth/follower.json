@@ -1,0 +1,35 @@
+{
+  "cookies": [
+    {
+      "name": "refreshToken",
+      "value": "d9051a77-d6c6-4531-bd42-142240b68d24",
+      "domain": "localhost",
+      "path": "/users-api/auth/refresh",
+      "expires": 1787687015.578461,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "jwt",
+      "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXd1c2VyQGdtYWlsLmNvbSIsInVzZXJJZCI6ImM3ODI2YjU5LTdiOTAtNGRmMS05YmVkLTVjZDJjMjkwNzllMSIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE3ODcwODIyMTUsImV4cCI6MTc4NzE2ODYxNX0.mWQ3KdTYdDEHulTrRfUVWuKWDsXUbOKtuW2COtTMtBM",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1787085815.578415,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Strict"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost:5173",
+      "localStorage": [
+        {
+          "name": "tanstack_devtools_state",
+          "value": "{\"activeTab\":\"plugins\",\"height\":400,\"layout\":null,\"persistOpen\":false}"
+        }
+      ]
+    }
+  ]
+}
