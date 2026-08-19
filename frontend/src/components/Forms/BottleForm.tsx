@@ -14,9 +14,9 @@ export default function BottleForm({
     <div className="min-h-screen px-4 py-8 sm:py-12">
       <form
         className="mx-auto w-full max-w-3xl space-y-8 rounded-lg border border-ink/15 bg-cream p-6 sm:p-8"
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          form.handleSubmit();
+          await form.handleSubmit();
         }}
       >
         <h1 className="font-caprasimo text-2xl text-center">Bottle Information</h1>
@@ -30,32 +30,25 @@ export default function BottleForm({
           <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Basics</h2>
           {bottleId && (
             <>
-              <form.AppField
-                name="bottleId"
-                children={(field) => <field.TextField type="hidden" label="BottleId" />}
-              />
-              <form.AppField
-                name="mode"
-                children={(field) => <field.TextField type="hidden" label="Mode" />}
-              />
+              <form.AppField name="bottleId">
+                {(field) => <field.TextField type="hidden" label="BottleId" />}
+              </form.AppField>
+              <form.AppField name="mode">
+                {(field) => <field.TextField type="hidden" label="Mode" />}
+              </form.AppField>
             </>
           )}
-          <form.AppField
-            name="name"
-            children={(field) => (
+          <form.AppField name="name">
+            {(field) => (
               <field.TextField label="Bottle Name" type="text" placeholder="Buffalo Trace" />
             )}
-          />
+          </form.AppField>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <form.AppField
-              name="type"
-              children={(field) => (
-                <field.TextField label="Liquor Type" type="text" placeholder="Bourbon" />
-              )}
-            />
-            <form.AppField
-              name="status"
-              children={(field) => (
+            <form.AppField name="type">
+              {(field) => <field.TextField label="Liquor Type" type="text" placeholder="Bourbon" />}
+            </form.AppField>
+            <form.AppField name="status">
+              {(field) => (
                 <field.SelectField
                   label="Bottle Status"
                   options={[
@@ -65,45 +58,41 @@ export default function BottleForm({
                   ]}
                 />
               )}
-            />
+            </form.AppField>
           </div>
         </div>
 
         <div className="space-y-4 border-t border-ink/10 pt-6">
           <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Origin</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <form.AppField
-              name="distillery"
-              children={(field) => (
+            <form.AppField name="distillery">
+              {(field) => (
                 <field.TextField
                   label="Distillery"
                   type="text"
                   placeholder="Buffalo Trace, Heaven Hill"
                 />
               )}
-            />
-            <form.AppField
-              name="producer"
-              children={(field) => (
+            </form.AppField>
+            <form.AppField name="producer">
+              {(field) => (
                 <field.TextField label="Producer" type="text" placeholder="Sazerac, MGP" />
               )}
-            />
-            <form.AppField
-              name="country"
-              children={(field) => (
+            </form.AppField>
+            <form.AppField name="country">
+              {(field) => (
                 <field.TextField
                   label="Country of Origin"
                   type="text"
                   placeholder="USA, Japan, Scotland"
                 />
               )}
-            />
-            <form.AppField
-              name="region"
-              children={(field) => (
+            </form.AppField>
+            <form.AppField name="region">
+              {(field) => (
                 <field.TextField label="Region" type="text" placeholder="KY, Islay, Hokkaido" />
               )}
-            />
+            </form.AppField>
           </div>
         </div>
 
@@ -112,18 +101,20 @@ export default function BottleForm({
             Specifications
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <form.AppField name="price" children={(field) => <field.NumberField label="Price" />} />
-            <form.AppField
-              name="age"
-              children={(field) => (
+            <form.AppField name="price">
+              {(field) => <field.NumberField label="Price" />}
+            </form.AppField>
+            <form.AppField name="age">
+              {(field) => (
                 <field.TextField label="Age" type="text" placeholder="10yrs, 6yrs 7mos, NAS" />
               )}
-            />
-            <form.AppField name="proof" children={(field) => <field.NumberField label="Proof" />} />
-            <form.AppField
-              name="releaseYear"
-              children={(field) => <field.NumberField label="Release Year" />}
-            />
+            </form.AppField>
+            <form.AppField name="proof">
+              {(field) => <field.NumberField label="Proof" />}
+            </form.AppField>
+            <form.AppField name="releaseYear">
+              {(field) => <field.NumberField label="Release Year" />}
+            </form.AppField>
           </div>
         </div>
 
@@ -132,40 +123,36 @@ export default function BottleForm({
             Barrel &amp; Finish
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <form.AppField
-              name="barrelInformation"
-              children={(field) => (
+            <form.AppField name="barrelInformation">
+              {(field) => (
                 <field.TextField
                   label="Barrel Information"
                   type="text"
                   placeholder="Binny's Pick, Barrel A225G3"
                 />
               )}
-            />
-            <form.AppField
-              name="finishing"
-              children={(field) => (
+            </form.AppField>
+            <form.AppField name="finishing">
+              {(field) => (
                 <field.TextField
                   label="Finishing Barrels"
                   type="text"
                   placeholder="Port, Sauternes, Tequila"
                 />
               )}
-            />
+            </form.AppField>
           </div>
         </div>
 
         <div className="space-y-4 border-t border-ink/10 pt-6">
           <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Timeline</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <form.AppField
-              name="openDate"
-              children={(field) => <field.DateField label="Open Date" />}
-            />
-            <form.AppField
-              name="killDate"
-              children={(field) => <field.DateField label="Kill Date" />}
-            />
+            <form.AppField name="openDate">
+              {(field) => <field.DateField label="Open Date" />}
+            </form.AppField>
+            <form.AppField name="killDate">
+              {(field) => <field.DateField label="Kill Date" />}
+            </form.AppField>
           </div>
         </div>
         <form.AppForm>
