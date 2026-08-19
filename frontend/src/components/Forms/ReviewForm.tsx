@@ -21,9 +21,9 @@ export default function ReviewForm({
     <div className="min-h-screen px-4 py-8 sm:py-12">
       <form
         className="mx-auto w-full max-w-3xl space-y-8 rounded-lg border border-ink/15 bg-cream p-6 sm:p-8"
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          form.handleSubmit();
+          await form.handleSubmit();
         }}
       >
         <h1 className="font-caprasimo text-2xl text-center">Review Information</h1>
@@ -33,11 +33,21 @@ export default function ReviewForm({
           </p>
         )}
 
+        {reviewId && (
+          <>
+            <form.AppField name="reviewId">
+              {(field) => <field.TextField type="hidden" label="ReviewId" />}
+            </form.AppField>
+            <form.AppField name="mode">
+              {(field) => <field.TextField type="hidden" label="Mode" />}
+            </form.AppField>
+          </>
+        )}
+
         <div className="space-y-4">
           <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Session</h2>
-          <form.AppField
-            name="bottleId"
-            children={(field) => (
+          <form.AppField name="bottleId">
+            {(field) => (
               <field.ComboboxField
                 label="Bottle"
                 options={bottleOptions}
@@ -45,32 +55,28 @@ export default function ReviewForm({
                 emptyMessage="No bottles match"
               />
             )}
-          />
-          <form.AppField
-            name="setting"
-            children={(field) => (
+          </form.AppField>
+          <form.AppField name="setting">
+            {(field) => (
               <field.TextField
                 label="Review Setting"
                 type="text"
                 placeholder="Winding down after work"
               />
             )}
-          />
+          </form.AppField>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <form.AppField
-              name="reviewDate"
-              children={(field) => <field.DateField label="Review Date" />}
-            />
-            <form.AppField
-              name="restTimeMin"
-              children={(field) => <field.NumberField label="Rest Time (minutes)" />}
-            />
-            <form.AppField
-              name="glassware"
-              children={(field) => (
+            <form.AppField name="reviewDate">
+              {(field) => <field.DateField label="Review Date" />}
+            </form.AppField>
+            <form.AppField name="restTimeMin">
+              {(field) => <field.NumberField label="Rest Time (minutes)" />}
+            </form.AppField>
+            <form.AppField name="glassware">
+              {(field) => (
                 <field.TextField label="Glassware" type="text" placeholder="Glencairn, Copita" />
               )}
-            />
+            </form.AppField>
           </div>
         </div>
 
@@ -78,49 +84,43 @@ export default function ReviewForm({
           <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
             Tasting Notes
           </h2>
-          <form.AppField
-            name="nose"
-            children={(field) => (
+          <form.AppField name="nose">
+            {(field) => (
               <field.TextareaField label="Nose" placeholder="Caramel, oak, dark cherry" />
             )}
-          />
-          <form.AppField
-            name="palate"
-            children={(field) => (
+          </form.AppField>
+          <form.AppField name="palate">
+            {(field) => (
               <field.TextareaField
                 label="Palate"
                 placeholder="Baking spice, vanilla, toasted oak"
               />
             )}
-          />
-          <form.AppField
-            name="finish"
-            children={(field) => (
+          </form.AppField>
+          <form.AppField name="finish">
+            {(field) => (
               <field.TextareaField label="Finish" placeholder="Long, warm, lingering spice" />
             )}
-          />
+          </form.AppField>
         </div>
 
         <div className="space-y-4 border-t border-ink/10 pt-6">
           <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Overall</h2>
-          <form.AppField
-            name="thoughts"
-            children={(field) => (
+          <form.AppField name="thoughts">
+            {(field) => (
               <field.TextareaField
                 label="Thoughts"
                 placeholder="Overall impressions of this pour"
               />
             )}
-          />
+          </form.AppField>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <form.AppField
-              name="valueScore"
-              children={(field) => <field.NumberField label="Value Rating" />}
-            />
-            <form.AppField
-              name="overallRating"
-              children={(field) => <field.NumberField label="Overall Rating" required />}
-            />
+            <form.AppField name="valueScore">
+              {(field) => <field.NumberField label="Value Rating" />}
+            </form.AppField>
+            <form.AppField name="overallRating">
+              {(field) => <field.NumberField label="Overall Rating" required />}
+            </form.AppField>
           </div>
         </div>
 

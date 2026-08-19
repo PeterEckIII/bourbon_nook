@@ -27,6 +27,7 @@ import { Route as AuthenticatedReviewsReviewIdRouteImport } from './routes/_auth
 import { Route as AuthenticatedReviewsNewRouteImport } from './routes/_authenticated/reviews/new'
 import { Route as AuthenticatedAdminUsersIndexRouteImport } from './routes/_authenticated/admin/users/index'
 import { Route as AuthenticatedBottlesBottleIdEditRouteImport } from './routes/_authenticated/bottles/$bottleId_.edit'
+import { Route as AuthenticatedReviewsReviewIdEditRouteImport } from './routes/_authenticated/reviews/$reviewId_.edit'
 import { Route as AuthenticatedAdminUsersUserIdEditRouteImport } from './routes/_authenticated/admin/users/$userId_.edit'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
@@ -127,6 +128,12 @@ const AuthenticatedBottlesBottleIdEditRoute =
     path: '/bottles/$bottleId/edit',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedReviewsReviewIdEditRoute =
+  AuthenticatedReviewsReviewIdEditRouteImport.update({
+    id: '/reviews/$reviewId_/edit',
+    path: '/reviews/$reviewId/edit',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedAdminUsersUserIdEditRoute =
   AuthenticatedAdminUsersUserIdEditRouteImport.update({
     id: '/users/$userId_/edit',
@@ -151,6 +158,7 @@ export interface FileRoutesByFullPath {
   '/profile/': typeof AuthenticatedProfileIndexRoute
   '/reviews/': typeof AuthenticatedReviewsIndexRoute
   '/bottles/$bottleId/edit': typeof AuthenticatedBottlesBottleIdEditRoute
+  '/reviews/$reviewId/edit': typeof AuthenticatedReviewsReviewIdEditRoute
   '/admin/users/': typeof AuthenticatedAdminUsersIndexRoute
   '/admin/users/$userId/edit': typeof AuthenticatedAdminUsersUserIdEditRoute
 }
@@ -171,6 +179,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileIndexRoute
   '/reviews': typeof AuthenticatedReviewsIndexRoute
   '/bottles/$bottleId/edit': typeof AuthenticatedBottlesBottleIdEditRoute
+  '/reviews/$reviewId/edit': typeof AuthenticatedReviewsReviewIdEditRoute
   '/admin/users': typeof AuthenticatedAdminUsersIndexRoute
   '/admin/users/$userId/edit': typeof AuthenticatedAdminUsersUserIdEditRoute
 }
@@ -193,6 +202,7 @@ export interface FileRoutesById {
   '/_authenticated/profile/': typeof AuthenticatedProfileIndexRoute
   '/_authenticated/reviews/': typeof AuthenticatedReviewsIndexRoute
   '/_authenticated/bottles/$bottleId_/edit': typeof AuthenticatedBottlesBottleIdEditRoute
+  '/_authenticated/reviews/$reviewId_/edit': typeof AuthenticatedReviewsReviewIdEditRoute
   '/_authenticated/admin/users/': typeof AuthenticatedAdminUsersIndexRoute
   '/_authenticated/admin/users/$userId_/edit': typeof AuthenticatedAdminUsersUserIdEditRoute
 }
@@ -215,6 +225,7 @@ export interface FileRouteTypes {
     | '/profile/'
     | '/reviews/'
     | '/bottles/$bottleId/edit'
+    | '/reviews/$reviewId/edit'
     | '/admin/users/'
     | '/admin/users/$userId/edit'
   fileRoutesByTo: FileRoutesByTo
@@ -235,6 +246,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reviews'
     | '/bottles/$bottleId/edit'
+    | '/reviews/$reviewId/edit'
     | '/admin/users'
     | '/admin/users/$userId/edit'
   id:
@@ -256,6 +268,7 @@ export interface FileRouteTypes {
     | '/_authenticated/profile/'
     | '/_authenticated/reviews/'
     | '/_authenticated/bottles/$bottleId_/edit'
+    | '/_authenticated/reviews/$reviewId_/edit'
     | '/_authenticated/admin/users/'
     | '/_authenticated/admin/users/$userId_/edit'
   fileRoutesById: FileRoutesById
@@ -396,6 +409,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBottlesBottleIdEditRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/reviews/$reviewId_/edit': {
+      id: '/_authenticated/reviews/$reviewId_/edit'
+      path: '/reviews/$reviewId/edit'
+      fullPath: '/reviews/$reviewId/edit'
+      preLoaderRoute: typeof AuthenticatedReviewsReviewIdEditRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/admin/users/$userId_/edit': {
       id: '/_authenticated/admin/users/$userId_/edit'
       path: '/users/$userId/edit'
@@ -434,6 +454,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedProfileIndexRoute: typeof AuthenticatedProfileIndexRoute
   AuthenticatedReviewsIndexRoute: typeof AuthenticatedReviewsIndexRoute
   AuthenticatedBottlesBottleIdEditRoute: typeof AuthenticatedBottlesBottleIdEditRoute
+  AuthenticatedReviewsReviewIdEditRoute: typeof AuthenticatedReviewsReviewIdEditRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -449,6 +470,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedProfileIndexRoute: AuthenticatedProfileIndexRoute,
   AuthenticatedReviewsIndexRoute: AuthenticatedReviewsIndexRoute,
   AuthenticatedBottlesBottleIdEditRoute: AuthenticatedBottlesBottleIdEditRoute,
+  AuthenticatedReviewsReviewIdEditRoute: AuthenticatedReviewsReviewIdEditRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
