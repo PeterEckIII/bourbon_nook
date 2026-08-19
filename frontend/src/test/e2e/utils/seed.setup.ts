@@ -1,4 +1,5 @@
 import { test as setup, expect } from '@playwright/test';
+import { gotoWithRetry } from './navigation';
 
 const seedFile = 'src/test/e2e/data/.auth/follower.json';
 
@@ -13,7 +14,7 @@ if (!followerEmail || !followerPassword || !testUserId) {
 }
 
 setup('seed', async ({ page }) => {
-  await page.goto('/login');
+  await gotoWithRetry(page, '/login');
   await page.getByLabel(/email/i).fill(followerEmail);
   await page.getByLabel(/password/i).fill(followerPassword);
   await page.getByRole('button', { name: /log in/i }).click();

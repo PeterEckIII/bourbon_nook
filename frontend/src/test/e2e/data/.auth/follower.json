@@ -2,20 +2,20 @@
   "cookies": [
     {
       "name": "refreshToken",
-      "value": "80571732-3df3-49c3-b859-b21fda90fc3e",
+      "value": "3e077067-031d-49a3-bdb6-92cee6032781",
       "domain": "localhost",
       "path": "/users-api/auth/refresh",
-      "expires": 1787688041.36254,
+      "expires": 1787765555.065616,
       "httpOnly": true,
       "secure": true,
       "sameSite": "Strict"
     },
     {
       "name": "jwt",
-      "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXd1c2VyQGdtYWlsLmNvbSIsInVzZXJJZCI6ImM3ODI2YjU5LTdiOTAtNGRmMS05YmVkLTVjZDJjMjkwNzllMSIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE3ODcwODMyNDEsImV4cCI6MTc4NzE2OTY0MX0.IWQyUkgdCTwOOnpkqlveyyERCwo8_uX_MkE0XpJzSfM",
+      "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXd1c2VyQGdtYWlsLmNvbSIsInVzZXJJZCI6ImM3ODI2YjU5LTdiOTAtNGRmMS05YmVkLTVjZDJjMjkwNzllMSIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE3ODcxNjA3NTUsImV4cCI6MTc4NzI0NzE1NX0.r5RopdSEesHvTFShUvLvh-_WlAvYCeskRkiDYxz892I",
       "domain": "localhost",
       "path": "/",
-      "expires": 1787086841.362486,
+      "expires": 1787164355.065569,
       "httpOnly": true,
       "secure": true,
       "sameSite": "Strict"

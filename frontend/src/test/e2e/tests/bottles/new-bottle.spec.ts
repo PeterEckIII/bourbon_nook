@@ -1,4 +1,4 @@
-import { test, expect } from '../../fixtures/bottles';
+import { test, expect } from '../../fixtures';
 
 test('user can add a new bottle', async ({ newBottlePage, page }) => {
   await newBottlePage.addBottle(

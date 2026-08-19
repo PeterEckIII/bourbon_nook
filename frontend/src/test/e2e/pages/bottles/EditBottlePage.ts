@@ -1,5 +1,6 @@
 import type { Page } from '@playwright/test';
 import { BottleFormPage } from './BottleFormPage';
+import { gotoWithRetry } from '../../utils/navigation';
 
 export class EditBottlePage extends BottleFormPage {
   private readonly bottleId: string;
@@ -10,7 +11,7 @@ export class EditBottlePage extends BottleFormPage {
   }
 
   async goto() {
-    await this.page.goto(`http://localhost:5173/bottles/${this.bottleId}/edit`);
+    await gotoWithRetry(this.page, `http://localhost:5173/bottles/${this.bottleId}/edit`);
   }
 
   // Client-side link click avoids the hard-navigation race with goto() that intermittently aborts in Firefox.
@@ -36,7 +37,6 @@ export class EditBottlePage extends BottleFormPage {
     openDate: string,
     killDate: string,
   ) {
-    await this.name.clear();
     await this.name.fill(name);
     await this.type.fill(type);
     await this.status.selectOption(status);

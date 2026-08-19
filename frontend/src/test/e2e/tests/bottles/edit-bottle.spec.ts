@@ -1,4 +1,4 @@
-import { test, expect } from '../../fixtures/bottles';
+import { test, expect } from '../../fixtures';
 
 test('user can edit an existing bottle', async ({ editBottlePage, page }) => {
   await editBottlePage.editBottle(

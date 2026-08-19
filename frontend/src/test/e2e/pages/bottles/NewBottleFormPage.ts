@@ -1,4 +1,5 @@
 import { BottleFormPage } from './BottleFormPage';
+import { gotoWithRetry } from '../../utils/navigation';
 
 const BOTTLE_DETAIL_URL = /\/bottles\/([0-9a-f-]{36})$/i;
 
@@ -6,7 +7,7 @@ export class NewBottlePage extends BottleFormPage {
   readonly createdBottleIds: string[] = [];
 
   async goto() {
-    await this.page.goto('http://localhost:5173/bottles/new');
+    await gotoWithRetry(this.page, 'http://localhost:5173/bottles/new');
   }
 
   async addBottle(
@@ -45,6 +46,7 @@ export class NewBottlePage extends BottleFormPage {
     await this.submit();
 
     await this.page.waitForURL(BOTTLE_DETAIL_URL);
+    await this.page.waitForLoadState('networkidle');
     const [, bottleId] = BOTTLE_DETAIL_URL.exec(this.page.url())!;
     this.createdBottleIds.push(bottleId);
   }
