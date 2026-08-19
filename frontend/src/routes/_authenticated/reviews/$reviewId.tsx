@@ -4,7 +4,11 @@ import {
   getUserBottleQueryOptions,
   useUserBottleSuspense,
 } from '../../../api/generated/bottles-api';
+import EditIcon from '../../../components/Icons/EditIcon';
 import noBottleImage from '../../../assets/brand/png/bottle-cancel-1024.png';
+
+const editLinkClasses =
+  'inline-flex cursor-pointer items-center gap-2 rounded-md border border-ink/20 px-3 py-2 text-sm font-medium text-ink transition-colors duration-150 hover:bg-ink/5 focus:outline-none focus:ring-2 focus:ring-amber-500/70 focus:ring-offset-2 focus:ring-offset-cream';
 
 export const Route = createFileRoute('/_authenticated/reviews/$reviewId')({
   loader: async ({ context, params }) => {
@@ -78,12 +82,24 @@ function RouteComponent() {
         </div>
 
         <div className="space-y-6">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-ink/50">Review</p>
-            <h1 className="font-caprasimo text-3xl text-ink">{bottle.name}</h1>
-            <p className="mt-1 text-sm text-ink/60">
-              {[bottle.distillery, bottle.producer].filter(Boolean).join(' · ')}
-            </p>
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-ink/50">Review</p>
+              <h1 className="font-caprasimo text-3xl text-ink">{bottle.name}</h1>
+              <p className="mt-1 text-sm text-ink/60">
+                {[bottle.distillery, bottle.producer].filter(Boolean).join(' · ')}
+              </p>
+            </div>
+            <Link
+              to="/reviews/$reviewId/edit"
+              params={{ reviewId }}
+              title="Edit Review"
+              aria-label="Edit Review"
+              className={editLinkClasses}
+            >
+              <EditIcon />
+              Edit Review
+            </Link>
           </div>
 
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
