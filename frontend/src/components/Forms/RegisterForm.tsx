@@ -44,7 +44,7 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
           username: value.username,
           password: value.password,
         });
-        navigate({ to: redirect || '/dashboard' });
+        await navigate({ to: redirect || '/dashboard' });
       } catch (error) {
         setServerError(getApiErrorMessage(error));
       }
@@ -55,9 +55,9 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
     <div className="min-h-screen flex items-center justify-center">
       <form
         className="max-w-md w-full space-y-4 p-6 border border-ink/15 rounded-lg bg-cream"
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          form.handleSubmit();
+          await form.handleSubmit();
         }}
       >
         <img src={mark} alt="Bourbon Nook" className="h-16 w-16 mx-auto" />
@@ -73,16 +73,22 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
             validators={{
               onChangeAsyncDebounceMs: 500,
               onChangeAsync: async ({ value }) => {
-                const isAvailable = await checkEmailAvailability({
-                  email: value,
-                });
-                return isAvailable ? undefined : 'Email is already registered at BourbonNook';
+                try {
+                  const isAvailable = await checkEmailAvailability({
+                    email: value,
+                  });
+                  return isAvailable ? undefined : 'Email is already registered at BourbonNook';
+                } catch (error) {
+                  console.log(error);
+                  return undefined;
+                }
               },
             }}
-            children={(field) => (
+          >
+            {(field) => (
               <field.TextField label="Email" type="email" placeholder="john@whiskey.org" required />
             )}
-          />
+          </form.AppField>
         </div>
         <div>
           <form.AppField
@@ -91,13 +97,19 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
               onChangeAsyncDebounceMs: 500,
               onChangeAsync: async ({ value }) => {
                 if (value.length < 3) return undefined;
-                const isAvailable = await checkUsernameAvailability({
-                  username: value,
-                });
-                return isAvailable ? undefined : 'Username is already taken';
+                try {
+                  const isAvailable = await checkUsernameAvailability({
+                    username: value,
+                  });
+                  return isAvailable ? undefined : 'Username is already taken';
+                } catch (error) {
+                  console.log(error);
+                  return undefined;
+                }
               },
             }}
-            children={(field) => (
+          >
+            {(field) => (
               <field.TextField
                 label="Username"
                 type="text"
@@ -105,15 +117,14 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
                 required
               />
             )}
-          />
+          </form.AppField>
         </div>
         <div>
-          <form.AppField
-            name="password"
-            children={(field) => (
+          <form.AppField name="password">
+            {(field) => (
               <field.TextField label="Password" type="password" placeholder="*********" required />
             )}
-          />
+          </form.AppField>
         </div>
         <div>
           <form.AppField
@@ -127,7 +138,8 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
                 return undefined;
               },
             }}
-            children={(field) => (
+          >
+            {(field) => (
               <field.TextField
                 label="Confirm Password"
                 type="password"
@@ -135,7 +147,7 @@ export default function RegisterForm({ auth, redirect }: RegisterFormProps) {
                 required
               />
             )}
-          />
+          </form.AppField>
         </div>
         <form.AppForm>
           <form.SubmitButton label="Register" fullWidth />

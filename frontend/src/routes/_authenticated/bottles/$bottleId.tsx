@@ -7,27 +7,13 @@ import ActionButtons from '../../../components/ui/ActionButtons';
 import BottleImageUpload from '../../../components/Forms/BottleImageUpload';
 import StatusPill from '../../../components/Tables/StatusPill';
 import noBottleImage from '../../../assets/brand/png/bottle-cancel-1024.png';
+import { formatDate, formatPrice } from '../../../utils/format';
 
 export const Route = createFileRoute('/_authenticated/bottles/$bottleId')({
   loader: ({ context, params }) =>
     context.queryClient.ensureQueryData(getUserBottleQueryOptions(params.bottleId)),
   component: RouteComponent,
 });
-
-const dateFormatter = new Intl.DateTimeFormat(undefined, {
-  dateStyle: 'medium',
-});
-
-function formatDate(value: string | undefined): string | undefined {
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value ?? '');
-  if (!match) return undefined;
-  const [, year, month, day] = match;
-  return dateFormatter.format(new Date(Number(year), Number(month) - 1, Number(day)));
-}
-
-function formatPrice(value: number | undefined): string | undefined {
-  return value === undefined ? undefined : `$${value.toFixed(2)}`;
-}
 
 function Detail({ label, value }: { label: string; value?: string | number }) {
   return (
