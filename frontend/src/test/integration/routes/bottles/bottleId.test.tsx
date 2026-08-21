@@ -7,7 +7,7 @@ import { customBottlesInstance } from '../../../../api/axios-instance';
 
 function returnBottleResponse(): BottleResponseModel {
   return {
-    id: '12345',
+    id: 'abc555',
     name: 'Mock Bottle',
     type: 'Bourbon',
     status: 'OPENED',
@@ -30,7 +30,7 @@ function returnBottleResponse(): BottleResponseModel {
 
 function renderBottleIdRouteWithAuth() {
   return renderWithFileRoutes({
-    initialLocation: '/bottles/12345',
+    initialLocation: '/bottles/abc555',
     routerContext: {
       auth: createMockAuthState({
         user: {
@@ -98,8 +98,10 @@ describe('Bottle ID route', () => {
     expect(selectors.pageTitle).toBeInTheDocument();
     expect(selectors.status).toBeInTheDocument();
     expect(selectors.price).toBeInTheDocument();
-    expect(selectors.writeReviewLink).toHaveAttribute('href', '/reviews/new');
-    expect(selectors.editBottleLink).toHaveAttribute('href', '/bottles/12345/edit');
+    const params = new URLSearchParams();
+    params.set('bottleId', 'abc555');
+    expect(selectors.writeReviewLink).toHaveAttribute('href', `/reviews/new?${params.toString()}`);
+    expect(selectors.editBottleLink).toHaveAttribute('href', '/bottles/abc555/edit');
     expect(selectors.deleteBottleButton).toBeInTheDocument();
     expect(selectors.bottleImage).toHaveAttribute(
       'src',
@@ -122,7 +124,7 @@ describe('Bottle ID route', () => {
     expect(mockedBottleInstance).toHaveBeenCalledWith(
       expect.objectContaining({
         method: 'DELETE',
-        url: '/bottles/12345',
+        url: '/bottles/abc555',
       }),
     );
     await waitFor(() => expect(router.state.location.pathname).toBe('/bottles'));
@@ -143,7 +145,7 @@ describe('Bottle ID route', () => {
     expect(mockedBottleInstance).not.toHaveBeenCalledWith(
       expect.objectContaining({ method: 'DELETE' }),
     );
-    await waitFor(() => expect(router.state.location.pathname).toBe('/bottles/12345'));
+    await waitFor(() => expect(router.state.location.pathname).toBe('/bottles/abc555'));
   });
   it('shows an error when delete fails', async () => {
     renderBottleIdRouteWithAuth();
@@ -153,14 +155,14 @@ describe('Bottle ID route', () => {
 
     mockedBottleInstance.mockRejectedValueOnce({
       isAxiosError: true,
-      response: { data: { message: 'Could not delete bottle with ID 12345' } },
+      response: { data: { message: 'Could not delete bottle with ID abc555' } },
     });
 
     await user.click(deleteBottleButton);
     await user.click(await screen.findByRole('button', { name: /^delete$/i }));
 
     expect(await screen.getByRole('alert')).toHaveTextContent(
-      /could not delete bottle with id 12345/i,
+      /could not delete bottle with id abc555/i,
     );
   });
   it('shows the missing image fallback when imageURL is undefined', async () => {
