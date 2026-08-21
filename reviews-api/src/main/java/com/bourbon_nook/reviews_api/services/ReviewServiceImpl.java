@@ -47,6 +47,15 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public ReviewDto getReviewByBottleIdAndUserId(String bottleId, String userId) {
+        ReviewEntity review = reviewRepository.findByBottleIdAndUserId(bottleId, userId).orElse(null);
+        if (review == null) {
+            throw new ReviewNotFoundException("Review with bottle id: " + bottleId + " not found");
+        }
+        return reviewMapper.toDto(review);
+    }
+
+    @Override
     public long countReviews(String userId) {
         return reviewRepository.countReviewsByUserId(userId);
     }

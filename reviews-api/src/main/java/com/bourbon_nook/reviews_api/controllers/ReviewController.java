@@ -72,6 +72,15 @@ public class ReviewController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @GetMapping("/bottle/{bottleId}")
+    public ResponseEntity<ReviewResponseModel> reviewByBottleId(@PathVariable String bottleId, Authentication authentication) {
+        String userId = authentication.getName();
+        ReviewDto review = reviewService.getReviewByBottleIdAndUserId(bottleId, userId);
+        ReviewResponseModel responseModel = reviewMapper.toResponseModel(review);
+        return ResponseEntity.status(HttpStatus.OK).body(responseModel);
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/count")
     public ResponseEntity<Long> countReviews(Authentication authentication) {
         String userId = authentication.getName();
