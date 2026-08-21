@@ -2,20 +2,20 @@ import { useUserBottlesSuspense } from '../../api/generated/bottles-api';
 import type { ReviewResponseModel } from '../../api/generated/reviews-api';
 import useReviewForm from '../../hooks/useReviewForm';
 
-export default function ReviewForm({
-  valuesToEdit,
-  reviewId,
-}: {
+interface ReviewFormProps {
   valuesToEdit?: ReviewResponseModel;
   reviewId?: string;
-}) {
+  bottleId?: string;
+}
+
+export default function ReviewForm({ valuesToEdit, reviewId, bottleId }: ReviewFormProps) {
   const { data: bottles } = useUserBottlesSuspense();
   const bottleOptions = bottles.map((bottle) => ({
     value: bottle.id!,
     label: bottle.name!,
   }));
 
-  const { form, serverError } = useReviewForm({ valuesToEdit, reviewId });
+  const { form, serverError } = useReviewForm({ valuesToEdit, reviewId, bottleId });
 
   return (
     <div className="min-h-screen px-4 py-8 sm:py-12">

@@ -81,6 +81,7 @@ function RouteComponent() {
           )}
 
           <ActionButtons
+            entity="bottle"
             bottleId={bottleId}
             onDeleted={() => navigate({ to: '/bottles' })}
             showLabels

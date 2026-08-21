@@ -49,9 +49,11 @@ const defaultValues: Review = {
 export default function useReviewForm({
   valuesToEdit,
   reviewId,
+  bottleId,
 }: {
   valuesToEdit?: ReviewResponseModel;
   reviewId?: string;
+  bottleId?: string;
 }) {
   const [serverError, setServerError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -64,8 +66,11 @@ export default function useReviewForm({
             mode: 'edit',
             reviewId: reviewId ?? '',
           }
-        : defaultValues,
-    [reviewId, valuesToEdit],
+        : {
+            ...defaultValues,
+            bottleId: bottleId ?? '',
+          },
+    [reviewId, valuesToEdit, bottleId],
   );
 
   const queryClient = useQueryClient();

@@ -82,7 +82,7 @@ const columns = columnHelper.columns([
     header: 'Price ($)',
     cell: (info) => `$ ${info.getValue()?.toFixed(2)}`,
     footer: (props) =>
-      `$ ${formatPrice(Number((props.column.getAggregationValue() as number).toFixed(2)))}`,
+      `${formatPrice(Number((props.column.getAggregationValue() as number).toFixed(2)))}`,
     aggregationFn: 'sum',
   }),
   columnHelper.accessor('proof', {
@@ -96,7 +96,9 @@ const columns = columnHelper.columns([
   columnHelper.display({
     id: 'actions',
     header: 'Actions',
-    cell: (props) => <ActionButtons bottleId={props.row.original.id as string} />,
+    cell: (props) => {
+      return <ActionButtons entity="bottle" bottleId={props.row.original.id as string} />;
+    },
   }),
 ]);
 
