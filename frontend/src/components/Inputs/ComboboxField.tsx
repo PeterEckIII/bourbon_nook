@@ -2,7 +2,7 @@ import { useId, useState, type KeyboardEvent } from 'react';
 import { useFieldContext } from '../../hooks/form-context';
 import { formatFieldErrors } from '../../utils/formFieldErrors';
 
-interface ComboboxOption {
+export interface ComboboxOption {
   value: string;
   label: string;
 }
