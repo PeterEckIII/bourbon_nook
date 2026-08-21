@@ -1,12 +1,30 @@
 import { createFileRoute } from '@tanstack/react-router';
 import ReviewForm from '../../../components/Forms/ReviewForm';
 import { getUserBottlesQueryOptions } from '../../../api/generated/bottles-api';
+import z from 'zod';
+
+const searchSchema = z.object({
+  bottleId: z.string().optional(),
+});
 
 export const Route = createFileRoute('/_authenticated/reviews/new')({
+  validateSearch: searchSchema,
+  search: {
+    middlewares: [
+      ({ search, next }) => {
+        const result = next(search);
+        return {
+          bottleId: search.bottleId,
+          ...result,
+        };
+      },
+    ],
+  },
   loader: ({ context }) => context.queryClient.ensureQueryData(getUserBottlesQueryOptions()),
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return <ReviewForm />;
+  const { bottleId } = Route.useSearch();
+  return <ReviewForm bottleId={bottleId} />;
 }
