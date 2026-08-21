@@ -51,7 +51,7 @@ describe('Login route', () => {
     await user.type(emailInput, 'peter@me.com');
     await user.type(passwordInput, 'mysecretpassword123!');
     await user.click(await screen.findByRole('button', { name: /log in/i }));
-    expect(await screen.findByText('Hello "/about"!')).toBeInTheDocument();
+    expect(await screen.findByText('About Bourbon Nook')).toBeInTheDocument();
   });
   it('should test submit button is disabled when invalid email is entered', async () => {
     const user = userEvent.setup();
@@ -83,7 +83,7 @@ describe('Login route', () => {
         auth: createMockAuthState({ isAuthenticated: true }),
       },
     });
-    expect(await screen.findByText('Hello "/about"!')).toBeInTheDocument();
+    expect(await screen.findByText('About Bourbon Nook')).toBeInTheDocument();
   });
   it('should fall back to a generic message when the error has no response body', async () => {
     const user = userEvent.setup();

@@ -152,6 +152,6 @@ describe('Register route', () => {
     await waitFor(() => expect(button).not.toBeDisabled(), { timeout: 2000 });
     await user.click(button);
 
-    expect(await screen.findByText('Hello "/about"!')).toBeInTheDocument();
+    expect(await screen.findByText('About Bourbon Nook')).toBeInTheDocument();
   });
 });
