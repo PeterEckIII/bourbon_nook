@@ -6,6 +6,7 @@ import {
 } from '../../../api/generated/bottles-api';
 import EditIcon from '../../../components/Icons/EditIcon';
 import noBottleImage from '../../../assets/brand/png/bottle-cancel-1024.png';
+import { formatDate } from '../../../utils/format';
 
 const editLinkClasses =
   'inline-flex cursor-pointer items-center gap-2 rounded-md border border-ink/20 px-3 py-2 text-sm font-medium text-ink transition-colors duration-150 hover:bg-ink/5 focus:outline-none focus:ring-2 focus:ring-amber-500/70 focus:ring-offset-2 focus:ring-offset-cream';
@@ -19,17 +20,6 @@ export const Route = createFileRoute('/_authenticated/reviews/$reviewId')({
   },
   component: RouteComponent,
 });
-
-const dateFormatter = new Intl.DateTimeFormat(undefined, {
-  dateStyle: 'medium',
-});
-
-function formatDate(value: string | undefined): string | undefined {
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value ?? '');
-  if (!match) return undefined;
-  const [, year, month, day] = match;
-  return dateFormatter.format(new Date(Number(year), Number(month) - 1, Number(day)));
-}
 
 function Detail({ label, value }: { label: string; value?: string | number }) {
   return (
