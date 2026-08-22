@@ -105,6 +105,15 @@ export default function ReviewForm({ valuesToEdit, reviewId, bottleId }: ReviewF
         </div>
 
         <div className="space-y-4 border-t border-ink/10 pt-6">
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
+            Tag & Score Notes
+          </h2>
+          <form.AppField name="reviewNotes">
+            {(field) => <field.TagNotesField label="Pick tags and score each 0-10" />}
+          </form.AppField>
+        </div>
+
+        <div className="space-y-4 border-t border-ink/10 pt-6">
           <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Overall</h2>
           <form.AppField name="thoughts">
             {(field) => (
