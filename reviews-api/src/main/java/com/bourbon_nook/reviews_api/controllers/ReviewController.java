@@ -5,6 +5,7 @@ import com.bourbon_nook.reviews_api.dtos.ReviewDto;
 import com.bourbon_nook.reviews_api.mappers.ReviewMapper;
 import com.bourbon_nook.reviews_api.models.requests.AddNoteToReviewRequest;
 import com.bourbon_nook.reviews_api.models.requests.CreateReviewRequest;
+import com.bourbon_nook.reviews_api.models.requests.UpdateNoteScoreRequest;
 import com.bourbon_nook.reviews_api.models.responses.ReviewResponseModel;
 import com.bourbon_nook.reviews_api.services.NoteService;
 import com.bourbon_nook.reviews_api.services.ReviewService;
@@ -140,6 +141,18 @@ public class ReviewController {
         reviewService.addNotesToReview(reviewId, notes, userId);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PatchMapping("/{reviewId}/notes/{noteId}")
+    public ResponseEntity<Void> updateNoteScore(@PathVariable String reviewId,
+                                                @PathVariable String noteId,
+                                                @Valid @RequestBody UpdateNoteScoreRequest request,
+                                                Authentication authentication
+    ) {
+        String userId = authentication.getName();
+        reviewService.updateNoteScore(reviewId, noteId, request.getScore(), userId);
+        return ResponseEntity.noContent().build();
     }
 
     @PreAuthorize("isAuthenticated()")
