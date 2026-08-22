@@ -1,10 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { getReviewQueryOptions, useReviewSuspense } from '../../../api/generated/reviews-api';
+import {
+  getReviewQueryOptions,
+  getCategoriesWithSystemNotesQueryOptions,
+  useReviewSuspense,
+} from '../../../api/generated/reviews-api';
 import ReviewForm from '../../../components/Forms/ReviewForm';
 
 export const Route = createFileRoute('/_authenticated/reviews/$reviewId_/edit')({
-  loader: async ({ context, params }) =>
-    await context.queryClient.ensureQueryData(getReviewQueryOptions(params.reviewId)),
+  loader: async ({ context, params }) => {
+    await Promise.all([
+      context.queryClient.ensureQueryData(getReviewQueryOptions(params.reviewId)),
+      context.queryClient.ensureQueryData(getCategoriesWithSystemNotesQueryOptions()),
+    ]);
+  },
   component: RouteComponent,
 });
 
