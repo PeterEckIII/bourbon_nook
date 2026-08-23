@@ -33,7 +33,10 @@ export default function TagNotesField({ label }: TagNotesFieldProps) {
   }
 
   function addNote(categoryId: string, categoryName: string, noteName: string) {
-    field.handleChange([...selections, { categoryId, categoryName, noteName, score: DEFAULT_SCORE }]);
+    field.handleChange([
+      ...selections,
+      { categoryId, categoryName, noteName, score: DEFAULT_SCORE },
+    ]);
   }
 
   function removeNote(categoryId: string, noteName: string) {
@@ -144,7 +147,9 @@ export default function TagNotesField({ label }: TagNotesFieldProps) {
                             max={10}
                             value={selection.score}
                             aria-label={`${noteName} score, 0 to 10`}
-                            onChange={(e) => updateScore(categoryId, noteName, e.target.valueAsNumber)}
+                            onChange={(e) =>
+                              updateScore(categoryId, noteName, e.target.valueAsNumber)
+                            }
                             className="w-10 rounded border border-amber-900/40 bg-[#2a150d] px-1 py-0.5 text-center text-xs text-amber-50 focus:border-amber-500/70 focus:outline-none focus:ring-1 focus:ring-amber-500/70"
                           />
                         </span>
