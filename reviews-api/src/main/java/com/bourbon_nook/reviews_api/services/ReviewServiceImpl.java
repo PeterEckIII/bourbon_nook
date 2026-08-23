@@ -4,6 +4,8 @@ import com.bourbon_nook.reviews_api.dtos.AddNoteToReviewDto;
 import com.bourbon_nook.reviews_api.dtos.ReviewDto;
 import com.bourbon_nook.reviews_api.entities.NoteEntity;
 import com.bourbon_nook.reviews_api.entities.ReviewEntity;
+import com.bourbon_nook.reviews_api.entities.ReviewNoteEntity;
+import com.bourbon_nook.reviews_api.exceptions.NoteNotFoundException;
 import com.bourbon_nook.reviews_api.exceptions.ReviewNotFoundException;
 import com.bourbon_nook.reviews_api.mappers.NoteMapper;
 import com.bourbon_nook.reviews_api.mappers.ReviewMapper;
@@ -119,6 +121,22 @@ public class ReviewServiceImpl implements ReviewService {
             review.addNote(note, noteRequest.score());
         }
 
+        reviewRepository.save(review);
+    }
+
+    @Override
+    public void updateNoteScore(String reviewId, String noteId, Integer score, String userId) {
+        ReviewEntity review = reviewRepository
+                .findByIdAndUserId(reviewId, userId)
+                .orElseThrow(() -> new ReviewNotFoundException("Review with id: " + reviewId + " not found"));
+
+        ReviewNoteEntity reviewNote = review.getReviewNotes().stream()
+                .filter(rn -> rn.getNote().getId().equals(noteId))
+                .findFirst()
+                .orElseThrow(() -> new NoteNotFoundException(
+                        "Note with id: " + noteId + " is not attached to review: " + reviewId));
+
+        reviewNote.setScore(score);
         reviewRepository.save(review);
     }
 

@@ -7,6 +7,7 @@ import SelectField from '../components/Inputs/SelectField';
 import TextareaField from '../components/Inputs/TextareaField';
 import ComboboxField from '../components/Inputs/ComboboxField';
 import FileField from '../components/Inputs/FileField';
+import TagNotesField from '../components/Inputs/TagNotesField';
 import SubmitButton from '../components/ui/SubmitButton';
 
 export const { useAppForm, withForm } = createFormHook({
@@ -18,6 +19,7 @@ export const { useAppForm, withForm } = createFormHook({
     TextareaField,
     ComboboxField,
     FileField,
+    TagNotesField,
   },
   formComponents: {
     SubmitButton,

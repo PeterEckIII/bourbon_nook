@@ -75,6 +75,14 @@ export interface AddNoteToReviewRequest {
   score: number;
 }
 
+export interface UpdateNoteScoreRequest {
+  /**
+     * @minimum 0
+     * @maximum 10
+     */
+  score: number;
+}
+
 export interface NoteResponseModel {
   id?: string;
   name?: string;
@@ -534,6 +542,125 @@ const {mutation: mutationOptions} = options ?
         TContext
       > => {
       return useMutation(getReviewCreateMutationOptions(options), queryClient);
+    }
+
+export const deleteNoteFromReview = (
+    reviewId: string,
+    noteId: string,
+ signal?: AbortSignal
+) => {
+
+
+      return customReviewsInstance<void>(
+      {url: `/reviews/${reviewId}/notes/${noteId}`, method: 'DELETE', signal
+    },
+      );
+    }
+
+
+
+
+export const getDeleteNoteFromReviewMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteNoteFromReview>>, TError,{reviewId: string;noteId: string}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof deleteNoteFromReview>>, TError,{reviewId: string;noteId: string}, TContext> => {
+
+const mutationKey = ['deleteNoteFromReview'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteNoteFromReview>>, {reviewId: string;noteId: string}> = (props) => {
+          const {reviewId,noteId} = props ?? {};
+
+          return  deleteNoteFromReview(reviewId,noteId,)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteNoteFromReviewMutationResult = NonNullable<Awaited<ReturnType<typeof deleteNoteFromReview>>>
+
+    export type DeleteNoteFromReviewMutationError = unknown
+
+    export const useDeleteNoteFromReview = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteNoteFromReview>>, TError,{reviewId: string;noteId: string}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof deleteNoteFromReview>>,
+        TError,
+        {reviewId: string;noteId: string},
+        TContext
+      > => {
+      return useMutation(getDeleteNoteFromReviewMutationOptions(options), queryClient);
+    }
+
+export const updateNoteScore = (
+    reviewId: string,
+    noteId: string,
+    updateNoteScoreRequest: UpdateNoteScoreRequest,
+ signal?: AbortSignal
+) => {
+
+
+      return customReviewsInstance<void>(
+      {url: `/reviews/${reviewId}/notes/${noteId}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateNoteScoreRequest, signal
+    },
+      );
+    }
+
+
+
+
+export const getUpdateNoteScoreMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateNoteScore>>, TError,{reviewId: string;noteId: string;data: UpdateNoteScoreRequest}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof updateNoteScore>>, TError,{reviewId: string;noteId: string;data: UpdateNoteScoreRequest}, TContext> => {
+
+const mutationKey = ['updateNoteScore'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateNoteScore>>, {reviewId: string;noteId: string;data: UpdateNoteScoreRequest}> = (props) => {
+          const {reviewId,noteId,data} = props ?? {};
+
+          return  updateNoteScore(reviewId,noteId,data,)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateNoteScoreMutationResult = NonNullable<Awaited<ReturnType<typeof updateNoteScore>>>
+    export type UpdateNoteScoreMutationBody = UpdateNoteScoreRequest
+    export type UpdateNoteScoreMutationError = unknown
+
+    export const useUpdateNoteScore = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateNoteScore>>, TError,{reviewId: string;noteId: string;data: UpdateNoteScoreRequest}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateNoteScore>>,
+        TError,
+        {reviewId: string;noteId: string;data: UpdateNoteScoreRequest},
+        TContext
+      > => {
+      return useMutation(getUpdateNoteScoreMutationOptions(options), queryClient);
     }
 
 export const userReviews = (
@@ -1780,67 +1907,3 @@ export function useCategoriesWithSystemNotesSuspense<TData = Awaited<ReturnType<
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
-
-export const deleteNoteFromReview = (
-    reviewId: string,
-    noteId: string,
- signal?: AbortSignal
-) => {
-
-
-      return customReviewsInstance<void>(
-      {url: `/reviews/${reviewId}/notes/${noteId}`, method: 'DELETE', signal
-    },
-      );
-    }
-
-
-
-
-export const getDeleteNoteFromReviewMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteNoteFromReview>>, TError,{reviewId: string;noteId: string}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof deleteNoteFromReview>>, TError,{reviewId: string;noteId: string}, TContext> => {
-
-const mutationKey = ['deleteNoteFromReview'];
-const {mutation: mutationOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteNoteFromReview>>, {reviewId: string;noteId: string}> = (props) => {
-          const {reviewId,noteId} = props ?? {};
-
-          return  deleteNoteFromReview(reviewId,noteId,)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DeleteNoteFromReviewMutationResult = NonNullable<Awaited<ReturnType<typeof deleteNoteFromReview>>>
-
-    export type DeleteNoteFromReviewMutationError = unknown
-
-    export const useDeleteNoteFromReview = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteNoteFromReview>>, TError,{reviewId: string;noteId: string}, TContext>, }
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof deleteNoteFromReview>>,
-        TError,
-        {reviewId: string;noteId: string},
-        TContext
-      > => {
-      return useMutation(getDeleteNoteFromReviewMutationOptions(options), queryClient);
-    }

@@ -19,6 +19,7 @@ public interface ReviewService {
                          String userId
     );
     void addNotesToReview(String reviewId, List<AddNoteToReviewDto> notes, String userId);
+    void updateNoteScore(String reviewId, String noteId, Integer score, String userId);
     void removeNoteFromReview(String reviewId, String noteId, String userId);
     boolean deleteReview(String userId, String id);
 }

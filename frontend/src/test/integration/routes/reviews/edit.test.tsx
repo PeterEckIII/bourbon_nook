@@ -2,9 +2,17 @@ import { describe, it, expect, vi, beforeEach } from 'vite-plus/test';
 import { screen, waitFor } from '@testing-library/react';
 import { createMockAuthState, renderWithFileRoutes } from '../../file-route-utils';
 import userEvent from '@testing-library/user-event';
-import type { ReviewResponseModel } from '../../../../api/generated/reviews-api';
+import {
+  useCategoriesWithSystemNotesSuspense,
+  useReviewSuspense,
+  type CategoryNoteResponseModel,
+  type ReviewResponseModel,
+} from '../../../../api/generated/reviews-api';
 import { customReviewsInstance } from '../../../../api/axios-instance';
-import type { BottleResponseModel } from '../../../../api/generated/bottles-api';
+import {
+  useUserBottlesSuspense,
+  type BottleResponseModel,
+} from '../../../../api/generated/bottles-api';
 
 function renderEditReviewRouteWithAuth() {
   return renderWithFileRoutes({
@@ -68,6 +76,22 @@ function returnReviewResponse(): ReviewResponseModel {
     thoughts: 'What an exceptional bourbon',
     valueScore: 8,
     overallRating: 7.5,
+    reviewNotes: [
+      {
+        noteId: '123',
+        noteName: 'pepper',
+        categoryId: '456',
+        categoryName: 'spicy',
+        score: 5,
+      },
+      {
+        noteId: '321',
+        noteName: 'butterscotch',
+        categoryId: '654',
+        categoryName: 'sweet',
+        score: 8,
+      },
+    ],
   };
 }
 
@@ -92,19 +116,102 @@ function returnBottleResponse(): BottleResponseModel {
   };
 }
 
+function returnCategoriesWithSystemNotesResponse(): CategoryNoteResponseModel[] {
+  return [
+    {
+      id: '456',
+      name: 'sweet',
+      systemNotes: [
+        { id: '555', name: 'butterscotch' },
+        { id: '666', name: 'caramel' },
+        { id: '777', name: 'chocolate' },
+      ],
+    },
+    {
+      id: '654',
+      name: 'spicy',
+      systemNotes: [
+        { id: '888', name: 'pepper' },
+        { id: '999', name: 'caraway' },
+        { id: '000', name: 'cardamon' },
+      ],
+    },
+  ];
+}
+
+function returnUserBottlesResponse(): BottleResponseModel[] {
+  return [
+    {
+      id: '12345',
+      name: 'Test bottle',
+      type: 'Bourbon',
+      status: 'SEALED',
+      distillery: 'Test distillery',
+      producer: 'Test producer',
+      country: 'Test country',
+      region: 'Test region',
+      price: 25.99,
+      age: 'NAS',
+      proof: 100,
+      releaseYear: 2025,
+      barrelInformation: 'N/A',
+      finishing: 'N/A',
+      imageUrl: '',
+      openDate: undefined,
+      killDate: undefined,
+    },
+  ];
+}
+
 vi.mock('../../../../api/axios-instance', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../../../api/axios-instance')>();
 
   return {
     ...actual,
-    customReviewsInstance: vi.fn().mockResolvedValue(returnReviewResponse()),
+    customReviewsInstance: vi.fn((config: { method?: string; url?: string }) => {
+      if (config.method === 'GET' && config.url === '/notes/categories') {
+        return Promise.resolve(returnCategoriesWithSystemNotesResponse());
+      }
+      return Promise.resolve({ id: '12345', ...returnReviewResponse() });
+    }),
     customBottlesInstance: vi.fn().mockResolvedValue([{ id: '555efg', ...returnBottleResponse() }]),
+  };
+});
+
+vi.mock('../../../../api/generated/reviews-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/generated/reviews-api')>();
+
+  return {
+    ...actual,
+    useReviewSuspense: vi.fn(),
+    useCategoriesWithSystemNotesSuspense: vi.fn(),
+  };
+});
+
+vi.mock('../../../../api/generated/bottles-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../../../api/generated/bottles-api')>();
+
+  return {
+    ...actual,
+    useUserBottlesSuspense: vi.fn(),
   };
 });
 
 describe('Edit review route', () => {
   beforeEach(() => vi.clearAllMocks());
   it('shows the form elements with default values', async () => {
+    vi.mocked(useCategoriesWithSystemNotesSuspense).mockReturnValue({
+      data: returnCategoriesWithSystemNotesResponse(),
+    } as ReturnType<typeof useCategoriesWithSystemNotesSuspense>);
+
+    vi.mocked(useUserBottlesSuspense).mockReturnValue({
+      data: returnUserBottlesResponse(),
+    } as ReturnType<typeof useUserBottlesSuspense>);
+
+    vi.mocked(useReviewSuspense).mockReturnValue({
+      data: returnReviewResponse(),
+    } as ReturnType<typeof useReviewSuspense>);
+
     renderEditReviewRouteWithAuth();
     const selectors = await getSelectors();
 
@@ -122,6 +229,18 @@ describe('Edit review route', () => {
     expect(selectors.submitButton).toBeInTheDocument();
   });
   it('allows editing the fields and submitting the form', async () => {
+    vi.mocked(useCategoriesWithSystemNotesSuspense).mockReturnValue({
+      data: returnCategoriesWithSystemNotesResponse(),
+    } as ReturnType<typeof useCategoriesWithSystemNotesSuspense>);
+
+    vi.mocked(useUserBottlesSuspense).mockReturnValue({
+      data: returnUserBottlesResponse(),
+    } as ReturnType<typeof useUserBottlesSuspense>);
+
+    vi.mocked(useReviewSuspense).mockReturnValue({
+      data: returnReviewResponse(),
+    } as ReturnType<typeof useReviewSuspense>);
+
     const { router } = renderEditReviewRouteWithAuth();
     const selectors = await getSelectors();
     const user = userEvent.setup();
@@ -140,12 +259,14 @@ describe('Edit review route', () => {
 
     await user.click(selectors.submitButton);
 
+    const { reviewNotes: _reviewNotes, ...reviewWithoutNotes } = returnReviewResponse();
+
     expect(mockedCustomReviewInstance).toHaveBeenCalledWith(
       expect.objectContaining({
         method: 'PUT',
         url: '/reviews/12345',
         data: {
-          ...returnReviewResponse(),
+          ...reviewWithoutNotes,
           setting: 'Some new setting',
           restTimeMin: 15,
           nose: 'My new nose notes',
@@ -156,6 +277,18 @@ describe('Edit review route', () => {
     expect(await screen.findByText('Overall Rating')).toBeInTheDocument();
   });
   it('shows the backend error message on a failed edit', async () => {
+    vi.mocked(useCategoriesWithSystemNotesSuspense).mockReturnValue({
+      data: returnCategoriesWithSystemNotesResponse(),
+    } as ReturnType<typeof useCategoriesWithSystemNotesSuspense>);
+
+    vi.mocked(useUserBottlesSuspense).mockReturnValue({
+      data: returnUserBottlesResponse(),
+    } as ReturnType<typeof useUserBottlesSuspense>);
+
+    vi.mocked(useReviewSuspense).mockReturnValue({
+      data: returnReviewResponse(),
+    } as ReturnType<typeof useReviewSuspense>);
+
     renderEditReviewRouteWithAuth();
     const { submitButton } = await getSelectors();
     const user = userEvent.setup();
@@ -172,6 +305,18 @@ describe('Edit review route', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent(/could not save your edits/i);
   });
   it('shows client-side validation', async () => {
+    vi.mocked(useCategoriesWithSystemNotesSuspense).mockReturnValue({
+      data: returnCategoriesWithSystemNotesResponse(),
+    } as ReturnType<typeof useCategoriesWithSystemNotesSuspense>);
+
+    vi.mocked(useUserBottlesSuspense).mockReturnValue({
+      data: returnUserBottlesResponse(),
+    } as ReturnType<typeof useUserBottlesSuspense>);
+
+    vi.mocked(useReviewSuspense).mockReturnValue({
+      data: returnReviewResponse(),
+    } as ReturnType<typeof useReviewSuspense>);
+
     renderEditReviewRouteWithAuth();
     const user = userEvent.setup();
     const { setting } = await getSelectors();
