@@ -39,7 +39,7 @@ function RouteComponent() {
       </Link>
 
       <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[320px_1fr]">
-        <div className="space-y-3">
+        <div className="animate-reveal-1 space-y-3">
           <div className="aspect-3/4 w-full overflow-hidden rounded-lg border border-amber-900/15 bg-cream p-4">
             {bottle.imageUrl ? (
               <img
@@ -61,7 +61,7 @@ function RouteComponent() {
         </div>
 
         <div className="space-y-6">
-          <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="animate-reveal-2 flex flex-wrap items-start justify-between gap-4">
             <div>
               {bottle.type && (
                 <p className="text-xs font-semibold uppercase tracking-wide text-ink/50">
@@ -87,7 +87,7 @@ function RouteComponent() {
             showLabels
           />
 
-          <div className="space-y-6 border-t border-ink/10 pt-6">
+          <div className="animate-reveal-3 space-y-6 border-t border-ink/10 pt-6">
             <div>
               <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Origin</h2>
               <dl className="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-4">

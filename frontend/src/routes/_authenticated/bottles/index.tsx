@@ -15,7 +15,7 @@ function RouteComponent() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
-      <div className="mb-6 flex items-center justify-between gap-4">
+      <div className="animate-reveal-1 mb-6 flex items-center justify-between gap-4">
         <h1 className="text-2xl font-semibold text-ink">Your Collection</h1>
         <Link
           to="/bottles/new"

@@ -82,7 +82,7 @@ export default function DateField({ label, required }: DateFieldProps) {
           aria-expanded={isOpen}
           aria-invalid={hasError}
           aria-describedby={hasError ? errorId : undefined}
-          className={`w-full rounded-md border bg-[#2a150d] px-3 py-2 text-left text-base text-amber-50 transition-colors duration-150 focus:border-amber-500/70 focus:outline-none focus:ring-2 focus:ring-amber-500/70 sm:text-sm ${
+          className={`w-full rounded-md border bg-cask px-3 py-2 text-left text-base text-amber-50 transition-colors duration-150 focus:border-amber-500/70 focus:outline-none focus:ring-2 focus:ring-amber-500/70 sm:text-sm ${
             hasError ? 'border-red-500/70' : 'border-amber-900/40'
           }`}
         >
@@ -111,7 +111,7 @@ export default function DateField({ label, required }: DateFieldProps) {
           <div
             role="dialog"
             aria-label={label}
-            className="bourbon-daypicker rounded-md border border-amber-900/40 bg-[#2a150d] p-2 shadow-lg"
+            className="bourbon-daypicker rounded-md border border-amber-900/40 bg-cask p-2 shadow-lg"
           >
             <DayPicker
               autoFocus

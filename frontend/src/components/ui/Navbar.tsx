@@ -21,7 +21,7 @@ export default function Navbar() {
   const { isAuthenticated, logout, hasRole } = useAuth();
 
   return (
-    <nav className="relative z-50 bg-linear-to-r from-[#3b1f14] via-[#4a2818] to-[#3b1f14] border-b border-amber-900/40 shadow-md">
+    <nav className="relative z-50 bg-linear-to-r from-barrel via-char to-barrel border-b border-amber-900/40 shadow-md">
       <div className="w-full px-4 sm:px-6 h-16 flex items-center justify-between">
         <Link
           to="/"
@@ -87,7 +87,7 @@ export default function Navbar() {
       >
         <div className="absolute inset-0 bg-black/50" onClick={() => setIsOpen(false)} />
         <ul
-          className={`absolute top-0 right-0 flex h-full w-64 flex-col gap-1 bg-[#3b1f14] px-6 py-6 shadow-xl transition-transform duration-300 ${
+          className={`absolute top-0 right-0 flex h-full w-64 flex-col gap-1 bg-barrel px-6 py-6 shadow-xl transition-transform duration-300 ${
             isOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >

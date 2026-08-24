@@ -49,7 +49,7 @@ export default function SelectField({
           onChange={(event) => field.handleChange(event.target.value)}
           aria-invalid={hasError}
           aria-describedby={hasError ? errorId : undefined}
-          className={`w-full appearance-none rounded-md border bg-[#2a150d] px-3 py-2 pr-9 text-base text-amber-50 transition-colors duration-150 focus:border-amber-500/70 focus:outline-none focus:ring-2 focus:ring-amber-500/70 sm:text-sm ${
+          className={`w-full appearance-none rounded-md border bg-cask px-3 py-2 pr-9 text-base text-amber-50 transition-colors duration-150 focus:border-amber-500/70 focus:outline-none focus:ring-2 focus:ring-amber-500/70 sm:text-sm ${
             hasError ? 'border-red-500/70' : 'border-amber-900/40'
           }`}
         >

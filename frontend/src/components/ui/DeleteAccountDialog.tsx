@@ -50,7 +50,7 @@ export default function DeleteAccountDialog({
       onClick={(e) => {
         if (e.target === dialogRef.current) onCancel();
       }}
-      className="m-auto bg-transparent p-0 backdrop:bg-ink/40"
+      className="m-auto bg-transparent p-0 backdrop:bg-radial backdrop:from-char/50 backdrop:via-barrel/60 backdrop:to-barrel/80"
     >
       <div
         onClick={(e) => e.stopPropagation()}
@@ -74,7 +74,7 @@ export default function DeleteAccountDialog({
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1.5 w-full rounded-md border border-amber-900/40 bg-[#2a150d] px-3 py-2 text-base text-amber-50 transition-colors duration-150 placeholder:text-amber-100/40 focus:border-amber-500/70 focus:outline-none focus:ring-2 focus:ring-amber-500/70 sm:text-sm"
+            className="mt-1.5 w-full rounded-md border border-amber-900/40 bg-cask px-3 py-2 text-base text-amber-50 transition-colors duration-150 placeholder:text-amber-100/40 focus:border-amber-500/70 focus:outline-none focus:ring-2 focus:ring-amber-500/70 sm:text-sm"
           />
         </div>
         <div className="mt-6 flex justify-end gap-3">

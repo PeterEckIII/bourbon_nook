@@ -50,7 +50,7 @@ export default function TextField({
         onChange={(event) => field.handleChange(event.target.value)}
         aria-invalid={hasError}
         aria-describedby={hasError ? errorId : undefined}
-        className={`w-full rounded-md border bg-[#2a150d] px-3 py-2 text-base text-amber-50 transition-colors duration-150 placeholder:text-amber-100/40 focus:border-amber-500/70 focus:outline-none focus:ring-2 focus:ring-amber-500/70 sm:text-sm ${
+        className={`w-full rounded-md border bg-cask px-3 py-2 text-base text-amber-50 transition-colors duration-150 placeholder:text-amber-100/40 focus:border-amber-500/70 focus:outline-none focus:ring-2 focus:ring-amber-500/70 sm:text-sm ${
           hasError ? 'border-red-500/70' : 'border-amber-900/40'
         }`}
       />

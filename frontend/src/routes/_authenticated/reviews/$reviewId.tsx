@@ -54,7 +54,7 @@ function RouteComponent() {
       </Link>
 
       <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[220px_1fr]">
-        <div className="space-y-3">
+        <div className="animate-reveal-1 space-y-3">
           <div className="aspect-3/4 w-full overflow-hidden rounded-lg border border-amber-900/15 bg-cream p-4">
             <img
               src={bottle.imageUrl || noBottleImage}
@@ -72,7 +72,7 @@ function RouteComponent() {
         </div>
 
         <div className="space-y-6">
-          <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="animate-reveal-2 flex flex-wrap items-start justify-between gap-4">
             <div>
               <p className="text-xs font-semibold uppercase tracking-wide text-ink/50">Review</p>
               <h1 className="font-caprasimo text-3xl text-ink">{bottle.name}</h1>
@@ -92,13 +92,13 @@ function RouteComponent() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="animate-reveal-2 grid grid-cols-2 gap-4 sm:grid-cols-4">
             <Stat label="Overall Rating" value={review.overallRating} />
             <Stat label="Value Score" value={review.valueScore} />
           </div>
 
           {review.thoughts && (
-            <div className="border-t border-ink/10 pt-6">
+            <div className="animate-reveal-3 border-t border-ink/10 pt-6">
               <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
                 Thoughts
               </h2>
@@ -106,7 +106,7 @@ function RouteComponent() {
             </div>
           )}
 
-          <div className="border-t border-ink/10 pt-6">
+          <div className="animate-reveal-3 border-t border-ink/10 pt-6">
             <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">
               Tasting Notes
             </h2>
@@ -117,7 +117,7 @@ function RouteComponent() {
             </dl>
           </div>
 
-          <div className="border-t border-ink/10 pt-6">
+          <div className="animate-reveal-3 border-t border-ink/10 pt-6">
             <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Details</h2>
             <dl className="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-4">
               <Detail label="Review Date" value={formatDate(review.reviewDate)} />
@@ -128,7 +128,7 @@ function RouteComponent() {
           </div>
 
           {review.reviewNotes && review.reviewNotes.length > 0 && (
-            <div className="border-t border-ink/10 pt-6">
+            <div className="animate-reveal-3 border-t border-ink/10 pt-6">
               <h2 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Notes</h2>
               <ul className="mt-3 divide-y divide-amber-900/10 rounded-lg border border-amber-900/15 bg-amber-600/5">
                 {review.reviewNotes.map((note) => (

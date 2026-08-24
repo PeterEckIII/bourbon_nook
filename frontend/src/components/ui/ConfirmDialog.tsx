@@ -45,7 +45,7 @@ export default function ConfirmDialog({
       onClick={(e) => {
         if (e.target === dialogRef.current) onCancel();
       }}
-      className="m-auto bg-transparent p-0 backdrop:bg-ink/40"
+      className="m-auto bg-transparent p-0 backdrop:bg-radial backdrop:from-char/50 backdrop:via-barrel/60 backdrop:to-barrel/80"
     >
       <div
         onClick={(e) => e.stopPropagation()}

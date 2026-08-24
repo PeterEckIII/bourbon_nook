@@ -34,10 +34,12 @@ function RouteComponent() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
-      <p className="text-xs font-semibold uppercase tracking-wide text-ink/50">Admin</p>
-      <h1 className="font-caprasimo text-3xl text-ink">Dashboard</h1>
+      <p className="animate-reveal-1 text-xs font-semibold uppercase tracking-wide text-ink/50">
+        Admin
+      </p>
+      <h1 className="animate-reveal-1 font-caprasimo text-3xl text-ink">Dashboard</h1>
 
-      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div className="animate-reveal-2 mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
         <AdminCard
           title="User Management"
           description="Manage all users in the system"
@@ -52,7 +54,7 @@ function RouteComponent() {
         />
       </div>
 
-      <div className="mt-10 rounded-lg border border-terracotta/25 bg-terracotta/10 px-4 py-4">
+      <div className="animate-reveal-3 mt-10 rounded-lg border border-terracotta/25 bg-terracotta/10 px-4 py-4">
         <h3 className="text-xs font-semibold uppercase tracking-wide text-ink/50">Your Info</h3>
         <p className="mt-1 text-sm text-ink">Username: {auth.user?.username}</p>
         <p className="mt-1 text-sm text-ink">Roles: {auth.user?.roles.join(', ')}</p>

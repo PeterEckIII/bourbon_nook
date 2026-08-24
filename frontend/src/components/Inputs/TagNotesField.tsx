@@ -81,7 +81,7 @@ export default function TagNotesField({ label }: TagNotesFieldProps) {
         </ul>
       )}
 
-      <div className="divide-y divide-amber-900/20 rounded-md border border-amber-900/40 bg-[#2a150d]">
+      <div className="divide-y divide-amber-900/20 rounded-md border border-amber-900/40 bg-cask">
         {categories.map((category) => {
           const categoryId = category.id!;
           const categoryName = category.name!;
@@ -150,7 +150,7 @@ export default function TagNotesField({ label }: TagNotesFieldProps) {
                             onChange={(e) =>
                               updateScore(categoryId, noteName, e.target.valueAsNumber)
                             }
-                            className="w-10 rounded border border-amber-900/40 bg-[#2a150d] px-1 py-0.5 text-center text-xs text-amber-50 focus:border-amber-500/70 focus:outline-none focus:ring-1 focus:ring-amber-500/70"
+                            className="w-10 rounded border border-amber-900/40 bg-cask px-1 py-0.5 text-center text-xs text-amber-50 focus:border-amber-500/70 focus:outline-none focus:ring-1 focus:ring-amber-500/70"
                           />
                         </span>
                       );
