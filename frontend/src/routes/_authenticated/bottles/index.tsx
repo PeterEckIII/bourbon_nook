@@ -4,6 +4,7 @@ import {
   useUserBottlesSuspense,
 } from '../../../api/generated/bottles-api';
 import BottleTable from '../../../components/Tables/BottleTable';
+import { buttonClasses } from '../../../components/ui/buttonClasses';
 
 export const Route = createFileRoute('/_authenticated/bottles/')({
   loader: ({ context }) => context.queryClient.ensureQueryData(getUserBottlesQueryOptions()),
@@ -15,11 +16,11 @@ function RouteComponent() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
-      <div className="mb-6 flex items-center justify-between gap-4">
+      <div className="animate-reveal-1 mb-6 flex items-center justify-between gap-4">
         <h1 className="text-2xl font-semibold text-ink">Your Collection</h1>
         <Link
           to="/bottles/new"
-          className="cursor-pointer rounded-md border border-amber-500/40 bg-amber-600 px-4 py-2 text-sm font-medium tracking-wide text-amber-50 transition-colors duration-150 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500/70 focus:ring-offset-2 focus:ring-offset-ground"
+          className={buttonClasses({ variant: 'primary', ringOffset: 'ground' })}
         >
           + New
         </Link>

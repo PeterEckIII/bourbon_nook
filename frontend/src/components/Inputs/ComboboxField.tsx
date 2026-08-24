@@ -124,7 +124,7 @@ export default function ComboboxField({
           setQuery(selectedOption?.label ?? '');
           field.handleBlur();
         }}
-        className={`w-full rounded-md border bg-[#2a150d] px-3 py-2 text-base text-amber-50 transition-colors duration-150 placeholder:text-amber-100/40 focus:border-amber-500/70 focus:outline-none focus:ring-2 focus:ring-amber-500/70 sm:text-sm ${
+        className={`w-full rounded-md border bg-cask px-3 py-2 text-base text-amber-50 transition-colors duration-150 placeholder:text-amber-100/40 focus:border-amber-500/70 focus:outline-none focus:ring-2 focus:ring-amber-500/70 sm:text-sm ${
           hasError ? 'border-red-500/70' : 'border-amber-900/40'
         }`}
       />
@@ -133,7 +133,7 @@ export default function ComboboxField({
           id={listboxId}
           role="listbox"
           aria-label={label}
-          className="absolute inset-x-0 top-full z-50 mt-2 max-h-60 overflow-auto rounded-md border border-amber-900/40 bg-[#2a150d] py-1 shadow-lg"
+          className="absolute inset-x-0 top-full z-50 mt-2 max-h-60 overflow-auto rounded-md border border-amber-900/40 bg-cask py-1 shadow-lg"
         >
           {filteredOptions.length === 0 && (
             <li className="px-3 py-2 text-sm text-amber-100/50">{emptyMessage}</li>

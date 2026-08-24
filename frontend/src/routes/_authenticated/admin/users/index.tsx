@@ -17,7 +17,7 @@ function RouteComponent() {
       >
         ← Back to Admin Dashboard
       </Link>
-      <h1 className="mt-4 mb-6 text-2xl font-semibold text-ink">Users</h1>
+      <h1 className="animate-reveal-1 mt-4 mb-6 text-2xl font-semibold text-ink">Users</h1>
       <UserTable data={data} />
     </div>
   );

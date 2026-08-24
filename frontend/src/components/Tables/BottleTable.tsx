@@ -16,7 +16,7 @@ export default function BottleTable({
 
   if (data.length === 0) {
     return (
-      <div className="rounded-lg border border-amber-900/15 bg-cream px-4 py-12 text-center text-sm text-ink/60">
+      <div className="animate-reveal-2 rounded-lg border border-amber-900/15 bg-cream px-4 py-12 text-center text-sm text-ink/60">
         No bottles yet.
         <Link to="/bottles/new">Add one</Link>
       </div>
@@ -25,7 +25,7 @@ export default function BottleTable({
 
   return (
     <>
-      <div className="relative mb-3 sm:max-w-xs">
+      <div className="animate-reveal-2 relative mb-3 sm:max-w-xs">
         <label htmlFor="bottle-search" className="sr-only">
           Search bottles
         </label>
@@ -56,7 +56,7 @@ export default function BottleTable({
         )}
       </div>
       <div
-        className={`overflow-x-auto rounded-lg border border-amber-900/15 bg-cream ${className}`}
+        className={`animate-reveal-2 overflow-x-auto rounded-lg border border-amber-900/15 bg-cream ${className}`}
       >
         <table className="w-full min-w-max border-collapse text-left">
           <THead table={table} />

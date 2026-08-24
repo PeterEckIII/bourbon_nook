@@ -10,6 +10,7 @@ import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
 import { formDevtoolsPlugin } from '@tanstack/react-form-devtools';
 import { QueryClient } from '@tanstack/react-query';
 import Navbar from '../components/ui/Navbar';
+import NotFound from '../components/ui/NotFound';
 import type { AuthState } from '../auth/types';
 
 export interface MyRouterContext {
@@ -31,6 +32,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     ],
   }),
   component: RootComponent,
+  notFoundComponent: NotFound,
 });
 
 function RootComponent() {

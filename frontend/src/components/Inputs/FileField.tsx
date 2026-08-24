@@ -76,7 +76,7 @@ export default function FileField({
 
       {file ? (
         <div
-          className={`flex items-center gap-3 rounded-md border bg-[#2a150d] p-3 ${
+          className={`flex items-center gap-3 rounded-md border bg-cask p-3 ${
             hasError ? 'border-red-500/70' : 'border-amber-900/40'
           }`}
         >
@@ -114,9 +114,9 @@ export default function FileField({
           }}
           onDragLeave={() => setIsDragging(false)}
           onDrop={handleDrop}
-          className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed bg-[#2a150d] px-4 py-8 text-center transition-colors duration-150 has-focus-visible:ring-2 has-focus-visible:ring-amber-500/70 ${
+          className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed bg-cask px-4 py-8 text-center transition-colors duration-150 has-focus-visible:ring-2 has-focus-visible:ring-amber-500/70 ${
             isDragging
-              ? 'border-amber-500/70 bg-[#33190f]'
+              ? 'border-amber-500/70 bg-toast'
               : hasError
                 ? 'border-red-500/70'
                 : 'border-amber-900/40 hover:border-amber-500/50'

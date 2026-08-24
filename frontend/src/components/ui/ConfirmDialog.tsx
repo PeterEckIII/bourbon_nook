@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef } from 'react';
+import { buttonClasses } from './buttonClasses';
 
 interface ConfirmDialogProps {
   open: boolean;
@@ -45,7 +46,7 @@ export default function ConfirmDialog({
       onClick={(e) => {
         if (e.target === dialogRef.current) onCancel();
       }}
-      className="m-auto bg-transparent p-0 backdrop:bg-ink/40"
+      className="m-auto bg-transparent p-0 backdrop:bg-radial backdrop:from-char/50 backdrop:via-barrel/60 backdrop:to-barrel/80"
     >
       <div
         onClick={(e) => e.stopPropagation()}
@@ -63,7 +64,7 @@ export default function ConfirmDialog({
           <button
             type="button"
             onClick={onCancel}
-            className="cursor-pointer rounded-md border border-ink/20 px-4 py-2 text-sm font-medium text-ink transition-colors duration-150 hover:bg-ink/5 focus:outline-none focus:ring-2 focus:ring-amber-500/70 focus:ring-offset-2 focus:ring-offset-cream"
+            className={buttonClasses({ variant: 'secondary' })}
           >
             {cancelLabel}
           </button>
@@ -72,7 +73,7 @@ export default function ConfirmDialog({
             onClick={onConfirm}
             disabled={isConfirming}
             aria-busy={isConfirming}
-            className="cursor-pointer rounded-md border border-red-700/40 bg-red-700 px-4 py-2 text-sm font-medium text-red-50 transition-colors duration-150 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500/70 focus:ring-offset-2 focus:ring-offset-cream disabled:cursor-not-allowed disabled:opacity-50"
+            className={buttonClasses({ variant: 'danger' })}
           >
             {isConfirming ? 'Deleting…' : confirmLabel}
           </button>
