@@ -6,11 +6,11 @@ export default function StatusPill({ value }: { value: unknown }) {
     <div
       className={
         opened
-          ? 'bg-amber-200 text-amber-800 py-2 px-4 rounded-lg text-center opacity-75'
+          ? 'border border-terracotta/40 bg-terracotta/30 text-barrel py-2 px-4 rounded-lg text-center'
           : sealed
-            ? 'bg-green-800 text-green-50 py-2 px-4 rounded-lg text-center opacity-75'
+            ? 'border border-amber-400/60 bg-amber-200 text-amber-900 py-2 px-4 rounded-lg text-center'
             : finished
-              ? 'bg-gray-400 text-gray-700 py-2 px-4 rounded-lg text-center opacity-75'
+              ? 'border border-ink/25 bg-ink/15 text-ink py-2 px-4 rounded-lg text-center'
               : ''
       }
     >
