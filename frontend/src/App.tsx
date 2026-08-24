@@ -14,11 +14,7 @@ function App() {
         aria-label="Loading"
         className="flex min-h-screen items-center justify-center bg-ground"
       >
-        <img
-          src={appIcon}
-          alt=""
-          className="h-12 w-12 animate-pulse motion-reduce:animate-none"
-        />
+        <img src={appIcon} alt="" className="h-12 w-12 animate-pulse motion-reduce:animate-none" />
       </div>
     );
   }
