@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
+import { buttonClasses } from '../../../components/ui/buttonClasses';
 
 export const Route = createFileRoute('/_authenticated/admin/dashboard')({
   component: RouteComponent,
 });
 
-const secondaryButtonClasses =
-  'cursor-pointer rounded-md border border-ink/20 px-4 py-2 text-sm font-medium text-ink transition-colors duration-150 hover:bg-ink/5 focus:outline-none focus:ring-2 focus:ring-amber-500/70 focus:ring-offset-2 focus:ring-offset-cream';
+const secondaryButtonClasses = buttonClasses({ variant: 'secondary' });
 
 function AdminCard({
   title,

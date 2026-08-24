@@ -16,6 +16,7 @@ import {
   useCountReviewsSuspense,
 } from '../../../api/generated/reviews-api';
 import ProfileDangerArea from '../../../components/ui/ProfileDangerArea';
+import { buttonClasses } from '../../../components/ui/buttonClasses';
 
 export const Route = createFileRoute('/_authenticated/profile/')({
   loader: async ({ context }) => {
@@ -44,8 +45,7 @@ export const Route = createFileRoute('/_authenticated/profile/')({
   component: RouteComponent,
 });
 
-const secondaryButtonClasses =
-  'cursor-pointer rounded-md border border-ink/20 px-4 py-2 text-sm font-medium text-ink transition-colors duration-150 hover:bg-ink/5 focus:outline-none focus:ring-2 focus:ring-amber-500/70 focus:ring-offset-2 focus:ring-offset-cream';
+const secondaryButtonClasses = buttonClasses({ variant: 'secondary', ringOffset: 'ground' });
 
 function Stat({ label, value }: { label: string; value: number }) {
   return (

@@ -5,6 +5,7 @@ import PlusIcon from '../Icons/PlusIcon';
 import EditIcon from '../Icons/EditIcon';
 import DeleteIcon from '../Icons/DeleteIcon';
 import ConfirmDialog from './ConfirmDialog';
+import { buttonClasses } from './buttonClasses';
 import { useBottleDelete, getUserBottlesQueryKey } from '../../api/generated/bottles-api';
 import { getApiErrorMessage } from '../../api/errors';
 import ViewIcon from '../Icons/ViewIcon';
@@ -14,8 +15,7 @@ import {
   useReviewDelete,
 } from '../../api/generated/reviews-api';
 
-const labeledButtonClasses =
-  'inline-flex cursor-pointer items-center gap-2 rounded-md border border-ink/20 px-3 py-2 text-sm font-medium text-ink transition-colors duration-150 hover:bg-ink/5 focus:outline-none focus:ring-2 focus:ring-amber-500/70 focus:ring-offset-2 focus:ring-offset-cream';
+const labeledButtonClasses = buttonClasses({ variant: 'secondary', ringOffset: 'ground' });
 
 interface ActionButtonsProps {
   entity: 'bottle' | 'review';

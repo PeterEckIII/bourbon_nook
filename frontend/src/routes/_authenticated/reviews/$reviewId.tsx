@@ -7,9 +7,9 @@ import {
 import EditIcon from '../../../components/Icons/EditIcon';
 import noBottleImage from '../../../assets/brand/png/bottle-cancel-1024.png';
 import { formatDate } from '../../../utils/format';
+import { buttonClasses } from '../../../components/ui/buttonClasses';
 
-const editLinkClasses =
-  'inline-flex cursor-pointer items-center gap-2 rounded-md border border-ink/20 px-3 py-2 text-sm font-medium text-ink transition-colors duration-150 hover:bg-ink/5 focus:outline-none focus:ring-2 focus:ring-amber-500/70 focus:ring-offset-2 focus:ring-offset-cream';
+const editLinkClasses = buttonClasses({ variant: 'secondary', ringOffset: 'ground' });
 
 export const Route = createFileRoute('/_authenticated/reviews/$reviewId')({
   loader: async ({ context, params }) => {
