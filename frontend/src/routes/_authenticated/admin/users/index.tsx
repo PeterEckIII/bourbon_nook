@@ -3,7 +3,8 @@ import { getGetUsersQueryOptions, useGetUsersSuspense } from '../../../../api/ge
 import UserTable from '../../../../components/Tables/UserTable';
 
 export const Route = createFileRoute('/_authenticated/admin/users/')({
-  loader: ({ context }) => context.queryClient.ensureQueryData(getGetUsersQueryOptions()),
+  loader: ({ context }) =>
+    context.queryClient.ensureQueryData(getGetUsersQueryOptions({ query: { staleTime: 15_000 } })),
   component: RouteComponent,
 });
 
