@@ -36,7 +36,14 @@ export default function BarStat({
           tickLine={false}
           allowDecimals={false}
         />
-        <YAxis type="category" dataKey="label" tick={tickStyle} width={90} axisLine={false} tickLine={false} />
+        <YAxis
+          type="category"
+          dataKey="label"
+          tick={tickStyle}
+          width={90}
+          axisLine={false}
+          tickLine={false}
+        />
       </>
     ) : (
       <>

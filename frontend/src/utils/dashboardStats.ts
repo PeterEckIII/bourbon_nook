@@ -17,7 +17,10 @@ export interface HistogramBucket {
   count: number;
 }
 
-function countBy<T>(items: T[], keyFn: (item: T) => string | null | undefined): Map<string, number> {
+function countBy<T>(
+  items: T[],
+  keyFn: (item: T) => string | null | undefined,
+): Map<string, number> {
   const map = new Map<string, number>();
   for (const item of items) {
     const key = keyFn(item);
@@ -61,7 +64,9 @@ export function priceDistribution(bottles: BottleResponseModel[]): CountDatum[] 
   const prices = bottles.flatMap((b) => (typeof b.price === 'number' ? [b.price] : []));
   return PRICE_TIERS.map((tierStart, i) => {
     const tierEnd: number | undefined = PRICE_TIERS[i + 1];
-    const count = prices.filter((p) => p >= tierStart && (tierEnd === undefined || p < tierEnd)).length;
+    const count = prices.filter(
+      (p) => p >= tierStart && (tierEnd === undefined || p < tierEnd),
+    ).length;
     const label = tierEnd === undefined ? `$${tierStart}+` : `$${tierStart}–${tierEnd}`;
     return { label, count };
   });
@@ -131,8 +136,9 @@ export function totalCollectionValue(bottles: BottleResponseModel[]): number {
 }
 
 export function averageRating(reviews: ReviewResponseModel[]): number | undefined {
-  const rated = reviews.filter((r): r is ReviewResponseModel & { overallRating: number } =>
-    typeof r.overallRating === 'number',
+  const rated = reviews.filter(
+    (r): r is ReviewResponseModel & { overallRating: number } =>
+      typeof r.overallRating === 'number',
   );
   if (rated.length === 0) return undefined;
   return rated.reduce((sum, r) => sum + r.overallRating, 0) / rated.length;

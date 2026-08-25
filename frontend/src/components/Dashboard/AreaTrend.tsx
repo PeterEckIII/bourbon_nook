@@ -1,5 +1,13 @@
 import { useId } from 'react';
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 
 const tickStyle = { fill: 'var(--color-ink)', fillOpacity: 0.6, fontSize: 12 };
 
@@ -22,7 +30,13 @@ export default function AreaTrend({ data, height = 200 }: { data: TrendDatum[]; 
         </defs>
         <CartesianGrid stroke="var(--color-ink)" strokeOpacity={0.08} vertical={false} />
         <XAxis dataKey="label" tick={tickStyle} axisLine={false} tickLine={false} />
-        <YAxis allowDecimals={false} tick={tickStyle} axisLine={false} tickLine={false} width={32} />
+        <YAxis
+          allowDecimals={false}
+          tick={tickStyle}
+          axisLine={false}
+          tickLine={false}
+          width={32}
+        />
         <Tooltip
           contentStyle={{
             background: 'var(--color-cream)',

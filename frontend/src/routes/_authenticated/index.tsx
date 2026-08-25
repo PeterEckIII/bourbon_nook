@@ -136,7 +136,10 @@ function RouteComponent() {
           <BarStat
             layout="vertical"
             valueFormatter={(v) => v.toFixed(1)}
-            data={avgScoreByNoteCategory(reviews).map((d) => ({ label: d.label, value: d.average }))}
+            data={avgScoreByNoteCategory(reviews).map((d) => ({
+              label: d.label,
+              value: d.average,
+            }))}
           />
         </ChartCard>
         <ChartCard title="Reviews Written Over Time" isEmpty={reviewsWrittenByMonth.length === 0}>

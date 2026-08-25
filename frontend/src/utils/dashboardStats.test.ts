@@ -52,7 +52,11 @@ describe('groupCounts', () => {
 
 describe('bottlesByType', () => {
   it('groups bottles by type', () => {
-    const bottles = [bottle({ type: 'Bourbon' }), bottle({ type: 'Rye' }), bottle({ type: 'Bourbon' })];
+    const bottles = [
+      bottle({ type: 'Bourbon' }),
+      bottle({ type: 'Rye' }),
+      bottle({ type: 'Bourbon' }),
+    ];
     expect(bottlesByType(bottles)).toEqual([
       { label: 'Bourbon', count: 2 },
       { label: 'Rye', count: 1 },
@@ -237,7 +241,11 @@ describe('avgScoreByNoteCategory', () => {
 
 describe('totalCollectionValue', () => {
   it('sums the price of every bottle, treating missing price as 0', () => {
-    const bottles = [bottle({ price: 25.5 }), bottle({ price: undefined }), bottle({ price: 74.5 })];
+    const bottles = [
+      bottle({ price: 25.5 }),
+      bottle({ price: undefined }),
+      bottle({ price: 74.5 }),
+    ];
     expect(totalCollectionValue(bottles)).toBe(100);
   });
 });

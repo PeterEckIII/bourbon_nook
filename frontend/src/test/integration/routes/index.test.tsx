@@ -1,8 +1,14 @@
 import { describe, it, expect, vi } from 'vite-plus/test';
 import { screen } from '@testing-library/react';
 import { createMockAuthState, renderWithFileRoutes } from '../file-route-utils';
-import { useUserBottlesSuspense, type BottleResponseModel } from '../../../api/generated/bottles-api';
-import { useUserReviewsSuspense, type ReviewResponseModel } from '../../../api/generated/reviews-api';
+import {
+  useUserBottlesSuspense,
+  type BottleResponseModel,
+} from '../../../api/generated/bottles-api';
+import {
+  useUserReviewsSuspense,
+  type ReviewResponseModel,
+} from '../../../api/generated/reviews-api';
 
 const mockBottles: BottleResponseModel[] = [
   {

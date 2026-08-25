@@ -26,4 +26,3 @@ export function formatMonthYear(value: string): string {
   const [, year, month] = match;
   return monthYearFormatter.format(new Date(Number(year), Number(month) - 1, 1));
 }
-
