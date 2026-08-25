@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vite-plus/test';
-import { formatPrice, formatDate } from './format';
+import { formatPrice, formatDate, formatMonthYear } from './format';
 
 describe('Format price', () => {
   it('correctly formats a number with no comma', () => {
@@ -60,5 +60,17 @@ describe('Format date', () => {
   it('formats the date for a leap-day', () => {
     const result = formatDate('2024-02-29');
     expect(result).toBe('Feb 29, 2024');
+  });
+});
+
+describe('Format month/year', () => {
+  it('formats a year-month string', () => {
+    expect(formatMonthYear('2026-03')).toBe('Mar 2026');
+  });
+  it('formats December correctly', () => {
+    expect(formatMonthYear('2025-12')).toBe('Dec 2025');
+  });
+  it('returns the raw value when malformed', () => {
+    expect(formatMonthYear('not-a-month')).toBe('not-a-month');
   });
 });

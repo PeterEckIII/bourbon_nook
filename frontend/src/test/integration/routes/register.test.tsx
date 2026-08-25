@@ -64,7 +64,7 @@ describe('Register route', () => {
       },
     });
 
-    expect(await screen.findByRole('heading', { name: 'Home' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Dashboard' })).toBeInTheDocument();
     expect(screen.queryByRole('textbox', { name: /email/i })).not.toBeInTheDocument();
   });
 
