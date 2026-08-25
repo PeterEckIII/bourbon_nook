@@ -8,3 +8,13 @@ HTMLDialogElement.prototype.showModal = function () {
 HTMLDialogElement.prototype.close = function () {
   this.removeAttribute('open');
 };
+
+// jsdom doesn't implement ResizeObserver, which recharts' ResponsiveContainer
+// requires to measure its container.
+class ResizeObserverMock implements ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+globalThis.ResizeObserver = ResizeObserverMock;

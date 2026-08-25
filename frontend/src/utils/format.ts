@@ -17,3 +17,13 @@ export function formatDate(value: string | undefined): string | undefined {
   const [, year, month, day] = match;
   return dateFormatter.format(new Date(Number(year), Number(month) - 1, Number(day)));
 }
+
+const monthYearFormatter = Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' });
+
+export function formatMonthYear(value: string): string {
+  const match = /^(\d{4})-(\d{2})$/.exec(value);
+  if (!match) return value;
+  const [, year, month] = match;
+  return monthYearFormatter.format(new Date(Number(year), Number(month) - 1, 1));
+}
+
