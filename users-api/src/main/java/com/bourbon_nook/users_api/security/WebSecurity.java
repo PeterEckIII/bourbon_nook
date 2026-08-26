@@ -1,6 +1,8 @@
 package com.bourbon_nook.users_api.security;
 
 import com.bourbon_nook.users_api.utils.RestAuthenticationEntryPoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -25,6 +27,8 @@ import org.springframework.web.cors.CorsUtils;
 @EnableWebSecurity
 public class WebSecurity {
 
+    private static final Logger log = LoggerFactory.getLogger(WebSecurity.class);
+
     private final Environment environment;
 
     public WebSecurity(Environment environment) {
@@ -46,6 +50,8 @@ public class WebSecurity {
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http, AuthenticationManager authenticationManager, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         String gatewayIpExpression = "hasIpAddress('" + environment.getProperty("gateway.ip") + "')";
+        // TEMPORARY diagnostic for e2e-in-CI debugging -- remove once resolved.
+        log.info("[E2E-DEBUG] Resolved gateway.ip property = '{}'", environment.getProperty("gateway.ip"));
 
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(auth ->
