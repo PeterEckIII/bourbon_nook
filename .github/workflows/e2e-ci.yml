@@ -14,8 +14,6 @@ env:
   RABBIT_MQ_USERNAME: ci_rabbit_user
   RABBIT_MQ_PASSWORD: ci_rabbit_pw
   MYSQL_ROOT_PASSWORD: ci_root_pw
-  MYSQL_USERNAME: ci_mysql_user
-  MYSQL_PASSWORD: ci_mysql_pw
   USERS_DB: bourbonnook_users
   BOTTLES_DB: bourbonnook_bottles
   REVIEWS_DB: bourbonnook_reviews
@@ -31,15 +29,24 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     # Service containers can't read the workflow-level `env:` context (GitHub
-    # Actions doesn't expose it there), so these CI-only, non-sensitive values
-    # are duplicated as literals rather than referenced via ${{ env.X }}.
+    # Actions doesn't expose it there), so CI-only, non-sensitive values are
+    # duplicated as literals rather than referenced via ${{ env.X }} -- but
+    # `secrets` IS available in this context, unlike `env`.
+    #
+    # The MySQL user is real credentials (secrets.DB_USERNAME/DB_PASSWORD),
+    # not an arbitrary CI-only value like the other service-container
+    # credentials: the private config repo (pulled into configuration-server)
+    # defines its own spring.datasource.username/password, and Spring Cloud
+    # Config's default precedence lets that remote value override anything
+    # locally/CI-supplied -- including command-line args, not just env vars.
+    # Matching CI's MySQL user to the real one sidesteps that fight entirely.
     services:
       mysql:
         image: mysql:8
         env:
           MYSQL_ROOT_PASSWORD: ci_root_pw
-          MYSQL_USER: ci_mysql_user
-          MYSQL_PASSWORD: ci_mysql_pw
+          MYSQL_USER: ${{ secrets.DB_USERNAME }}
+          MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
         ports:
           - 3306:3306
         options: >-
@@ -97,14 +104,15 @@ jobs:
       - name: Create MySQL databases
         env:
           MYSQL_PWD: ${{ env.MYSQL_ROOT_PASSWORD }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
         run: |
           mysql -h127.0.0.1 -uroot -e "
             CREATE DATABASE IF NOT EXISTS ${USERS_DB};
             CREATE DATABASE IF NOT EXISTS ${BOTTLES_DB};
             CREATE DATABASE IF NOT EXISTS ${REVIEWS_DB};
-            GRANT ALL PRIVILEGES ON ${USERS_DB}.* TO '${MYSQL_USERNAME}'@'%';
-            GRANT ALL PRIVILEGES ON ${BOTTLES_DB}.* TO '${MYSQL_USERNAME}'@'%';
-            GRANT ALL PRIVILEGES ON ${REVIEWS_DB}.* TO '${MYSQL_USERNAME}'@'%';
+            GRANT ALL PRIVILEGES ON ${USERS_DB}.* TO '${DB_USERNAME}'@'%';
+            GRANT ALL PRIVILEGES ON ${BOTTLES_DB}.* TO '${DB_USERNAME}'@'%';
+            GRANT ALL PRIVILEGES ON ${REVIEWS_DB}.* TO '${DB_USERNAME}'@'%';
             FLUSH PRIVILEGES;
           "
 
@@ -114,6 +122,8 @@ jobs:
           GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
           GIT_REPO: ${{ secrets.GIT_REPO }}
           ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
           cat > configuration-server/.env <<EOF
           CONFIG_SERVER_USERNAME_ADMIN=${CONFIG_SERVER_USERNAME_ADMIN}
@@ -148,8 +158,8 @@ jobs:
           RABBIT_MQ_USERNAME=${RABBIT_MQ_USERNAME}
           RABBIT_MQ_PASSWORD=${RABBIT_MQ_PASSWORD}
           MYSQL_DATABASE_NAME=${USERS_DB}
-          MYSQL_USERNAME=${MYSQL_USERNAME}
-          MYSQL_PASSWORD=${MYSQL_PASSWORD}
+          MYSQL_USERNAME=${DB_USERNAME}
+          MYSQL_PASSWORD=${DB_PASSWORD}
           SPRING_CLOUD_CONFIG_ALLOW_OVERRIDE=false
           EOF
 
@@ -159,8 +169,8 @@ jobs:
           RABBIT_MQ_USERNAME=${RABBIT_MQ_USERNAME}
           RABBIT_MQ_PASSWORD=${RABBIT_MQ_PASSWORD}
           MYSQL_DATABASE_NAME=${REVIEWS_DB}
-          MYSQL_USERNAME=${MYSQL_USERNAME}
-          MYSQL_PASSWORD=${MYSQL_PASSWORD}
+          MYSQL_USERNAME=${DB_USERNAME}
+          MYSQL_PASSWORD=${DB_PASSWORD}
           SPRING_CLOUD_CONFIG_ALLOW_OVERRIDE=false
           EOF
 
@@ -170,8 +180,8 @@ jobs:
           RABBIT_MQ_USERNAME=${RABBIT_MQ_USERNAME}
           RABBIT_MQ_PASSWORD=${RABBIT_MQ_PASSWORD}
           MYSQL_DATABASE_NAME=${BOTTLES_DB}
-          MYSQL_USERNAME=${MYSQL_USERNAME}
-          MYSQL_PASSWORD=${MYSQL_PASSWORD}
+          MYSQL_USERNAME=${DB_USERNAME}
+          MYSQL_PASSWORD=${DB_PASSWORD}
           SPRING_CLOUD_CONFIG_ALLOW_OVERRIDE=false
           AWS_ACCESS_KEY=ci-placeholder-access-key
           AWS_SECRET_KEY=ci-placeholder-secret-key
