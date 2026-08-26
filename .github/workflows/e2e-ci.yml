@@ -131,6 +131,7 @@ jobs:
           cat > discovery-service/.env <<EOF
           CONFIG_SERVER_USERNAME=${CONFIG_SERVER_USERNAME_CLIENT}
           CONFIG_SERVER_PASSWORD=${CONFIG_SERVER_PASSWORD_CLIENT}
+          SPRING_CLOUD_CONFIG_ALLOW_OVERRIDE=false
           EOF
 
           cat > api-gateway/.env <<EOF
@@ -138,6 +139,7 @@ jobs:
           CONFIG_SERVER_PASSWORD=${CONFIG_SERVER_PASSWORD_CLIENT}
           RABBIT_MQ_USERNAME=${RABBIT_MQ_USERNAME}
           RABBIT_MQ_PASSWORD=${RABBIT_MQ_PASSWORD}
+          SPRING_CLOUD_CONFIG_ALLOW_OVERRIDE=false
           EOF
 
           cat > users-api/.env <<EOF
@@ -148,6 +150,7 @@ jobs:
           MYSQL_DATABASE_NAME=${USERS_DB}
           MYSQL_USERNAME=${MYSQL_USERNAME}
           MYSQL_PASSWORD=${MYSQL_PASSWORD}
+          SPRING_CLOUD_CONFIG_ALLOW_OVERRIDE=false
           EOF
 
           cat > reviews-api/.env <<EOF
@@ -158,6 +161,7 @@ jobs:
           MYSQL_DATABASE_NAME=${REVIEWS_DB}
           MYSQL_USERNAME=${MYSQL_USERNAME}
           MYSQL_PASSWORD=${MYSQL_PASSWORD}
+          SPRING_CLOUD_CONFIG_ALLOW_OVERRIDE=false
           EOF
 
           cat > bottles-api/.env <<EOF
@@ -168,6 +172,7 @@ jobs:
           MYSQL_DATABASE_NAME=${BOTTLES_DB}
           MYSQL_USERNAME=${MYSQL_USERNAME}
           MYSQL_PASSWORD=${MYSQL_PASSWORD}
+          SPRING_CLOUD_CONFIG_ALLOW_OVERRIDE=false
           AWS_ACCESS_KEY=ci-placeholder-access-key
           AWS_SECRET_KEY=ci-placeholder-secret-key
           AWS_REGION=us-east-1
