@@ -2,7 +2,6 @@ name: E2E CI
 
 on:
   pull_request:
-    branches: [main]
   push:
     branches: [main]
 
@@ -31,25 +30,28 @@ env:
 jobs:
   e2e:
     runs-on: ubuntu-latest
+    # Service containers can't read the workflow-level `env:` context (GitHub
+    # Actions doesn't expose it there), so these CI-only, non-sensitive values
+    # are duplicated as literals rather than referenced via ${{ env.X }}.
     services:
       mysql:
         image: mysql:8
         env:
-          MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_ROOT_PASSWORD }}
-          MYSQL_USER: ${{ env.MYSQL_USERNAME }}
-          MYSQL_PASSWORD: ${{ env.MYSQL_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: ci_root_pw
+          MYSQL_USER: ci_mysql_user
+          MYSQL_PASSWORD: ci_mysql_pw
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping -h localhost -uroot -p${{ env.MYSQL_ROOT_PASSWORD }}"
+          --health-cmd="mysqladmin ping -h localhost -uroot -pci_root_pw"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=10
       rabbitmq:
         image: rabbitmq:3
         env:
-          RABBITMQ_DEFAULT_USER: ${{ env.RABBIT_MQ_USERNAME }}
-          RABBITMQ_DEFAULT_PASS: ${{ env.RABBIT_MQ_PASSWORD }}
+          RABBITMQ_DEFAULT_USER: ci_rabbit_user
+          RABBITMQ_DEFAULT_PASS: ci_rabbit_pw
         ports:
           - 5672:5672
         options: >-
