@@ -137,6 +137,7 @@ jobs:
           RABBIT_MQ_USERNAME=${RABBIT_MQ_USERNAME}
           RABBIT_MQ_PASSWORD=${RABBIT_MQ_PASSWORD}
           ENCRYPT_KEY=${ENCRYPT_KEY}
+          SPRING_PROFILES_ACTIVE=ci
           EOF
 
           cat > discovery-service/.env <<EOF
