@@ -14,9 +14,11 @@ env:
   RABBIT_MQ_USERNAME: ci_rabbit_user
   RABBIT_MQ_PASSWORD: ci_rabbit_pw
   MYSQL_ROOT_PASSWORD: ci_root_pw
-  USERS_DB: bourbonnook_users
-  BOTTLES_DB: bourbonnook_bottles
-  REVIEWS_DB: bourbonnook_reviews
+  # The private config repo's shared application.properties defines a single
+  # spring.datasource.url naming this exact database for every service that
+  # pulls it (users-api/bottles-api/reviews-api all share one schema, not
+  # one database each) -- confirmed from CI logs, not an assumption.
+  DB_NAME: bourbon_nook
   # --- e2e test accounts (fresh CI database every run, so fixed values are fine) ---
   PLAYWRIGHT_USER_EMAIL: e2e-ci-user@bourbonnook-e2e.test
   PLAYWRIGHT_USER_USERNAME: e2e_ci_user
@@ -107,12 +109,8 @@ jobs:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
         run: |
           mysql -h127.0.0.1 -uroot -e "
-            CREATE DATABASE IF NOT EXISTS ${USERS_DB};
-            CREATE DATABASE IF NOT EXISTS ${BOTTLES_DB};
-            CREATE DATABASE IF NOT EXISTS ${REVIEWS_DB};
-            GRANT ALL PRIVILEGES ON ${USERS_DB}.* TO '${DB_USERNAME}'@'%';
-            GRANT ALL PRIVILEGES ON ${BOTTLES_DB}.* TO '${DB_USERNAME}'@'%';
-            GRANT ALL PRIVILEGES ON ${REVIEWS_DB}.* TO '${DB_USERNAME}'@'%';
+            CREATE DATABASE IF NOT EXISTS ${DB_NAME};
+            GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USERNAME}'@'%';
             FLUSH PRIVILEGES;
           "
 
@@ -157,7 +155,7 @@ jobs:
           CONFIG_SERVER_PASSWORD=${CONFIG_SERVER_PASSWORD_CLIENT}
           RABBIT_MQ_USERNAME=${RABBIT_MQ_USERNAME}
           RABBIT_MQ_PASSWORD=${RABBIT_MQ_PASSWORD}
-          MYSQL_DATABASE_NAME=${USERS_DB}
+          MYSQL_DATABASE_NAME=${DB_NAME}
           MYSQL_USERNAME=${DB_USERNAME}
           MYSQL_PASSWORD=${DB_PASSWORD}
           SPRING_CLOUD_CONFIG_ALLOW_OVERRIDE=false
@@ -168,7 +166,7 @@ jobs:
           CONFIG_SERVER_PASSWORD=${CONFIG_SERVER_PASSWORD_CLIENT}
           RABBIT_MQ_USERNAME=${RABBIT_MQ_USERNAME}
           RABBIT_MQ_PASSWORD=${RABBIT_MQ_PASSWORD}
-          MYSQL_DATABASE_NAME=${REVIEWS_DB}
+          MYSQL_DATABASE_NAME=${DB_NAME}
           MYSQL_USERNAME=${DB_USERNAME}
           MYSQL_PASSWORD=${DB_PASSWORD}
           SPRING_CLOUD_CONFIG_ALLOW_OVERRIDE=false
@@ -179,7 +177,7 @@ jobs:
           CONFIG_SERVER_PASSWORD=${CONFIG_SERVER_PASSWORD_CLIENT}
           RABBIT_MQ_USERNAME=${RABBIT_MQ_USERNAME}
           RABBIT_MQ_PASSWORD=${RABBIT_MQ_PASSWORD}
-          MYSQL_DATABASE_NAME=${BOTTLES_DB}
+          MYSQL_DATABASE_NAME=${DB_NAME}
           MYSQL_USERNAME=${DB_USERNAME}
           MYSQL_PASSWORD=${DB_PASSWORD}
           SPRING_CLOUD_CONFIG_ALLOW_OVERRIDE=false
