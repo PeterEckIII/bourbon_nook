@@ -26,6 +26,9 @@ env:
   PLAYWRIGHT_FOLLOWER_EMAIL: e2e-ci-follower@bourbonnook-e2e.test
   PLAYWRIGHT_FOLLOWER_USERNAME: e2e_ci_follower
   PLAYWRIGHT_FOLLOWER_PASSWORD: CorrectHorseBattery9
+  PLAYWRIGHT_CHANGE_PASSWORD_EMAIL: e2e-ci-changepw@bourbonnook-e2e.test
+  PLAYWRIGHT_CHANGE_PASSWORD_CURRENT_PASSWORD: CorrectHorseBattery9
+  PLAYWRIGHT_CHANGE_PASSWORD_NEW_PASSWORD: DifferentHorseBattery7
 
 jobs:
   e2e:
