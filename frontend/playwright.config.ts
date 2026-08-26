@@ -40,12 +40,18 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: 'register',
+      testMatch: /register\.setup\.ts/,
+    },
+    {
       name: 'auth',
       testMatch: /auth\.setup\.ts/,
+      dependencies: ['register'],
     },
     {
       name: 'seed',
       testMatch: /seed\.setup\.ts/,
+      dependencies: ['register'],
     },
     {
       name: 'chromium',

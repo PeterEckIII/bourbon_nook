@@ -179,13 +179,15 @@ cmd_logs() {
   tail -f "$log_file"
 }
 
-case "${1:-}" in
-  up) cmd_up ;;
-  down) cmd_down ;;
-  status) cmd_status ;;
-  logs) shift; cmd_logs "$@" ;;
-  *)
-    echo "Usage: scripts/dev.sh {up|down|status|logs <name>}" >&2
-    exit 1
-    ;;
-esac
+if [[ "${BASH_SOURCE[0]:-$0}" == "$0" ]]; then
+  case "${1:-}" in
+    up) cmd_up ;;
+    down) cmd_down ;;
+    status) cmd_status ;;
+    logs) shift; cmd_logs "$@" ;;
+    *)
+      echo "Usage: scripts/dev.sh {up|down|status|logs <name>}" >&2
+      exit 1
+      ;;
+  esac
+fi
