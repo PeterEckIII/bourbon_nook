@@ -1,0 +1,194 @@
+name: E2E CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+env:
+  # --- CI-only, non-sensitive values shared across services ---
+  CONFIG_SERVER_USERNAME_ADMIN: ci_admin
+  CONFIG_SERVER_PASSWORD_ADMIN: ci_admin_pw
+  CONFIG_SERVER_USERNAME_CLIENT: ci_client
+  CONFIG_SERVER_PASSWORD_CLIENT: ci_client_pw
+  RABBIT_MQ_USERNAME: ci_rabbit_user
+  RABBIT_MQ_PASSWORD: ci_rabbit_pw
+  MYSQL_ROOT_PASSWORD: ci_root_pw
+  MYSQL_USERNAME: ci_mysql_user
+  MYSQL_PASSWORD: ci_mysql_pw
+  USERS_DB: bourbonnook_users
+  BOTTLES_DB: bourbonnook_bottles
+  REVIEWS_DB: bourbonnook_reviews
+  # --- e2e test accounts (fresh CI database every run, so fixed values are fine) ---
+  PLAYWRIGHT_USER_EMAIL: e2e-ci-user@bourbonnook-e2e.test
+  PLAYWRIGHT_USER_USERNAME: e2e_ci_user
+  PLAYWRIGHT_USER_PASSWORD: CorrectHorseBattery9
+  PLAYWRIGHT_FOLLOWER_EMAIL: e2e-ci-follower@bourbonnook-e2e.test
+  PLAYWRIGHT_FOLLOWER_USERNAME: e2e_ci_follower
+  PLAYWRIGHT_FOLLOWER_PASSWORD: CorrectHorseBattery9
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_ROOT_PASSWORD }}
+          MYSQL_USER: ${{ env.MYSQL_USERNAME }}
+          MYSQL_PASSWORD: ${{ env.MYSQL_PASSWORD }}
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -uroot -p${{ env.MYSQL_ROOT_PASSWORD }}"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+      rabbitmq:
+        image: rabbitmq:3
+        env:
+          RABBITMQ_DEFAULT_USER: ${{ env.RABBIT_MQ_USERNAME }}
+          RABBITMQ_DEFAULT_PASS: ${{ env.RABBIT_MQ_PASSWORD }}
+        ports:
+          - 5672:5672
+        options: >-
+          --health-cmd="rabbitmq-diagnostics -q ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+          cache-dependency-path: |
+            configuration-server/pom.xml
+            discovery-service/pom.xml
+            users-api/pom.xml
+            bottles-api/pom.xml
+            reviews-api/pom.xml
+            api-gateway/pom.xml
+
+      - name: Setup Vite+
+        uses: voidzero-dev/setup-vp@v1.17.0
+        with:
+          working-directory: frontend
+          node-version: '22'
+          cache: true
+          run-install: false
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: vp install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        working-directory: frontend
+        run: vp exec playwright install --with-deps chromium firefox
+
+      - name: Create MySQL databases
+        env:
+          MYSQL_PWD: ${{ env.MYSQL_ROOT_PASSWORD }}
+        run: |
+          mysql -h127.0.0.1 -uroot -e "
+            CREATE DATABASE IF NOT EXISTS ${USERS_DB};
+            CREATE DATABASE IF NOT EXISTS ${BOTTLES_DB};
+            CREATE DATABASE IF NOT EXISTS ${REVIEWS_DB};
+            GRANT ALL PRIVILEGES ON ${USERS_DB}.* TO '${MYSQL_USERNAME}'@'%';
+            GRANT ALL PRIVILEGES ON ${BOTTLES_DB}.* TO '${MYSQL_USERNAME}'@'%';
+            GRANT ALL PRIVILEGES ON ${REVIEWS_DB}.* TO '${MYSQL_USERNAME}'@'%';
+            FLUSH PRIVILEGES;
+          "
+
+      - name: Write service .env files
+        env:
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+          GIT_REPO: ${{ secrets.GIT_REPO }}
+        run: |
+          cat > configuration-server/.env <<EOF
+          CONFIG_SERVER_USERNAME_ADMIN=${CONFIG_SERVER_USERNAME_ADMIN}
+          CONFIG_SERVER_PASSWORD_ADMIN=${CONFIG_SERVER_PASSWORD_ADMIN}
+          CONFIG_SERVER_USERNAME_CLIENT=${CONFIG_SERVER_USERNAME_CLIENT}
+          CONFIG_SERVER_PASSWORD_CLIENT=${CONFIG_SERVER_PASSWORD_CLIENT}
+          GIT_REPO=${GIT_REPO}
+          GIT_TOKEN=${GIT_TOKEN}
+          GIT_USERNAME=${GIT_USERNAME}
+          RABBIT_MQ_USERNAME=${RABBIT_MQ_USERNAME}
+          RABBIT_MQ_PASSWORD=${RABBIT_MQ_PASSWORD}
+          EOF
+
+          cat > discovery-service/.env <<EOF
+          CONFIG_SERVER_USERNAME=${CONFIG_SERVER_USERNAME_CLIENT}
+          CONFIG_SERVER_PASSWORD=${CONFIG_SERVER_PASSWORD_CLIENT}
+          EOF
+
+          cat > api-gateway/.env <<EOF
+          CONFIG_SERVER_USERNAME=${CONFIG_SERVER_USERNAME_CLIENT}
+          CONFIG_SERVER_PASSWORD=${CONFIG_SERVER_PASSWORD_CLIENT}
+          RABBIT_MQ_USERNAME=${RABBIT_MQ_USERNAME}
+          RABBIT_MQ_PASSWORD=${RABBIT_MQ_PASSWORD}
+          EOF
+
+          cat > users-api/.env <<EOF
+          CONFIG_SERVER_USERNAME=${CONFIG_SERVER_USERNAME_CLIENT}
+          CONFIG_SERVER_PASSWORD=${CONFIG_SERVER_PASSWORD_CLIENT}
+          RABBIT_MQ_USERNAME=${RABBIT_MQ_USERNAME}
+          RABBIT_MQ_PASSWORD=${RABBIT_MQ_PASSWORD}
+          MYSQL_DATABASE_NAME=${USERS_DB}
+          MYSQL_USERNAME=${MYSQL_USERNAME}
+          MYSQL_PASSWORD=${MYSQL_PASSWORD}
+          EOF
+
+          cat > reviews-api/.env <<EOF
+          CONFIG_SERVER_USERNAME=${CONFIG_SERVER_USERNAME_CLIENT}
+          CONFIG_SERVER_PASSWORD=${CONFIG_SERVER_PASSWORD_CLIENT}
+          RABBIT_MQ_USERNAME=${RABBIT_MQ_USERNAME}
+          RABBIT_MQ_PASSWORD=${RABBIT_MQ_PASSWORD}
+          MYSQL_DATABASE_NAME=${REVIEWS_DB}
+          MYSQL_USERNAME=${MYSQL_USERNAME}
+          MYSQL_PASSWORD=${MYSQL_PASSWORD}
+          EOF
+
+          cat > bottles-api/.env <<EOF
+          CONFIG_SERVER_USERNAME=${CONFIG_SERVER_USERNAME_CLIENT}
+          CONFIG_SERVER_PASSWORD=${CONFIG_SERVER_PASSWORD_CLIENT}
+          RABBIT_MQ_USERNAME=${RABBIT_MQ_USERNAME}
+          RABBIT_MQ_PASSWORD=${RABBIT_MQ_PASSWORD}
+          MYSQL_DATABASE_NAME=${BOTTLES_DB}
+          MYSQL_USERNAME=${MYSQL_USERNAME}
+          MYSQL_PASSWORD=${MYSQL_PASSWORD}
+          AWS_ACCESS_KEY=ci-placeholder-access-key
+          AWS_SECRET_KEY=ci-placeholder-secret-key
+          AWS_REGION=us-east-1
+          BUCKET_NAME=ci-placeholder-bucket
+          EOF
+
+      - name: Start backend stack
+        run: bash scripts/ci-e2e.sh up
+
+      - name: Run e2e tests
+        working-directory: frontend
+        run: yarn test:e2e
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: frontend/playwright-report/
+          retention-days: 14
+
+      - name: Upload service logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: service-logs
+          path: .dev/logs/*.log
+          retention-days: 14
