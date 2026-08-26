@@ -42,8 +42,7 @@ public class SystemNoteSeeder implements CommandLineRunner {
         SYSTEM_NOTES.forEach((categoryName, noteNames) -> {
             NoteCategoryEntity category = noteCategoryRepository
                     .findByName(categoryName)
-                    .orElseThrow(() -> new IllegalStateException(
-                            "Expected category '" + categoryName + "' to already exist but it was not found"));
+                    .orElseGet(() -> noteCategoryRepository.save(new NoteCategoryEntity(categoryName)));
 
             for (String noteName : noteNames) {
                 boolean alreadyExists = noteRepository
