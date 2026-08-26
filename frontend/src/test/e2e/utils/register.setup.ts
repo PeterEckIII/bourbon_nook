@@ -16,6 +16,8 @@ setup('register', async ({ request }) => {
   const followerEmail = process.env.PLAYWRIGHT_FOLLOWER_EMAIL;
   const followerUsername = process.env.PLAYWRIGHT_FOLLOWER_USERNAME;
   const followerPassword = process.env.PLAYWRIGHT_FOLLOWER_PASSWORD;
+  const changePasswordEmail = process.env.PLAYWRIGHT_CHANGE_PASSWORD_EMAIL;
+  const changePasswordCurrentPassword = process.env.PLAYWRIGHT_CHANGE_PASSWORD_CURRENT_PASSWORD;
 
   if (
     !userEmail ||
@@ -23,11 +25,14 @@ setup('register', async ({ request }) => {
     !userPassword ||
     !followerEmail ||
     !followerUsername ||
-    !followerPassword
+    !followerPassword ||
+    !changePasswordEmail ||
+    !changePasswordCurrentPassword
   ) {
     throw new Error(
       'PLAYWRIGHT_USER_EMAIL, PLAYWRIGHT_USER_USERNAME, PLAYWRIGHT_USER_PASSWORD, ' +
-        'PLAYWRIGHT_FOLLOWER_EMAIL, PLAYWRIGHT_FOLLOWER_USERNAME, and PLAYWRIGHT_FOLLOWER_PASSWORD ' +
+        'PLAYWRIGHT_FOLLOWER_EMAIL, PLAYWRIGHT_FOLLOWER_USERNAME, PLAYWRIGHT_FOLLOWER_PASSWORD, ' +
+        'PLAYWRIGHT_CHANGE_PASSWORD_EMAIL, and PLAYWRIGHT_CHANGE_PASSWORD_CURRENT_PASSWORD ' +
         'must be set to run CI registration setup',
     );
   }
@@ -48,6 +53,22 @@ setup('register', async ({ request }) => {
   if (!followerResponse.ok()) {
     throw new Error(
       `Failed to register follower: ${followerResponse.status()} ${await followerResponse.text()}`,
+    );
+  }
+
+  const changePasswordResponse = await request.post(
+    'http://localhost:8082/users-api/auth/register',
+    {
+      data: {
+        email: changePasswordEmail,
+        username: 'e2e_ci_changepw',
+        password: changePasswordCurrentPassword,
+      },
+    },
+  );
+  if (!changePasswordResponse.ok()) {
+    throw new Error(
+      `Failed to register change-password test user: ${changePasswordResponse.status()} ${await changePasswordResponse.text()}`,
     );
   }
 

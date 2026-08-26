@@ -65,7 +65,13 @@ start_jar_service() {
     # shellcheck disable=SC1090
     source "$env_file"
     set +a
-    exec java -jar "$jar"
+    # Downstream services gate some endpoints on hasIpAddress(gateway.ip)
+    # (a value from the private config repo, correct for local dev where
+    # everything's one host). On Linux CI runners, some inter-service calls
+    # can resolve localhost to the IPv6 loopback (::1) instead of IPv4
+    # 127.0.0.1, so the observed remote address doesn't match even though
+    # it's the same machine. Force IPv4 to match local dev's behavior.
+    exec java -Djava.net.preferIPv4Stack=true -jar "$jar"
   ) > "$LOG_DIR/$name.log" 2>&1 &
   echo $! > "$PID_DIR/$name.pid"
 }
