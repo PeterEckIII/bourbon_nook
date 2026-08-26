@@ -44,6 +44,7 @@ build_all_services() {
 
 start_jar_service() {
   local name="$1" dir="$2" port="$3"
+  shift 3
   local service_dir="$ROOT_DIR/$dir"
   local env_file="$service_dir/.env"
 
@@ -65,7 +66,7 @@ start_jar_service() {
     # shellcheck disable=SC1090
     source "$env_file"
     set +a
-    exec java -jar "$jar"
+    exec java -jar "$jar" "$@"
   ) > "$LOG_DIR/$name.log" 2>&1 &
   echo $! > "$PID_DIR/$name.pid"
 }
@@ -85,14 +86,37 @@ cmd_ci_up() {
   start_jar_service discovery-service discovery-service 8010
   wait_for_port discovery-service 8010
 
-  start_jar_service users-api users-api 8081
-  start_jar_service bottles-api bottles-api 8083
-  start_jar_service reviews-api reviews-api 8084
+  # Spring Cloud Config's default precedence lets the remote config repo
+  # override locally/CI-supplied env vars, including datasource/RabbitMQ
+  # credentials -- SPRING_CLOUD_CONFIG_ALLOW_OVERRIDE=false (in each
+  # service's .env) is meant to prevent that but wasn't sufficient in
+  # practice, so these are also forced via command-line args, which
+  # Spring Cloud Config's remote sources can never override.
+  start_jar_service users-api users-api 8081 \
+    "--spring.datasource.username=${MYSQL_USERNAME}" \
+    "--spring.datasource.password=${MYSQL_PASSWORD}" \
+    "--spring.datasource.url=jdbc:mysql://localhost:3306/${USERS_DB}?serverTimezone=UTC" \
+    "--spring.rabbitmq.username=${RABBIT_MQ_USERNAME}" \
+    "--spring.rabbitmq.password=${RABBIT_MQ_PASSWORD}"
+  start_jar_service bottles-api bottles-api 8083 \
+    "--spring.datasource.username=${MYSQL_USERNAME}" \
+    "--spring.datasource.password=${MYSQL_PASSWORD}" \
+    "--spring.datasource.url=jdbc:mysql://localhost:3306/${BOTTLES_DB}?serverTimezone=UTC" \
+    "--spring.rabbitmq.username=${RABBIT_MQ_USERNAME}" \
+    "--spring.rabbitmq.password=${RABBIT_MQ_PASSWORD}"
+  start_jar_service reviews-api reviews-api 8084 \
+    "--spring.datasource.username=${MYSQL_USERNAME}" \
+    "--spring.datasource.password=${MYSQL_PASSWORD}" \
+    "--spring.datasource.url=jdbc:mysql://localhost:3306/${REVIEWS_DB}?serverTimezone=UTC" \
+    "--spring.rabbitmq.username=${RABBIT_MQ_USERNAME}" \
+    "--spring.rabbitmq.password=${RABBIT_MQ_PASSWORD}"
   wait_for_port users-api 8081
   wait_for_port bottles-api 8083
   wait_for_port reviews-api 8084
 
-  start_jar_service api-gateway api-gateway 8082
+  start_jar_service api-gateway api-gateway 8082 \
+    "--spring.rabbitmq.username=${RABBIT_MQ_USERNAME}" \
+    "--spring.rabbitmq.password=${RABBIT_MQ_PASSWORD}"
   wait_for_port api-gateway 8082
 
   log "Backend stack is up."
