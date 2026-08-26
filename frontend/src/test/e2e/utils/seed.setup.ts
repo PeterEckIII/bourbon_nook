@@ -8,7 +8,9 @@ const followerEmail = process.env.PLAYWRIGHT_FOLLOWER_EMAIL;
 const followerPassword = process.env.PLAYWRIGHT_FOLLOWER_PASSWORD;
 
 if (!followerEmail || !followerPassword) {
-  throw new Error('PLAYWRIGHT_FOLLOWER_EMAIL and PLAYWRIGHT_FOLLOWER_PASSWORD must be set to run seed setup');
+  throw new Error(
+    'PLAYWRIGHT_FOLLOWER_EMAIL and PLAYWRIGHT_FOLLOWER_PASSWORD must be set to run seed setup',
+  );
 }
 
 setup('seed', async ({ page }) => {
@@ -18,7 +20,8 @@ setup('seed', async ({ page }) => {
   // module scope races the `register` project actually writing it and
   // always loses. Dependency order only guarantees test *body* ordering.
   const testUserId = process.env.CI
-    ? (JSON.parse(readFileSync('src/test/e2e/data/.auth/ci-user.json', 'utf-8')).testUserId as string)
+    ? (JSON.parse(readFileSync('src/test/e2e/data/.auth/ci-user.json', 'utf-8'))
+        .testUserId as string)
     : process.env.PLAYWRIGHT_USER_USER_ID;
 
   if (!testUserId) {
