@@ -113,6 +113,7 @@ jobs:
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
           GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
           GIT_REPO: ${{ secrets.GIT_REPO }}
+          ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
         run: |
           cat > configuration-server/.env <<EOF
           CONFIG_SERVER_USERNAME_ADMIN=${CONFIG_SERVER_USERNAME_ADMIN}
@@ -124,6 +125,7 @@ jobs:
           GIT_USERNAME=${GIT_USERNAME}
           RABBIT_MQ_USERNAME=${RABBIT_MQ_USERNAME}
           RABBIT_MQ_PASSWORD=${RABBIT_MQ_PASSWORD}
+          ENCRYPT_KEY=${ENCRYPT_KEY}
           EOF
 
           cat > discovery-service/.env <<EOF
